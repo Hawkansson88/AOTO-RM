@@ -134,7 +134,7 @@ function update(){
   const gransKr = grans * 1e6;
   document.getElementById('slider-val').textContent = grans + ' Mkr';
 
-  const pot = DATA.filter(d=>d.omsattning!=null && d.omsattning>=gransKr);
+  const pot = DATA.filter(d=>d.omsattning!=null && (grans===0 || d.omsattning>=gransKr));
   const under = DATA.filter(d=>d.omsattning!=null && d.omsattning<gransKr);
   const ingen = DATA.filter(d=>d.omsattning==null);
 
