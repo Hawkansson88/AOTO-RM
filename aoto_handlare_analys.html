@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AOTO – Handlaranalys 2026</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f5f3;color:#1a1a18;min-height:100vh;padding:2rem 1rem}
+  .container{max-width:860px;margin:0 auto}
+  h1{font-size:20px;font-weight:500;margin-bottom:4px;color:#1a1a18}
+  .subtitle{font-size:13px;color:#888;margin-bottom:2rem}
+  .card{background:#fff;border:1px solid #e5e4df;border-radius:12px;padding:1.25rem}
+  .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:1rem}
+  .metric{background:#f5f5f3;border-radius:8px;padding:1rem;text-align:center}
+  .metric-label{font-size:12px;color:#888;margin-bottom:4px}
+  .metric-value{font-size:22px;font-weight:500;color:#1a1a18}
+  .metric-sub{font-size:11px;color:#aaa;margin-top:2px}
+  .slider-card{background:#fff;border:1px solid #e5e4df;border-radius:12px;padding:1.25rem;margin-bottom:1rem}
+  .slider-label{font-size:13px;color:#666;margin-bottom:10px}
+  .slider-row{display:flex;align-items:center;gap:14px}
+  .slider-row input[type=range]{flex:1;accent-color:#2a78d6;height:4px;cursor:pointer}
+  .slider-val{font-size:20px;font-weight:500;min-width:72px;color:#1a1a18;text-align:right}
+  .bars{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:1rem}
+  .bar-item{display:flex;flex-direction:column;gap:4px}
+  .bar-bg{background:#ebebea;border-radius:4px;height:8px}
+  .bar-fill{height:8px;border-radius:4px;transition:width 0.2s ease}
+  .bar-lbl{font-size:11px;color:#888}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  thead th{text-align:left;padding:8px 8px;font-weight:500;color:#666;border-bottom:1px solid #ebebea;font-size:11px;text-transform:uppercase;letter-spacing:0.04em;position:sticky;top:0;background:#fff;z-index:1}
+  tbody td{padding:8px 8px;color:#1a1a18;border-bottom:1px solid #f0f0ee}
+  tbody tr:last-child td{border-bottom:none}
+  tbody tr:hover{background:#fafaf8}
+  .tnum{font-variant-numeric:tabular-nums;text-align:right}
+  .tbl-wrap{max-height:420px;overflow-y:auto;border-radius:0 0 8px 8px}
+  .tbl-header{display:flex;justify-content:space-between;align-items:center;padding-bottom:10px}
+  .tbl-title{font-size:14px;font-weight:500;color:#1a1a18}
+  .tbl-count{font-size:12px;color:#aaa}
+  .city{font-size:11px;color:#aaa}
+  .pos{color:#0ca30c}
+  .neg{color:#d03b3b}
+  .badge-none{font-size:11px;color:#bbb}
+  @media(max-width:600px){.metrics{grid-template-columns:1fr 1fr}.metrics .metric:last-child{grid-column:span 2}.bars{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="container">
+  <h1>AOTO – Handlaranalys 2026</h1>
+  <p class="subtitle">285 handlare från ReachMee · Finansiell data via Bolagsverket · Uppdaterad 2026-06-26</p>
+
+  <div class="slider-card">
+    <div class="slider-label">Omsättningsgräns för samarbete</div>
+    <div class="slider-row">
+      <input type="range" id="slider" min="1" max="200" value="10" step="1">
+      <div class="slider-val" id="slider-val">10 Mkr</div>
+    </div>
+  </div>
+
+  <div class="metrics">
+    <div class="metric">
+      <div class="metric-label">Potentiella bolag</div>
+      <div class="metric-value" id="m-bolag">–</div>
+      <div class="metric-sub" id="m-bolag-pct"></div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">Bilar (potentiella)</div>
+      <div class="metric-value" id="m-bilar">–</div>
+      <div class="metric-sub" id="m-bilar-pct"></div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">Max möjliga bilar</div>
+      <div class="metric-value" id="m-bilar-inkl">–</div>
+      <div class="metric-sub">inkl. bolag med okänd omsättning</div>
+    </div>
+  </div>
+
+  <div class="bars">
+    <div class="bar-item">
+      <div class="bar-bg"><div class="bar-fill" id="bar-green" style="background:#1baf7a;width:0%"></div></div>
+      <div class="bar-lbl" id="lbl-green"></div>
+    </div>
+    <div class="bar-item">
+      <div class="bar-bg"><div class="bar-fill" id="bar-red" style="background:#e34948;width:0%"></div></div>
+      <div class="bar-lbl" id="lbl-red"></div>
+    </div>
+    <div class="bar-item">
+      <div class="bar-bg"><div class="bar-fill" id="bar-gray" style="background:#aaa;width:0%"></div></div>
+      <div class="bar-lbl" id="lbl-gray"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="tbl-header">
+      <div class="tbl-title">Potentiella partners</div>
+      <div class="tbl-count" id="tbl-count"></div>
+    </div>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr>
+          <th>Bolag</th>
+          <th class="tnum">Bilar</th>
+          <th class="tnum">Omsättning</th>
+          <th class="tnum">Resultat</th>
+          <th class="tnum">Soliditet</th>
+        </tr></thead>
+        <tbody id="tbl-body"></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+const DATA = [{"namn":"Great Products Motor i Strängnäs AB","orgnr":"556791-9286","stad":"STRÄNGNÄS","bilar":158,"omsattning":155637000,"resultat":866000,"soliditet":0.156},{"namn":"Bolinder Fordon AB","orgnr":"559171-9975","stad":"JÄRFÄLLA","bilar":90,"omsattning":23897865,"resultat":1076615,"soliditet":0.4395},{"namn":"BhappyBil aktiebolag","orgnr":"559462-8090","stad":"VÄSTERÅS","bilar":49,"omsattning":11595977,"resultat":-298658,"soliditet":0.3068},{"namn":"W-H FÖRMEDLING AB","orgnr":"559551-8175","stad":"MALMÖ","bilar":48,"omsattning":null,"resultat":null,"soliditet":null},{"namn":"Perssons Motor AB","orgnr":"559442-5166","stad":"HYLTEBRUK","bilar":38,"omsattning":32580413,"resultat":1265115,"soliditet":0.5263},{"namn":"Fa Auto AB","orgnr":"559249-5005","stad":"ÖREBRO","bilar":36,"omsattning":26929213,"resultat":240637,"soliditet":0.3964},{"namn":"Lamis Bil","orgnr":"800807-3010","stad":"","bilar":33,"omsattning":null,"resultat":null,"soliditet":null},{"namn":"Wises Bilar AB","orgnr":"559210-4672","stad":"UMEÅ","bilar":28,"omsattning":13488358,"resultat":401858,"soliditet":0.8051},{"namn":"Nordic Car Store AB","orgnr":"559417-6322","stad":"FARSTA","bilar":27,"omsattning":2868409,"resultat":19311,"soliditet":0.134},{"namn":"BMN CAR TRADING AB","orgnr":"559000-3314","stad":"NACKA","bilar":27,"omsattning":1670843,"resultat":17667,"soliditet":0.3195},{"namn":"Mraz Invest AB","orgnr":"559423-6894","stad":"HÄSSELBY","bilar":26,"omsattning":null,"resultat":null,"soliditet":null},{"namn":"CR Racing Performance AB","orgnr":"559369-3582","stad":"ÖREBRO","bilar":25,"omsattning":12339435,"resultat":206998,"soliditet":0.0522},{"namn":"Sunds Bilhandel AB","orgnr":"559466-4681","stad":"SUNDSVALL","bilar":24,"omsattning":7067830,"resultat":647919,"soliditet":0.4815},{"namn":"Österbil","orgnr":"640117-0433","stad":"","bilar":24,"omsattning":null,"resultat":null,"soliditet":null},{"namn":"Fordonsbolaget i Dalarna AB","orgnr":"559072-2749","stad":"LUDVIKA","bilar":24,"omsattning":38642459,"resultat":110019,"soliditet":0.0232},{"namn":"Metacars Norrköping AB","orgnr":"559444-3854","stad":"NORRKÖPING","bilar":23,"omsattning":19871394,"resultat":873031,"soliditet":0.342},{"namn":"BSE Auto AB","orgnr":"559333-5713","stad":"ÅKERSBERGA","bilar":23,"omsattning":5402751,"resultat":271365,"soliditet":0.3944},{"namn":"Fordonskedjan Västerås AB","orgnr":"559451-5727","stad":"VÄSTERÅS","bilar":21,"omsattning":7294679,"resultat":39452,"soliditet":0.3925},{"namn":"Elite Nordic Motors AB","orgnr":"559214-4462","stad":"TRELLEBORG","bilar":20,"omsattning":28783053,"resultat":506526,"soliditet":0.3358},{"namn":"JJ Bil AB","orgnr":"559470-0915","stad":"KATRINEHOLM","bilar":20,"omsattning":12180820,"resultat":251403,"soliditet":0.3415},{"namn":"Dmj AB","orgnr":"559512-4388","stad":"HUSKVARNA","bilar":19,"omsattning":null,"resultat":null,"soliditet":null},{"namn":"Alexander Cars AB","orgnr":"559373-4899","stad":"KARLSTAD","bilar":19,"omsattning":5795580,"resultat":269631,"soliditet":0.3487},{"namn":"Åhlin Bil Kommanditbolag","orgnr":"969749-3881","stad":"BROMMA","bilar":19,"omsattning":null,"resultat":null,"soliditet":null},{"namn":"Handlarbudet Trading AB","orgnr":"559388-5345","stad":"SOLNA","bilar":19,"omsattning":632456099,"resultat":6110723,"soliditet":0.1047},{"namn":"Nordic Auto Kalmar AB","orgnr":"559528-8167","stad":"KALMAR","bilar":17,"omsattning":null,"resultat":null,"soliditet":null},{"namn":"MT Bilar","orgnr":"820622-9794","stad":"","bilar":16,"omsattning":null,"resultat":null,"soliditet":null},{"namn":"Dynamic Management AB","orgnr":"556956-6283","stad":"NORRKÖPING","bilar":16,"omsattning":6499301,"resultat":-69837,"soliditet":0.3888},{"naam":"AZ Bilförsäljning","orgnr":"670725-4295","stad":"","bilar":15,"omsattning":null,"resultat":null,"soliditet":null},{"namn":"DTs Bilboost AB","orgnr":"559199-5252","stad":"SUNDSBRUK","bilar":14,"omsattning":9843304,"resultat":307323,"soliditet":0.1421},{"namn":"Bilexperten i Boxholm AB","orgnr":"559195-1198","stad":"BOXHOLM","bilar":14,"omsattning":20646709,"resultat":51269,"soliditet":0.3683},{"namn":"Bilcity Stockholm AB","orgnr":"556038-3860","stad":"TÄBY","bilar":14,"omsattning":null,"resultat":null,"soliditet":null},{"namn":"Nystedt Rental Trading AB","orgnr":"556838-0546","stad":"ESKILSTUNA","bilar":13,"omsattning":1702524,"resultat":-1032120,"soliditet":0.0728},{"namn":"Rena Cars AB","orgnr":"559123-5170","stad":"KRISTINEHAMN","bilar":13,"omsattning":2793988,"resultat":2397,"soliditet":0.236},{"namn":"Mali Bil AB","orgnr":"559238-3904","stad":"RYDEBÄCK","bilar":13,"omsattning":24992057,"resultat":409407,"soliditet":0.4957},{"namn":"Motorhuset Jönköping AB","orgnr":"559339-5006","stad":"JÖNKÖPING","bilar":13,"omsattning":6835805,"resultat":145703,"soliditet":0.3182},{"namn":"HOUSE OF CARS ÖREBRO AB","orgnr":"559244-0621","stad":"ÖREBRO","bilar":13,"omsattning":4070797,"resultat":371985,"soliditet":0.8909},{"namn":"Aylas Bilar","orgnr":"990110-0082","stad":"","bilar":13,"omsattning":null,"resultat":null,"soliditet":null},{"namn":"Carclusive AB","orgnr":"559255-9347","stad":"NORSBORG","bilar":12,"omsattning":43955520,"resultat":-28723,"soliditet":0.1254},{"namn":"Bilevo AB","orgnr":"559507-5119","stad":"TULLINGE","bilar":12,"omsattning":13644564,"resultat":666262,"soliditet":0.6837},{"namn":"HOFFNER GROUP AB","orgnr":"559515-7909","stad":"NORRKÖPING","bilar":11,"omsattning":12119092,"resultat":179984,"soliditet":0.0883},{"namn":"Högsbo Bil och Rekond AB","orgnr":"559270-8555","stad":"VÄSTRA FRÖLUNDA","bilar":11,"omsattning":14552625,"resultat":-373052,"soliditet":0.0306},{"namn":"AutoDeal Sweden AB","orgnr":"559175-2323","stad":"NORRKÖPING","bilar":11,"omsattning":5127616,"resultat":-65571,"soliditet":0.1105},{"namn":"Point Of Cars Hässleholm AB","orgnr":"559484-6577","stad":"HÄSSLEHOLM","bilar":10,"omsattning":8064937,"resultat":-93983,"soliditet":0.0412},{"namn":"Mia Bilcenter i Huddinge AB","orgnr":"556786-5299","stad":"JORDBRO","bilar":10,"omsattning":28668358,"resultat":-296254,"soliditet":0.5549},{"namn":"Eriksson Bilcenter AB","orgnr":"559192-9202","stad":"GÖTEBORG","bilar":10,"omsattning":53327056,"resultat":159402,"soliditet":0.0529},{"namn":"Bilcentrum i Lund AB","orgnr":"559222-9768","stad":"LUND","bilar":10,"omsattning":11142181,"resultat":-75806,"soliditet":0.029},{"namn":"AMD Bilcenter AB","orgnr":"556796-1122","stad":"SKOGÅS","bilar":8,"omsattning":11470814,"resultat":722021,"soliditet":0.5654},{"namn":"Nicco Macchina AB","orgnr":"559397-3398","stad":"PARTILLE","bilar":8,"omsattning":16197715,"resultat":137869,"soliditet":0.0345},{"namn":"MH BILCITY I JÖNKÖPING AB","orgnr":"556807-6409","stad":"BANKERYD","bilar":8,"omsattning":16696089,"resultat":-546608,"soliditet":0.593},{"namn":"Karlstad Direkt Service AB","orgnr":"556865-5657","stad":"KARLSTAD","bilar":7,"omsattning":99970000,"resultat":30799000,"soliditet":0.6468},{"namn":"Bilpunkten Kronoberg AB","orgnr":"559198-0601","stad":"VÄXJÖ","bilar":7,"omsattning":10082924,"resultat":-152029,"soliditet":0.3795},{"namn":"FMD BIL AB","orgnr":"559399-6274","stad":"JÄRFÄLLA","bilar":6,"omsattning":15185079,"resultat":569993,"soliditet":0.3726},{"namn":"Ronneby Bilcenter AB","orgnr":"559431-1606","stad":"RONNEBY","bilar":6,"omsattning":7898515,"resultat":252178,"soliditet":0.2172},{"namn":"L Autohandel AB","orgnr":"559260-1727","stad":"STAFFANSTORP","bilar":6,"omsattning":19588666,"resultat":1292,"soliditet":0.0127},{"namn":"Premia Bil AB","orgnr":"559465-1571","stad":"VÄLLINGBY","bilar":5,"omsattning":8061892,"resultat":253762,"soliditet":0.1678},{"namn":"Däckindustri i Sverige AB","orgnr":"559137-0548","stad":"UPPLANDS VÄSBY","bilar":5,"omsattning":9014464,"resultat":731131,"soliditet":0.7232},{"namn":"LEADING AUTOCENTER SVERIGE AB","orgnr":"559437-9447","stad":"LANDSKRONA","bilar":5,"omsattning":20340087,"resultat":1456122,"soliditet":0.7845},{"namn":"PIXID AB","orgnr":"559221-8670","stad":"SUNDSVALL","bilar":5,"omsattning":12070373,"resultat":-136177,"soliditet":0.0237},{"namn":"Johan Mörk Bil och Lack i Enköping AB","orgnr":"556582-4207","stad":"ENKÖPING","bilar":5,"omsattning":24174138,"resultat":496923,"soliditet":0.5234},{"namn":"KP Bilparken AB","orgnr":"559204-9141","stad":"NORRKÖPING","bilar":5,"omsattning":16456953,"resultat":109678,"soliditet":0.5883},{"namn":"NGS Consulting AB","orgnr":"559402-2310","stad":"MARIESTAD","bilar":5,"omsattning":9810605,"resultat":-366393,"soliditet":0.922},{"namn":"Storsjöbilar AB","orgnr":"556907-9931","stad":"ÖSTERSUND","bilar":4,"omsattning":29885469,"resultat":568521,"soliditet":0.2391},{"namn":"V&D Motor Sweden AB","orgnr":"559107-1062","stad":"NORRKÖPING","bilar":4,"omsattning":123076935,"resultat":788531,"soliditet":0.482},{"namn":"Auto Flex Cars AB","orgnr":"559334-0150","stad":"PARTILLE","bilar":4,"omsattning":19753765,"resultat":347778,"soliditet":0.5241},{"namn":"Prime Auto Collection i Halmstad AB","orgnr":"559490-0218","stad":"HALMSTAD","bilar":2,"omsattning":22204201,"resultat":148222,"soliditet":0.6768},{"namn":"Bil Labyrinten AB","orgnr":"559111-4896","stad":"HUDDINGE","bilar":2,"omsattning":22162670,"resultat":-259115,"soliditet":0.6757},{"namn":"Östersunds Bilhall AB","orgnr":"559237-3889","stad":"ÖSTERSUND","bilar":2,"omsattning":16335099,"resultat":677873,"soliditet":0.7278},{"namn":"Auto.F AB","orgnr":"559284-0317","stad":"GÖTEBORG","bilar":2,"omsattning":10982384,"resultat":131245,"soliditet":0.4747},{"namn":"Hallsten Bil AB","orgnr":"556831-0824","stad":"TÄBY","bilar":2,"omsattning":84141095,"resultat":-252963,"soliditet":0.015},{"namn":"BILVALET MALMÖ AB","orgnr":"556699-9602","stad":"OXIE","bilar":2,"omsattning":10457157,"resultat":-559454,"soliditet":-1.6799},{"namn":"Ultimate Performance AB","orgnr":"559470-7068","stad":"NORRKÖPING","bilar":2,"omsattning":18371182,"resultat":-130300,"soliditet":0.005},{"namn":"Dixons Bil AB","orgnr":"556851-1900","stad":"VÄXJÖ","bilar":2,"omsattning":15920916,"resultat":-283148,"soliditet":0.6766},{"namn":"Premium Import Lammhult AB","orgnr":"559288-8985","stad":"VÄXJÖ","bilar":2,"omsattning":10172606,"resultat":54233,"soliditet":0.4782},{"namn":"Fordoncenter Halmstad AB","orgnr":"559431-7116","stad":"HALMSTAD","bilar":2,"omsattning":26153468,"resultat":578381,"soliditet":0.2536},{"namn":"BilTeam i Karlskrona AB","orgnr":"559264-9627","stad":"KARLSKRONA","bilar":2,"omsattning":28868519,"resultat":821732,"soliditet":0.1571},{"namn":"Fordonshallen Eskilstuna AB","orgnr":"559331-0633","stad":"ESKILSTUNA","bilar":3,"omsattning":33844214,"resultat":297561,"soliditet":0.0787},{"namn":"Number One Cars I Sverige AB","orgnr":"559266-3982","stad":"LAHOLM","bilar":3,"omsattning":11452044,"resultat":7405,"soliditet":0.038},{"namn":"Cartrader i Växjö AB","orgnr":"559220-4654","stad":"VÄXJÖ","bilar":3,"omsattning":11425547,"resultat":-341979,"soliditet":0.1214},{"namn":"Tonys X Bil AB","orgnr":"556900-6413","stad":"SVANEHOLM","bilar":3,"omsattning":12774741,"resultat":1558,"soliditet":0.3738},{"namn":"Alux Bil AB","orgnr":"559221-4794","stad":"UDDEVALLA","bilar":3,"omsattning":14746923,"resultat":-87592,"soliditet":0.228},{"namn":"custom car sthlm AB","orgnr":"556959-8237","stad":"SÖDERTÄLJE","bilar":1,"omsattning":17055940,"resultat":-55211,"soliditet":0.5051},{"namn":"Bilförmedlarna i Stockholm AB","orgnr":"556918-7080","stad":"HUDDINGE","bilar":1,"omsattning":62416063,"resultat":111516,"soliditet":0.2344},{"namn":"MCS Sverige AB","orgnr":"556116-3584","stad":"EKERÖ","bilar":1,"omsattning":124988928,"resultat":468680,"soliditet":0.8542},{"namn":"Bilförmedling i Kronoberg AB","orgnr":"559301-5661","stad":"ALVESTA","bilar":1,"omsattning":31259211,"resultat":1453660,"soliditet":0.9026},{"namn":"Motorpartner i Stockholm AB","orgnr":"559230-0163","stad":"JÄRFÄLLA","bilar":1,"omsattning":104498522,"resultat":-1022570,"soliditet":0.3215},{"namn":"MS Car Center AB","orgnr":"559323-9451","stad":"ROSERSBERG","bilar":1,"omsattning":24927612,"resultat":68085,"soliditet":0.5619},{"namn":"FOS Bil AB","orgnr":"556785-9185","stad":"ESKILSTUNA","bilar":1,"omsattning":49535862,"resultat":-936790,"soliditet":0.0099},{"namn":"Bil-Trade i Falköping AB","orgnr":"556943-6875","stad":"FALKÖPING","bilar":1,"omsattning":23150095,"resultat":744228,"soliditet":0.8157},{"namn":"Ekmar Bil AB","orgnr":"559330-2788","stad":"MJÖLBY","bilar":1,"omsattning":14784397,"resultat":1156320,"soliditet":0.4439},{"namn":"Tenn Bil Invest AB","orgnr":"559254-7698","stad":"BRO","bilar":1,"omsattning":89695363,"resultat":1342851,"soliditet":0.332},{"namn":"Hällstorps Bil AB","orgnr":"559119-6919","stad":"SKILLINGARYD","bilar":1,"omsattning":41560919,"resultat":1411946,"soliditet":0.262},{"namn":"Kalmar Automobil AB","orgnr":"559145-6750","stad":"KALMAR","bilar":1,"omsattning":37675912,"resultat":666001,"soliditet":0.3885},{"namn":"SB Cars Stockholm AB","orgnr":"559417-2289","stad":"SÖDERBY","bilar":1,"omsattning":24224218,"resultat":113998,"soliditet":0.3101},{"namn":"SEDINS BIL AB","orgnr":"559464-0087","stad":"STAFFANSTORP","bilar":1,"omsattning":22040467,"resultat":665022,"soliditet":0.2389},{"namn":"Bilarvet i Uppsala AB","orgnr":"559512-3331","stad":"UPPSALA","bilar":1,"omsattning":38111744,"resultat":103881,"soliditet":0.0956},{"namn":"AMMBIG AB","orgnr":"556663-8416","stad":"MÖLNLYCKE","bilar":1,"omsattning":31293207,"resultat":2959156,"soliditet":0.9781},{"namn":"TopGear Växjö AB","orgnr":"556794-1017","stad":"VÄXJÖ","bilar":1,"omsattning":24494188,"resultat":-423349,"soliditet":0.1502},{"namn":"Baltikis Auto AB","orgnr":"559041-8934","stad":"MALMÖ","bilar":1,"omsattning":21815462,"resultat":1107664,"soliditet":0.4257},{"namn":"Linn & Elias bilfirma AB","orgnr":"559317-2488","stad":"FLEN","bilar":1,"omsattning":13115754,"resultat":-398083,"soliditet":0.1323},{"namn":"Paradis Bilar AB","orgnr":"559521-3496","stad":"STRÄNGNÄS","bilar":1,"omsattning":8730868,"resultat":518769,"soliditet":0.2914},{"namn":"Car Trade Sweden AB","orgnr":"559076-9856","stad":"HANDEN","bilar":1,"omsattning":8473539,"resultat":592057,"soliditet":0.7239},{"namn":"Excellent Cars i Finspång AB","orgnr":"556969-3962","stad":"FINSPÅNG","bilar":1,"omsattning":8002006,"resultat":511566,"soliditet":0.7415},{"namn":"Göteborgs Bil och Fritid AB","orgnr":"559265-0328","stad":"PARTILLE","bilar":1,"omsattning":14268315,"resultat":28996,"soliditet":0.1601},{"namn":"Auto lyckan i Norrköping AB","orgnr":"559325-9848","stad":"NORRKÖPING","bilar":1,"omsattning":14412535,"resultat":246501,"soliditet":0.3217},{"namn":"RIXBIL SVERIGE AB","orgnr":"559283-3197","stad":"HELSINGBORG","bilar":1,"omsattning":12234828,"resultat":-121662,"soliditet":0.3134},{"namn":"Mekta Bilservice i Uppsala AB","orgnr":"559456-8569","stad":"UPPSALA","bilar":1,"omsattning":5119522,"resultat":785045,"soliditet":0.7054}];
+
+const TOTAL_BILAR = 1970;
+const TOTAL_BOLAG = 288;
+const INGEN_BILAR = 528;
+
+function fmt(n){if(n==null)return'–';return(n/1e6).toFixed(1)+' Mkr'}
+function fmtRes(n){if(n==null)return'–';let s=n<0?'−':'';return s+(Math.abs(n)/1000).toFixed(0)+' tkr'}
+function fmtSol(n){if(n==null)return'–';return Math.round(n*100)+'%'}
+
+function update(){
+  const grans = parseInt(document.getElementById('slider').value);
+  const gransKr = grans * 1e6;
+  document.getElementById('slider-val').textContent = grans + ' Mkr';
+
+  const pot = DATA.filter(d=>d.omsattning!=null && d.omsattning>=gransKr);
+  const under = DATA.filter(d=>d.omsattning!=null && d.omsattning<gransKr);
+  const ingen = DATA.filter(d=>d.omsattning==null);
+
+  const potBilar = pot.reduce((s,d)=>s+d.bilar,0);
+  const underBilar = under.reduce((s,d)=>s+d.bilar,0);
+  const ingenBilar = ingen.reduce((s,d)=>s+d.bilar,0);
+
+  document.getElementById('m-bolag').textContent = pot.length;
+  document.getElementById('m-bolag-pct').textContent = 'av '+TOTAL_BOLAG+' totalt ('+Math.round(pot.length/TOTAL_BOLAG*100)+'%)';
+  document.getElementById('m-bilar').textContent = potBilar;
+  document.getElementById('m-bilar-pct').textContent = 'av '+TOTAL_BILAR+' totalt ('+Math.round(potBilar/TOTAL_BILAR*100)+'%)';
+  document.getElementById('m-bilar-inkl').textContent = potBilar + ingenBilar;
+
+  document.getElementById('bar-green').style.width = (potBilar/TOTAL_BILAR*100)+'%';
+  document.getElementById('bar-red').style.width = (underBilar/TOTAL_BILAR*100)+'%';
+  document.getElementById('bar-gray').style.width = (ingenBilar/TOTAL_BILAR*100)+'%';
+  document.getElementById('lbl-green').textContent = '≥'+grans+' Mkr: '+Math.round(potBilar/TOTAL_BILAR*100)+'% av bilarna';
+  document.getElementById('lbl-red').textContent = '<'+grans+' Mkr: '+Math.round(underBilar/TOTAL_BILAR*100)+'% av bilarna';
+  document.getElementById('lbl-gray').textContent = 'Okänd omsättning: '+Math.round(ingenBilar/TOTAL_BILAR*100)+'% av bilarna';
+
+  const sorted = [...pot].sort((a,b)=>b.bilar-a.bilar);
+  document.getElementById('tbl-count').textContent = sorted.length+' bolag · '+potBilar+' bilar';
+
+  const tbody = document.getElementById('tbl-body');
+  tbody.innerHTML = '';
+  sorted.forEach(d=>{
+    const tr = document.createElement('tr');
+    const resClass = d.resultat==null?'':d.resultat>=0?'pos':'neg';
+    tr.innerHTML = `
+      <td><strong style="font-weight:500">${d.namn}</strong><br><span class="city">${d.stad||'–'} &nbsp;·&nbsp; ${d.orgnr}</span></td>
+      <td class="tnum">${d.bilar}</td>
+      <td class="tnum">${fmt(d.omsattning)}</td>
+      <td class="tnum ${resClass}">${fmtRes(d.resultat)}</td>
+      <td class="tnum">${fmtSol(d.soliditet)}</td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+document.getElementById('slider').addEventListener('input', update);
+update();
+</script>
+</body>
+</html>
