@@ -67,11 +67,11 @@
       <div class="metric-value" id="m-bilar">–</div>
       <div class="metric-sub" id="m-bilar-pct"></div>
     </div>
-    <div class="metric">
-      <div class="metric-label">Max möjliga bilar</div>
-      <div class="metric-value" id="m-bilar-inkl">–</div>
-      <div class="metric-sub">inkl. bolag med okänd omsättning</div>
-    </div>
+<div class="metric">
+  <div class="metric-label">Negativt resultat (potentiella)</div>
+  <div class="metric-value" id="m-neg">–</div>
+  <div class="metric-sub" id="m-neg-pct">av de potentiella bolagen</div>
+</div>
   </div>
 
   <div class="bars">
@@ -137,7 +137,9 @@ function update(){
   document.getElementById('m-bolag-pct').textContent = 'av '+TOTAL_BOLAG+' totalt ('+Math.round(pot.length/TOTAL_BOLAG*100)+'%)';
   document.getElementById('m-bilar').textContent = potBilar;
   document.getElementById('m-bilar-pct').textContent = 'av '+TOTAL_BILAR+' totalt ('+Math.round(potBilar/TOTAL_BILAR*100)+'%)';
-  document.getElementById('m-bilar-inkl').textContent = potBilar + ingenBilar;
+  const negAntal = pot.filter(d=>d.resultat!=null && d.resultat<0).length;
+document.getElementById('m-neg').textContent = negAntal;
+document.getElementById('m-neg-pct').textContent = Math.round(negAntal/pot.length*100)+'% av de potentiella bolagen';
 
   document.getElementById('bar-green').style.width = (potBilar/TOTAL_BILAR*100)+'%';
   document.getElementById('bar-red').style.width = (underBilar/TOTAL_BILAR*100)+'%';
