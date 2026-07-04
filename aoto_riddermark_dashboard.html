@@ -3,89 +3,85 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AOTO × Riddermark – Analysdashboard 2026</title>
+<title>AOTO × Riddermark – Beslutsstöd 2026</title>
 <style>
   *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
   body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f5f3;color:#1a1a18;min-height:100vh;padding:1.25rem 1rem;font-size:16px}
-  .container{max-width:1080px;margin:0 auto}
+  .container{max-width:920px;margin:0 auto}
   h1{font-size:19px;font-weight:600;margin-bottom:4px;color:#1a1a18}
   .subtitle{font-size:12px;color:#888;margin-bottom:1rem;line-height:1.5}
   .card{background:#fff;border:1px solid #e5e4df;border-radius:12px;padding:1rem;margin-bottom:1rem}
   .card-title{font-size:14px;font-weight:600;color:#1a1a18;margin-bottom:2px}
-  .card-sub{font-size:11px;color:#999;margin-bottom:12px;line-height:1.5}
+  .card-sub{font-size:11.5px;color:#999;margin-bottom:12px;line-height:1.5}
 
   /* Tabs */
   .tabs{display:flex;gap:6px;margin-bottom:1rem;background:#ebebea;padding:4px;border-radius:10px}
-  .tab{flex:1;padding:10px 8px;border:none;background:transparent;border-radius:7px;font-size:13px;font-weight:500;color:#666;cursor:pointer;font-family:inherit;transition:all .15s;line-height:1.3}
+  .tab{flex:1;padding:11px 8px;border:none;background:transparent;border-radius:7px;font-size:13.5px;font-weight:500;color:#666;cursor:pointer;font-family:inherit;transition:all .15s;line-height:1.3}
   .tab.active{background:#fff;color:#1a1a18;box-shadow:0 1px 2px rgba(0,0,0,.06)}
   .view{display:none}
   .view.active{display:block}
 
   /* Info / match report */
-  .info{display:flex;flex-wrap:wrap;gap:6px 16px;background:#eef4fb;border:1px solid #d6e4f5;border-radius:8px;padding:10px 12px;font-size:11.5px;color:#3a5a7a;margin-bottom:1rem;line-height:1.5}
+  .info{display:flex;flex-wrap:wrap;gap:4px 14px;background:#eef4fb;border:1px solid #d6e4f5;border-radius:8px;padding:9px 12px;font-size:11px;color:#3a5a7a;margin-bottom:1rem;line-height:1.5}
   .info b{color:#2a5580;font-weight:600}
   .info .link{color:#2a78d6;cursor:pointer;text-decoration:underline;text-underline-offset:2px}
-  .unmatched-list{display:none;margin-top:8px;max-height:160px;overflow-y:auto;font-size:11px;color:#6a7a8a;line-height:1.6;border-top:1px solid #d6e4f5;padding-top:8px}
+  .unmatched-list{display:none;margin-top:8px;max-height:150px;overflow-y:auto;font-size:10.5px;color:#6a7a8a;line-height:1.6;border-top:1px solid #d6e4f5;padding-top:8px;width:100%}
+
+  /* Selection bar */
+  .selbar{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:10px;background:#1a1a18;color:#fff;border-radius:10px;padding:11px 14px;margin-bottom:1rem;flex-wrap:wrap}
+  .selbar .n{font-size:14px;font-weight:600}
+  .selbar .hint{font-size:11px;color:#b7b7b3}
+  .selbar-actions{display:flex;gap:8px;align-items:center}
+  .btn{font-family:inherit;font-size:12.5px;font-weight:500;border-radius:7px;padding:7px 12px;cursor:pointer;border:1px solid transparent}
+  .btn-primary{background:#2a78d6;color:#fff}
+  .btn-primary:disabled{background:#3a3a38;color:#888;cursor:default}
+  .btn-ghost{background:transparent;color:#cfcfca;border-color:#444}
+
+  /* Ranked cards */
+  .rank{display:flex;gap:12px;align-items:flex-start;padding:13px 4px;border-bottom:1px solid #f0f0ee}
+  .rank:last-child{border-bottom:none}
+  .rank.sel{background:#f4f8fd;border-radius:8px;padding-left:10px;padding-right:10px}
+  .rank-chk{margin-top:3px;width:19px;height:19px;accent-color:#2a78d6;cursor:pointer;flex-shrink:0}
+  .rank-num{font-size:12px;font-weight:600;color:#c0bfba;min-width:20px;text-align:right;margin-top:2px;font-variant-numeric:tabular-nums}
+  .rank-body{flex:1;min-width:0}
+  .rank-head{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+  .rank-name{font-size:14.5px;font-weight:600;color:#1a1a18}
+  .rank-city{font-size:11px;color:#aaa}
+  .badge{display:inline-block;border-radius:20px;padding:2px 9px;font-size:10.5px;font-weight:600;white-space:nowrap}
+  .b-gem{background:#fff3d6;color:#8a6d1a}
+  .b-unknown{background:#ede8f5;color:#6a5a8a}
+  .b-weak{background:#fbe4e4;color:#b23a3a}
+  .b-rm{background:#e3edfb;color:#2a5580}
+  .b-hast{background:#e0f2ec;color:#1b7a5a}
+  .b-vol{background:#e8e8e5;color:#555}
+  .b-active{background:#f0f0ee;color:#999}
+  .rank-motiv{font-size:13px;color:#3a3a38;line-height:1.5;margin:5px 0 6px}
+  .rank-nums{font-size:11px;color:#999;display:flex;gap:14px;flex-wrap:wrap}
+  .rank-nums b{color:#555;font-weight:600}
+  .showmore{width:100%;text-align:center;padding:11px;background:#f5f5f3;border:1px solid #e5e4df;border-radius:8px;font-size:12.5px;color:#2a78d6;cursor:pointer;font-family:inherit;font-weight:500;margin-top:6px}
 
   /* Metrics */
-  .metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:1rem}
-  .metric{background:#f5f5f3;border-radius:8px;padding:0.75rem;text-align:center}
+  .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:1rem}
+  .metric{background:#f5f5f3;border-radius:8px;padding:0.8rem;text-align:center}
   .metric-label{font-size:11px;color:#888;margin-bottom:4px;line-height:1.3}
-  .metric-value{font-size:20px;font-weight:600;color:#1a1a18}
+  .metric-value{font-size:21px;font-weight:600;color:#1a1a18}
   .metric-sub{font-size:10px;color:#aaa;margin-top:2px;line-height:1.3}
 
-  /* Controls */
+  /* Empty state */
+  .empty{text-align:center;padding:2rem 1rem;color:#999}
+  .empty .big{font-size:15px;font-weight:600;color:#555;margin-bottom:6px}
+  .empty .arrow{font-size:26px;margin-bottom:10px}
+
+  /* Summary prose */
+  .prose{background:#f0f7f2;border:1px solid #cfe7d8;border-radius:8px;padding:14px 16px;font-size:13.5px;color:#2a5a42;line-height:1.65}
+  .prose b{font-weight:600;color:#1b7a5a}
+
+  /* Simulator */
   .controls{display:flex;flex-direction:column;gap:14px}
   .ctrl-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
-  .ctrl-label{font-size:12px;color:#666;min-width:0}
-  select,.chk{font-family:inherit}
-  select{font-size:13px;padding:6px 8px;border:1px solid #d8d7d2;border-radius:7px;background:#fff;color:#1a1a18;cursor:pointer}
+  .ctrl-label{font-size:12.5px;color:#666}
   input[type=range]{flex:1;min-width:120px;accent-color:#2a78d6;cursor:pointer;height:28px}
-  .slider-val{font-size:16px;font-weight:600;min-width:96px;color:#1a1a18;text-align:right;font-variant-numeric:tabular-nums}
-  .chk-row{display:flex;align-items:flex-start;gap:8px;font-size:12.5px;color:#444;line-height:1.4}
-  .chk-row input{margin-top:2px;accent-color:#2a78d6;cursor:pointer;width:16px;height:16px;flex-shrink:0}
-  .pill{display:inline-block;background:#fff3d6;color:#8a6d1a;border:1px solid #ecdca0;border-radius:20px;padding:1px 8px;font-size:10px;font-weight:600;white-space:nowrap}
-
-  /* Table */
-  table{width:100%;border-collapse:collapse;font-size:12.5px;table-layout:auto}
-  thead th{text-align:right;padding:8px 6px;font-weight:500;color:#666;border-bottom:1px solid #ebebea;font-size:10.5px;text-transform:uppercase;letter-spacing:.03em;position:sticky;top:0;background:#fff;z-index:1;cursor:pointer;white-space:nowrap;user-select:none}
-  thead th:first-child{text-align:left}
-  thead th:hover{color:#2a78d6}
-  thead th.sorted::after{content:' ▾';color:#2a78d6}
-  thead th.sorted.asc::after{content:' ▴'}
-  tbody td{padding:8px 6px;color:#1a1a18;border-bottom:1px solid #f0f0ee;word-break:break-word;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
-  tbody td:first-child{text-align:left;white-space:normal}
-  tbody tr:last-child td{border-bottom:none}
-  tbody tr.gem{background:#fffaf0}
-  tbody tr.unmatched{opacity:.72}
-  .na{color:#c0bfba;font-style:italic}
-  .tbl-wrap{max-height:60vh;overflow:auto;-webkit-overflow-scrolling:touch;border-radius:0 0 8px 8px;border-top:1px solid #f0f0ee}
-  .tbl-header{display:flex;justify-content:space-between;align-items:center;padding-bottom:10px;flex-wrap:wrap;gap:4px}
-  .tbl-count{font-size:12px;color:#aaa}
-  .city{font-size:10.5px;color:#aaa}
-  .pos{color:#0ca30c}
-  .neg{color:#d03b3b}
-
-  /* Scatter */
-  .chartbox{width:100%;overflow-x:auto}
-  svg{display:block;max-width:100%}
-  .axis-label{font-size:10px;fill:#999}
-  .grid-line{stroke:#f0f0ee;stroke-width:1}
-  .axis-line{stroke:#d8d7d2;stroke-width:1}
-  .tick-txt{font-size:9.5px;fill:#aaa}
-  .dot{stroke:#fff;stroke-width:.8;cursor:pointer;transition:opacity .15s}
-  .legend{display:flex;flex-wrap:wrap;gap:16px;align-items:center;margin-top:10px;font-size:10.5px;color:#888}
-  .legend-grad{width:120px;height:10px;border-radius:5px;background:linear-gradient(90deg,#cfe0f5,#5b8fd6,#e8842e)}
-  .tooltip{position:fixed;pointer-events:none;background:#1a1a18;color:#fff;font-size:11px;padding:6px 9px;border-radius:6px;opacity:0;transition:opacity .1s;z-index:10;line-height:1.5;max-width:220px}
-
-  /* Distribution bars */
-  .dist-row{display:grid;grid-template-columns:96px 1fr auto;align-items:center;gap:10px;margin-bottom:9px;font-size:12px}
-  .dist-lbl{color:#666;text-align:right;font-variant-numeric:tabular-nums}
-  .dist-track{background:#ebebea;border-radius:5px;height:22px;position:relative;overflow:hidden}
-  .dist-fill{height:100%;border-radius:5px;background:#2a78d6;display:flex;align-items:center;transition:width .3s}
-  .dist-val{font-size:11px;color:#555;white-space:nowrap;min-width:0}
-  .callout{background:#f0f7f2;border:1px solid #cfe7d8;border-radius:8px;padding:10px 12px;font-size:12px;color:#2a6b47;line-height:1.6;margin-top:6px}
-  .callout b{font-weight:600}
+  .slider-val{font-size:16px;font-weight:600;min-width:104px;color:#1a1a18;text-align:right;font-variant-numeric:tabular-nums}
   .sim-out{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
   .sim-card{background:#f5f5f3;border-radius:8px;padding:12px;text-align:center}
   .sim-card.primary{background:#eef4fb;border:1px solid #d6e4f5}
@@ -93,9 +89,49 @@
   .sim-value{font-size:19px;font-weight:600;color:#1a1a18}
   .sim-sub{font-size:10px;color:#aaa;margin-top:3px}
   .disclaimer{font-size:10.5px;color:#b58a2a;background:#fdf6e3;border:1px solid #eddfb0;border-radius:7px;padding:8px 10px;margin-top:12px;line-height:1.5}
+  .pill{display:inline-block;background:#fff3d6;color:#8a6d1a;border:1px solid #ecdca0;border-radius:20px;padding:1px 8px;font-size:10px;font-weight:600}
 
-  @media(max-width:640px){
-    .metrics{grid-template-columns:1fr 1fr}
+  /* Distribution */
+  .dist-row{display:grid;grid-template-columns:88px 1fr auto;align-items:center;gap:10px;margin-bottom:9px;font-size:12px}
+  .dist-lbl{color:#666;text-align:right;font-variant-numeric:tabular-nums}
+  .dist-track{background:#ebebea;border-radius:5px;height:20px;overflow:hidden}
+  .dist-fill{height:100%;border-radius:5px;background:#2a78d6;transition:width .3s}
+  .dist-val{font-size:11px;color:#555;white-space:nowrap}
+  .callout{background:#f0f7f2;border:1px solid #cfe7d8;border-radius:8px;padding:10px 12px;font-size:12px;color:#2a6b47;line-height:1.6;margin-top:6px}
+  .callout b{font-weight:600}
+
+  /* Advanced */
+  details.adv{margin-bottom:1rem}
+  details.adv > summary{cursor:pointer;list-style:none;background:#fff;border:1px solid #e5e4df;border-radius:12px;padding:13px 16px;font-size:13px;font-weight:500;color:#666;display:flex;align-items:center;gap:8px}
+  details.adv > summary::-webkit-details-marker{display:none}
+  details.adv > summary::before{content:'▸';color:#aaa}
+  details.adv[open] > summary::before{content:'▾'}
+  details.adv[open] > summary{border-radius:12px 12px 0 0;border-bottom:none}
+  .adv-body{background:#fff;border:1px solid #e5e4df;border-top:none;border-radius:0 0 12px 12px;padding:1rem}
+  select{font-size:13px;padding:6px 8px;border:1px solid #d8d7d2;border-radius:7px;background:#fff;color:#1a1a18;cursor:pointer;font-family:inherit}
+  table{width:100%;border-collapse:collapse;font-size:12px;table-layout:auto}
+  thead th{text-align:right;padding:7px 5px;font-weight:500;color:#666;border-bottom:1px solid #ebebea;font-size:10px;text-transform:uppercase;letter-spacing:.03em;position:sticky;top:0;background:#fff;z-index:1;cursor:pointer;white-space:nowrap;user-select:none}
+  thead th:first-child{text-align:left}
+  thead th.sorted::after{content:' ▾';color:#2a78d6}
+  thead th.sorted.asc::after{content:' ▴'}
+  tbody td{padding:7px 5px;color:#1a1a18;border-bottom:1px solid #f0f0ee;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+  tbody td:first-child{text-align:left;white-space:normal}
+  tbody tr.unmatched{opacity:.7}
+  .na{color:#c0bfba;font-style:italic}
+  .tbl-wrap{max-height:52vh;overflow:auto;border-top:1px solid #f0f0ee;margin-top:10px}
+  .city{font-size:10px;color:#aaa}
+  .pos{color:#0ca30c}.neg{color:#d03b3b}
+  .chartbox{width:100%;overflow-x:auto}
+  svg{display:block;max-width:100%}
+  .grid-line{stroke:#f0f0ee;stroke-width:1}.axis-line{stroke:#d8d7d2;stroke-width:1}
+  .tick-txt{font-size:9.5px;fill:#aaa}.axis-label{font-size:10px;fill:#999}
+  .dot{stroke:#fff;stroke-width:.8;cursor:pointer}
+  .legend{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-top:10px;font-size:10.5px;color:#888}
+  .legend-grad{width:110px;height:10px;border-radius:5px;background:linear-gradient(90deg,#cfe0f5,#5b8fd6,#e8842e)}
+  .tooltip{position:fixed;pointer-events:none;background:#1a1a18;color:#fff;font-size:11px;padding:6px 9px;border-radius:6px;opacity:0;transition:opacity .1s;z-index:20;line-height:1.5;max-width:220px}
+
+  @media(max-width:600px){
+    .metrics{grid-template-columns:1fr}
     .sim-out{grid-template-columns:1fr}
     body{padding:1rem .75rem}
   }
@@ -103,25 +139,41 @@
 </head>
 <body>
 <div class="container">
-  <h1>AOTO × Riddermark – Analysdashboard 2026</h1>
-  <p class="subtitle">Handlaranalys · finansiell data via Bolagsverket · aktivitetsdata från Riddermark Bil (köpt/sålt/lager 2026) · sammanställd 2026-07-04 // Anton</p>
+  <h1>AOTO × Riddermark – Beslutsstöd 2026</h1>
+  <p class="subtitle">Vilka handlare ska vi prata med, och vad tjänar Riddermark på det · finansiell data via Bolagsverket · aktivitet (köpt/sålt/lager 2026) från Riddermark Bil · 2026-07-04 // Anton</p>
 
   <div class="tabs">
-    <button class="tab active" data-view="prospects">Prospects för AOTO</button>
-    <button class="tab" data-view="business">Business case för Riddermark</button>
+    <button class="tab active" data-view="prospects">1 · Vilka ska AOTO satsa på?</button>
+    <button class="tab" data-view="business">2 · Vad tjänar Riddermark på det?</button>
   </div>
 
   <div class="info" id="matchinfo"></div>
 
-  <!-- ==================== FLIK 1: PROSPECTS ==================== -->
+  <!-- ==================== FLIK 1 ==================== -->
   <div class="view active" id="view-prospects">
+    <div class="selbar">
+      <div>
+        <div class="n" id="selcount">0 handlare valda</div>
+        <div class="hint" id="selhint">Bocka för de du vill satsa på – urvalet driver flik 2.</div>
+      </div>
+      <div class="selbar-actions">
+        <button class="btn btn-ghost" id="selclear">Rensa</button>
+        <button class="btn btn-primary" id="seltobiz" disabled>Se effekten →</button>
+      </div>
+    </div>
 
     <div class="card">
-      <div class="card-title">Filter</div>
-      <div class="card-sub">Hitta vilka av Riddermarks handlare AOTO bör prioritera för lagerfinansiering. Rader utan data för valt fält döljs aldrig – de visas som ”data saknas”.</div>
-      <div class="controls">
-        <div class="ctrl-row">
-          <span class="ctrl-label">Filtrera på fält:</span>
+      <div class="card-title">Prioriterade handlare för lagerfinansiering</div>
+      <div class="card-sub">Rangordnade efter hur väl de passar AOTO: hög köpaktivitet, snabb lageromsättning och tecken på kapitalbehov som traditionell kreditbedömning missar.</div>
+      <div id="ranklist"></div>
+      <button class="showmore" id="showmore" style="display:none"></button>
+    </div>
+
+    <details class="adv">
+      <summary>Avancerat · all data (filter, diagram, full tabell)</summary>
+      <div class="adv-body">
+        <div class="ctrl-row" style="margin-bottom:12px">
+          <span class="ctrl-label">Filtrera på:</span>
           <select id="filterField">
             <option value="oms">Omsättning (2025)</option>
             <option value="sol">Soliditet</option>
@@ -130,118 +182,33 @@
           <input type="range" id="filterSlider">
           <span class="slider-val" id="filterVal"></span>
         </div>
-        <div class="chk-row">
-          <input type="checkbox" id="gemOnly">
-          <label for="gemOnly">Visa endast <span class="pill">snabbväxare</span> – låg omsättning 2025 men hög köpaktivitet 2026 (bolag där kreditbedömning på bokslut sannolikt underskattar dem)</label>
+        <label style="font-size:12px;color:#666;display:flex;gap:8px;align-items:center;margin-bottom:12px">
+          <input type="checkbox" id="incUnmatched" style="width:16px;height:16px;accent-color:#2a78d6"> Inkludera 32 omatchade bolag (endast finansiell data)
+        </label>
+        <div class="ctrl-row" style="margin-bottom:6px">
+          <span class="ctrl-label">Diagram X-axel:</span>
+          <select id="scatterX"><option value="sol">Soliditet</option><option value="oms">Omsättning (2025)</option></select>
+          <span class="dist-val" id="scatter-count"></span>
         </div>
-        <div class="ctrl-row" id="gemThreshRow" style="display:none;padding-left:24px">
-          <span class="ctrl-label">Omsättning under:</span>
-          <input type="range" id="gemOms" min="1" max="30" value="5" step="1" style="max-width:140px">
-          <span class="slider-val" id="gemOmsVal" style="min-width:64px"></span>
-          <span class="ctrl-label">Köpta minst:</span>
-          <input type="range" id="gemKop" min="20" max="300" value="75" step="5" style="max-width:140px">
-          <span class="slider-val" id="gemKopVal" style="min-width:64px"></span>
+        <div class="chartbox"><svg id="scatter" viewBox="0 0 720 380" preserveAspectRatio="xMidYMid meet"></svg></div>
+        <div class="legend"><span>Riddermark-andel:</span><span>låg</span><div class="legend-grad"></div><span>hög</span><span style="margin-left:10px">◦ litet / ● stort lager</span></div>
+        <div class="tbl-wrap">
+          <table><thead><tr id="thead-row"></tr></thead><tbody id="tbl-body"></tbody></table>
         </div>
-        <div class="chk-row">
-          <input type="checkbox" id="incUnmatched">
-          <label for="incUnmatched">Inkludera 32 omatchade bolag (finns i finansiell analys men saknar Riddermark-aktivitetsdata)</label>
-        </div>
+        <div class="dist-val" id="tbl-count" style="margin-top:8px"></div>
       </div>
-    </div>
-
-    <div class="metrics">
-      <div class="metric"><div class="metric-label">Handlare i urval</div><div class="metric-value" id="p-antal">–</div><div class="metric-sub" id="p-antal-sub"></div></div>
-      <div class="metric"><div class="metric-label">Bilar köpta av Riddermark</div><div class="metric-value" id="p-bilar">–</div><div class="metric-sub">i urvalet</div></div>
-      <div class="metric"><div class="metric-label">Köpta totalt (all marknad)</div><div class="metric-value" id="p-kopta">–</div><div class="metric-sub">i urvalet</div></div>
-      <div class="metric"><div class="metric-label">Snabbväxare</div><div class="metric-value" id="p-gem">–</div><div class="metric-sub">flaggade i urvalet</div></div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">Positionering</div>
-      <div class="card-sub">Y = köpta bilar totalt 2026 · punktstorlek = aktuellt lagerinnehav · färg = Riddermark-andel (andel av köpen som kommer från Riddermark).</div>
-      <div class="ctrl-row" style="margin-bottom:8px">
-        <span class="ctrl-label">X-axel:</span>
-        <select id="scatterX">
-          <option value="sol">Soliditet</option>
-          <option value="oms">Omsättning (2025)</option>
-        </select>
-        <span class="tbl-count" id="scatter-count"></span>
-      </div>
-      <div class="chartbox"><svg id="scatter" viewBox="0 0 720 380" preserveAspectRatio="xMidYMid meet"></svg></div>
-      <div class="legend">
-        <span>Riddermark-andel:</span>
-        <span>låg</span><div class="legend-grad"></div><span>hög</span>
-        <span style="margin-left:12px">◦ liten / ● stort lagerinnehav</span>
-        <span style="margin-left:12px;color:#b58a2a">▢ gul markering = snabbväxare</span>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="tbl-header">
-        <div class="card-title">Handlare</div>
-        <div class="tbl-count" id="tbl-count"></div>
-      </div>
-      <div class="tbl-wrap">
-        <table>
-          <thead><tr id="thead-row"></tr></thead>
-          <tbody id="tbl-body"></tbody>
-        </table>
-      </div>
-    </div>
+    </details>
   </div>
 
-  <!-- ==================== FLIK 2: BUSINESS CASE ==================== -->
+  <!-- ==================== FLIK 2 ==================== -->
   <div class="view" id="view-business">
-
-    <div class="card" style="background:#1a1a18;border-color:#1a1a18">
-      <div class="card-title" style="color:#fff">Värdet av AOTO som finansieringspartner på Handlarbudet</div>
-      <div class="card-sub" style="color:#aaa;margin-bottom:0">Bättre lagerfinansiering hjälper särskilt de mindre och snabbväxande handlarna att köpa mer – vilket ger Riddermark bättre pris och snabbare rörlighet på bilarna.</div>
-    </div>
-
-    <div class="metrics">
-      <div class="metric"><div class="metric-label">Handlare totalt</div><div class="metric-value" id="b-antal">–</div><div class="metric-sub">med aktivitetsdata</div></div>
-      <div class="metric"><div class="metric-label">Bilar i omlopp 2026</div><div class="metric-value" id="b-kopta">–</div><div class="metric-sub">totalt köpta</div></div>
-      <div class="metric"><div class="metric-label">Aktuellt lagerinnehav</div><div class="metric-value" id="b-innehav">–</div><div class="metric-sub">bilar just nu</div></div>
-      <div class="metric"><div class="metric-label">Svag soliditet</div><div class="metric-value" id="b-svag">–</div><div class="metric-sub" id="b-svag-sub"></div></div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">Kapitalbegränsade handlare</div>
-      <div class="card-sub">Andel handlare med svag soliditet – sannolikt kapitalbegränsade idag och därmed hjälpta av extern lagerfinansiering. Justera tröskeln:</div>
-      <div class="ctrl-row">
-        <span class="ctrl-label">Soliditet under:</span>
-        <input type="range" id="solThresh" min="5" max="40" value="15" step="1">
-        <span class="slider-val" id="solThreshVal">15 %</span>
-      </div>
-    </div>
+    <div id="biz-content"></div>
 
     <div class="card">
       <div class="card-title">Storleksfördelning – långsvansen av mindre handlare</div>
-      <div class="card-sub">Antal handlare per storleksklass (köpta bilar 2026). Etiketten visar klassens andel av den totala köpvolymen.</div>
+      <div class="card-sub">Stödinfo: antal handlare per storleksklass (köpta bilar 2026), med klassens andel av total köpvolym.</div>
       <div id="dist"></div>
       <div class="callout" id="dist-callout"></div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">Simulator – finansieringsvolym <span class="pill">illustrativ</span></div>
-      <div class="card-sub">En förenklad modell för diskussion, inte en prognos. Ange antaget snittpris per bil och hur stor andel av köpen som finansieras via AOTO.</div>
-      <div class="controls">
-        <div class="ctrl-row">
-          <span class="ctrl-label">Snittpris per bil:</span>
-          <input type="range" id="simPris" min="50000" max="500000" value="180000" step="10000">
-          <span class="slider-val" id="simPrisVal"></span>
-        </div>
-        <div class="ctrl-row">
-          <span class="ctrl-label">Andel finansierad via AOTO:</span>
-          <input type="range" id="simAndel" min="5" max="100" value="40" step="5">
-          <span class="slider-val" id="simAndelVal"></span>
-        </div>
-      </div>
-      <div class="sim-out">
-        <div class="sim-card primary"><div class="sim-label">Årligt finansieringsflöde (köpvolym × andel)</div><div class="sim-value" id="simFlow">–</div><div class="sim-sub" id="simFlowSub"></div></div>
-        <div class="sim-card"><div class="sim-label">Utestående lagerfinansiering (ögonblicksbild av lager × andel)</div><div class="sim-value" id="simStock">–</div><div class="sim-sub" id="simStockSub"></div></div>
-      </div>
-      <div class="disclaimer">⚠︎ Illustrativ modell. Snittpris och finansieringsandel är antaganden som du själv sätter. Beräkningen bygger på handlarnas faktiska köpta bilar (2026 hittills) och aktuella lagerinnehav, men säger inget om faktiska marginaler, kreditförluster eller villkor.</div>
     </div>
   </div>
 </div>
@@ -251,280 +218,265 @@
 <script>
 const DATA = [{"namn":"Great Products Motor i Strängnäs AB","orgnr":"556791-9286","stad":"","bilar":158,"oms":155637000,"res":866000,"sol":0.156,"kopta":672,"salda":685,"innehav":173,"m":1},{"namn":"Bolinder Fordon AB","orgnr":"559171-9975","stad":"JÄRFÄLLA","bilar":90,"oms":23897865,"res":1076615,"sol":0.4395340060100587,"kopta":208,"salda":193,"innehav":117,"m":1},{"namn":"Handlarbudet Trading AB","orgnr":"559388-5345","stad":"SOLNA","bilar":60,"oms":632456099,"res":6110723,"sol":0.1047101774215321,"kopta":869,"salda":927,"innehav":227,"m":1},{"namn":"BhappyBil aktiebolag","orgnr":"559462-8090","stad":"VÄSTERÅS","bilar":49,"oms":11595977,"res":-298658,"sol":0.3068155277374189,"kopta":98,"salda":92,"innehav":16,"m":1},{"namn":"W-H FÖRMEDLING AB","orgnr":"559551-8175","stad":"MALMÖ","bilar":48,"oms":null,"res":null,"sol":null,"kopta":110,"salda":89,"innehav":21,"m":1},{"namn":"Perssons Motor AB","orgnr":"559442-5166","stad":"HYLTEBRUK","bilar":38,"oms":32580413,"res":1265115,"sol":0.526290648640463,"kopta":237,"salda":221,"innehav":58,"m":1},{"namn":"Fa Auto AB","orgnr":"559249-5005","stad":"ÖREBRO","bilar":36,"oms":26929213,"res":240637,"sol":0.396429991517193,"kopta":206,"salda":209,"innehav":125,"m":1},{"namn":"Lamis Bil","orgnr":"800807-3010","stad":"","bilar":33,"oms":null,"res":null,"sol":null,"kopta":null,"salda":null,"innehav":null,"m":0},{"namn":"Wises Bilar AB","orgnr":"559210-4672","stad":"UMEÅ","bilar":28,"oms":13488358,"res":401858,"sol":0.8051458213989211,"kopta":118,"salda":111,"innehav":31,"m":1},{"namn":"Nordic Car Store AB","orgnr":"559417-6322","stad":"FARSTA","bilar":27,"oms":2868409,"res":19311,"sol":0.1339831164462672,"kopta":128,"salda":108,"innehav":56,"m":1},{"namn":"BMN CAR TRADING AB","orgnr":"559000-3314","stad":"NACKA","bilar":27,"oms":1670843,"res":17667,"sol":0.3194856560102869,"kopta":75,"salda":53,"innehav":45,"m":1},{"namn":"Mraz Invest AB","orgnr":"559423-6894","stad":"HÄSSELBY","bilar":26,"oms":null,"res":null,"sol":null,"kopta":83,"salda":75,"innehav":64,"m":1},{"namn":"CR Racing Performance AB","orgnr":"559369-3582","stad":"ÖREBRO","bilar":25,"oms":12339435,"res":206998,"sol":0.0522474769817571,"kopta":171,"salda":166,"innehav":44,"m":1},{"namn":"Sunds Bilhandel AB","orgnr":"559466-4681","stad":"SUNDSVALL","bilar":24,"oms":7067830,"res":647919,"sol":0.4814997409749075,"kopta":139,"salda":122,"innehav":44,"m":1},{"namn":"Österbil","orgnr":"640117-0433","stad":"","bilar":24,"oms":null,"res":null,"sol":null,"kopta":null,"salda":null,"innehav":null,"m":0},{"namn":"Fordonsbolaget i Dalarna AB","orgnr":"559072-2749","stad":"LUDVIKA","bilar":24,"oms":38642459,"res":110019,"sol":0.0232121483204018,"kopta":136,"salda":150,"innehav":65,"m":1},{"namn":"Metacars Norrköping AB","orgnr":"559444-3854","stad":"NORRKÖPING","bilar":23,"oms":19871394,"res":873031,"sol":0.3419727939932257,"kopta":110,"salda":92,"innehav":37,"m":1},{"namn":"BSE Auto AB","orgnr":"559333-5713","stad":"ÅKERSBERGA","bilar":23,"oms":5402751,"res":271365,"sol":0.3944200195299316,"kopta":96,"salda":70,"innehav":47,"m":1},{"namn":"Fordonskedjan Västerås AB","orgnr":"559451-5727","stad":"VÄSTERÅS","bilar":21,"oms":7294679,"res":39452,"sol":0.3925003816474365,"kopta":67,"salda":70,"innehav":29,"m":1},{"namn":"Elite Nordic Motors AB","orgnr":"559214-4462","stad":"TRELLEBORG","bilar":20,"oms":28783053,"res":506526,"sol":0.3358026005281657,"kopta":315,"salda":310,"innehav":329,"m":1},{"namn":"JJ Bil AB","orgnr":"559470-0915","stad":"KATRINEHOLM","bilar":20,"oms":12180820,"res":251403,"sol":0.3415227572738287,"kopta":127,"salda":106,"innehav":41,"m":1},{"namn":"Dmj AB","orgnr":"559512-4388","stad":"HUSKVARNA","bilar":19,"oms":null,"res":null,"sol":null,"kopta":36,"salda":24,"innehav":20,"m":1},{"namn":"Alexander Cars AB","orgnr":"559373-4899","stad":"KARLSTAD","bilar":19,"oms":5795580,"res":269631,"sol":0.3487117995840329,"kopta":37,"salda":24,"innehav":16,"m":1},{"namn":"Åhlin Bil Kommanditbolag","orgnr":"969749-3881","stad":"BROMMA","bilar":19,"oms":null,"res":null,"sol":null,"kopta":65,"salda":67,"innehav":6,"m":1},{"namn":"Nordic Auto Kalmar AB","orgnr":"559528-8167","stad":"KALMAR","bilar":17,"oms":null,"res":null,"sol":null,"kopta":84,"salda":71,"innehav":23,"m":1},{"namn":"MT Bilar","orgnr":"820622-9794","stad":"","bilar":16,"oms":null,"res":null,"sol":null,"kopta":null,"salda":null,"innehav":null,"m":0},{"namn":"Dynamic Management AB","orgnr":"556956-6283","stad":"NORRKÖPING","bilar":16,"oms":6499301,"res":-69837,"sol":0.3888084298049314,"kopta":31,"salda":27,"innehav":20,"m":1},{"namn":"Galjonbil i Stockholm AB","orgnr":"559099-1237","stad":"STOCKHOLM","bilar":16,"oms":-2,"res":-82291,"sol":1,"kopta":27,"salda":37,"innehav":5,"m":1},{"namn":"AZ Bilförsäljning","orgnr":"670725-4295","stad":"","bilar":15,"oms":null,"res":null,"sol":null,"kopta":null,"salda":null,"innehav":null,"m":0},{"namn":"DTs Bilboost AB","orgnr":"559199-5252","stad":"SUNDSBRUK","bilar":14,"oms":9843304,"res":307323,"sol":0.1421239678936948,"kopta":66,"salda":51,"innehav":70,"m":1},{"namn":"Bilexperten i Boxholm AB","orgnr":"559195-1198","stad":"BOXHOLM","bilar":14,"oms":20646709,"res":51269,"sol":0.3682985564107296,"kopta":171,"salda":162,"innehav":54,"m":1},{"namn":"Bilcity Stockholm AB","orgnr":"556038-3860","stad":"TÄBY","bilar":14,"oms":null,"res":null,"sol":null,"kopta":73,"salda":77,"innehav":105,"m":1},{"namn":"Nystedt Rental Trading AB","orgnr":"556838-0546","stad":"ESKILSTUNA","bilar":13,"oms":1702524,"res":-1032120,"sol":0.0727791333945163,"kopta":16,"salda":8,"innehav":10,"m":1},{"namn":"Rena Cars AB","orgnr":"559123-5170","stad":"KRISTINEHAMN","bilar":13,"oms":2793988,"res":2397,"sol":0.2359625723342403,"kopta":83,"salda":126,"innehav":57,"m":1},{"namn":"Mali Bil AB","orgnr":"559238-3904","stad":"RYDEBÄCK","bilar":13,"oms":24992057,"res":409407,"sol":0.4957090549338588,"kopta":77,"salda":69,"innehav":33,"m":1},{"namn":"Motorhuset Jönköping AB","orgnr":"559339-5006","stad":"JÖNKÖPING","bilar":13,"oms":6835805,"res":145703,"sol":0.3182300385471385,"kopta":54,"salda":63,"innehav":10,"m":1},{"namn":"HOUSE OF CARS ÖREBRO AB","orgnr":"559244-0621","stad":"ÖREBRO","bilar":13,"oms":4070797,"res":371985,"sol":0.8909425140792689,"kopta":91,"salda":82,"innehav":46,"m":1},{"namn":"FordonsTorget i Örebro AB","orgnr":"559515-1274","stad":"ÖREBRO","bilar":13,"oms":4000,"res":953,"sol":0.9369990613040652,"kopta":61,"salda":41,"innehav":20,"m":1},{"namn":"Aylas Bilar","orgnr":"990110-0082","stad":"","bilar":13,"oms":null,"res":null,"sol":null,"kopta":null,"salda":null,"innehav":null,"m":0},{"namn":"Carclusive AB","orgnr":"559255-9347","stad":"NORSBORG","bilar":12,"oms":43955520,"res":-28723,"sol":0.1254246033223581,"kopta":107,"salda":111,"innehav":74,"m":1},{"namn":"Bil Kanonen","orgnr":"751115-6072","stad":"","bilar":12,"oms":null,"res":null,"sol":null,"kopta":null,"salda":null,"innehav":null,"m":0},{"namn":"Bilevo AB","orgnr":"559507-5119","stad":"TULLINGE","bilar":12,"oms":13644564,"res":666262,"sol":0.6836970463151048,"kopta":99,"salda":101,"innehav":17,"m":1},{"namn":"LM Bil & Maskin ","orgnr":"940412-8697","stad":"","bilar":12,"oms":null,"res":null,"sol":null,"kopta":null,"salda":null,"innehav":null,"m":0},{"namn":"Bilteamet Syd AB","orgnr":"556688-7021","stad":"ARLÖV","bilar":12,"oms":2174033,"res":-23594,"sol":0.9048654998749088,"kopta":29,"salda":15,"innehav":17,"m":1},{"namn":"Linnarhult lastbiltvätt AB","orgnr":"559099-1914","stad":"GUNNILSE","bilar":12,"oms":1392304,"res":-128677,"sol":0.231268665282088,"kopta":30,"salda":14,"innehav":20,"m":1},{"namn":"Fordonsmagasinet i Jönköping AB","orgnr":"559391-2735","stad":"TABERG","bilar":12,"oms":3558892,"res":123154,"sol":0.5700712164937011,"kopta":76,"salda":66,"innehav":17,"m":1},{"namn":"INSWEBILAR AB","orgnr":"559443-1156","stad":"GRÖDINGE","bilar":12,"oms":1177408,"res":297657,"sol":0.5693221259114856,"kopta":33,"salda":31,"innehav":19,"m":1},{"namn":"HOFFNER GROUP AB","orgnr":"559515-7909","stad":"NORRKÖPING","bilar":11,"oms":12119092,"res":179984,"sol":0.0882842025699168,"kopta":143,"salda":137,"innehav":26,"m":1},{"namn":"BILCITY","orgnr":"780606-1714","stad":"","bilar":11,"oms":null,"res":null,"sol":null,"kopta":null,"salda":null,"innehav":null,"m":0},{"namn":"Högsbo Bil och Rekond AB","orgnr":"559270-8555","stad":"VÄSTRA FRÖLUNDA","bilar":11,"oms":14552625,"res":-373052,"sol":0.0305538866978431,"kopta":66,"salda":68,"innehav":59,"m":1},{"namn":"AutoDeal Sweden AB","orgnr":"559175-2323","stad":"NORRKÖPING","bilar":11,"oms":5127616,"res":-65571,"sol":0.1105299519647524,"kopta":38,"salda":25,"innehav":23,"m":1},{"namn":"Point Of Cars Hässleholm AB","orgnr":"559484-6577","stad":"HÄSSLEHOLM","bilar":10,"oms":8064937,"res":-93983,"sol":0.0411957211807925,"kopta":101,"salda":96,"innehav":22,"m":1},{"namn":"Mia Bilcenter i Huddinge AB","orgnr":"556786-5299","stad":"JORDBRO","bilar":10,"oms":28668358,"res":-296254,"sol":0.5548686383208449,"kopta":130,"salda":123,"innehav":47,"m":1},{"namn":"L.Thorsén Transport Solutions AB","orgnr":"559533-6248","stad":"ÅKERS STYCKEBRUK","bilar":10,"oms":758959,"res":92791,"sol":0.2654935672620067,"kopta":45,"salda":40,"innehav":11,"m":1},{"namn":"Eriksson Bilcenter AB","orgnr":"559192-9202","stad":"GÖTEBORG","bilar":10,"oms":53327056,"res":159402,"sol":0.0529020163692631,"kopta":264,"salda":230,"innehav":172,"m":1},{"namn":"Bilcentrum i Lund AB","orgnr":"559222-9768","stad":"LUND","bilar":10,"oms":11142181,"res":-75806,"sol":0.0289653677018822,"kopta":98,"salda":110,"innehav":29,"m":1},{"namn":"Fordons bolaget Hyltebruk AB","orgnr":"559497-4387","stad":"HYLTEBRUK","bilar":10,"oms":null,"res":null,"sol":null,"kopta":59,"salda":57,"innehav":30,"m":1},{"namn":"Drive On AB","orgnr":"559508-2479","stad":"TIMRÅ","bilar":10,"oms":null,"res":null,"sol":null,"kopta":78,"salda":68,"innehav":21,"m":1},{"namn":"Four Wheel Drive Norden AB","orgnr":"559350-9739","stad":"ÅKERSBERGA","bilar":10,"oms":2191681,"res":213587,"sol":0.4273352678031677,"kopta":17,"salda":13,"innehav":14,"m":1},{"namn":"110 Bilar AB","orgnr":"559521-9485","stad":"HÄSSLEHOLM","bilar":10,"oms":277000,"res":-5182,"sol":0.1074105589489829,"kopta":22,"salda":10,"innehav":14,"m":1},{"namn":"AutoWave Göteborg AB","orgnr":"559287-4118","stad":"HISINGS BACKA","bilar":9,"oms":0,"res":-7881,"sol":0.214495741333478,"kopta":31,"salda":23,"innehav":8,"m":1},{"namn":"Olssonsbilar","orgnr":"920719-5109","stad":"","bilar":9,"oms":null,"res":null,"sol":null,"kopta":null,"salda":null,"innehav":null,"m":0},{"namn":"Bilux AB","orgnr":"559224-7067","stad":"FALKENBERG","bilar":9,"oms":5166639,"res":-7675,"sol":0.8807089976387378,"kopta":40,"salda":39,"innehav":24,"m":1},{"namn":"Kümmerling Bil AB","orgnr":"556579-9821","stad":"HANDEN","bilar":9,"oms":null,"res":null,"sol":null,"kopta":357,"salda":300,"innehav":264,"m":1},{"namn":"Harvey Sales Solution AB","orgnr":"559506-7520","stad":"HUDDINGE","bilar":9,"oms":null,"res":null,"sol":null,"kopta":3,"salda":3,"innehav":0,"m":1},{"namn":"Småland Bil AB","orgnr":"559363-7241","stad":"NYBRO","bilar":8,"oms":2170023,"res":235201,"sol":0.2639120918756302,"kopta":19,"salda":25,"innehav":23,"m":1},{"namn":"GT Car4You AB","orgnr":"559313-2987","stad":"HALLSBERG","bilar":8,"oms":5362039,"res":406493,"sol":0.6552630280429563,"kopta":56,"salda":40,"innehav":33,"m":1},{"namn":"AMD Bilcenter AB","orgnr":"556796-1122","stad":"SKOGÅS","bilar":8,"oms":11470814,"res":722021,"sol":0.565404668062941,"kopta":48,"salda":104,"innehav":46,"m":1},{"namn":"Katrineholms begagnade bilar Handelsbolag","orgnr":"969766-8862","stad":"KATRINEHOLM","bilar":8,"oms":null,"res":null,"sol":null,"kopta":33,"salda":30,"innehav":39,"m":1},{"namn":"Nicco Macchina AB","orgnr":"559397-3398","stad":"PARTILLE","bilar":8,"oms":16197715,"res":137869,"sol":0.0345432966811589,"kopta":68,"salda":70,"innehav":38,"m":1},{"namn":"KR CARS AB","orgnr":"559436-2864","stad":"TABERG","bilar":8,"oms":5954033,"res":180985,"sol":0.2093087366652136,"kopta":35,"salda":39,"innehav":9,"m":1},{"namn":"MH BILCITY I JÖNKÖPING AB","orgnr":"556807-6409","stad":"BANKERYD","bilar":8,"oms":16696089,"res":-546608,"sol":0.5929996619949306,"kopta":64,"salda":56,"innehav":55,"m":1},{"namn":"Kihlsten Martinkus AB","orgnr":"556922-2432","stad":"HÄSSELBY","bilar":8,"oms":63720,"res":-21645,"sol":0.1426964185261579,"kopta":15,"salda":16,"innehav":22,"m":1},{"namn":"Jasses Bil","orgnr":"741212-4286","stad":"","bilar":8,"oms":null,"res":null,"sol":null,"kopta":null,"salda":null,"innehav":null,"m":0},{"namn":"Butängens Autocenter AB","orgnr":"559421-0238","stad":"NORRKÖPING","bilar":7,"oms":127099,"res":-22068,"sol":0.4183369583403045,"kopta":20,"salda":13,"innehav":7,"m":1},{"namn":"Kristianstads AutoService AB","orgnr":"559534-0588","stad":"KRISTIANSTAD","bilar":7,"oms":null,"res":null,"sol":null,"kopta":17,"salda":8,"innehav":13,"m":1},{"namn":"EE Autocenter AB","orgnr":"559518-4705","stad":"SURTE","bilar":7,"oms":735919,"res":153079,"sol":0.3705681478497069,"kopta":36,"salda":31,"innehav":12,"m":1},{"namn":"Lindö Bil AB","orgnr":"559201-3766","stad":"NORRKÖPING","bilar":7,"oms":708220,"res":42665,"sol":0.8515315482521576,"kopta":26,"salda":22,"innehav":18,"m":1},{"namn":"Töreboda Bilcenter","orgnr":"940717-7576","stad":"","bilar":7,"oms":null,"res":null,"sol":null,"kopta":null,"salda":null,"innehav":null,"m":0},{"namn":"LR Bil","orgnr":"920805-4115","stad":"","bilar":7,"oms":null,"res":null,"sol":null,"kopta":null,"salda":null,"innehav":null,"m":0},{"namn":"Karlstad Direkt Service AB","orgnr":"556865-5657","stad":"KARLSTAD","bilar":7,"oms":99970000,"res":30799000,"sol":0.6467692092714538,"kopta":345,"salda":345,"innehav":195,"m":1},{"namn":"Bilpunkten Kronoberg AB","orgnr":"559198-0601","stad":"VÄXJÖ","bilar":7,"oms":10082924,"res":-152029,"sol":0.3794510352203438,"kopta":73,"salda":66,"innehav":52,"m":1},{"namn":"Björröds Bil & MC AB","orgnr":"559153-1388","stad":"LANDVETTER","bilar":7,"oms":4731189,"res":-673994,"sol":0.1550503545310131,"kopta":60,"salda":45,"innehav":25,"m":1},{"namn":"FMD BIL AB","orgnr":"559399-6274","stad":"JÄRFÄLLA","bilar":6,"oms":15185079,"res":569993,"sol":0.3726013049542304,"kopta":118,"salda":103,"innehav":42,"m":1},{"namn":"SAM Bilar AB","orgnr":"559196-4415","stad":"KARLSTAD","bilar":6,"oms":null,"res":null,"sol":null,"kopta":82,"salda":78,"innehav":26,"m":1},{"namn":"Ronneby Bilcenter AB","orgnr":"559431-1606","stad":"RONNEBY","bilar":6,"oms":7898515,"res":252178,"sol":0.2171505973034448,"kopta":85,"salda":74,"innehav":26,"m":1},{"namn":"Leons Bilar AB","orgnr":"559293-7923","stad":"ÄNGELHOLM","bilar":6,"oms":1627084,"res":-62025,"sol":0.0311040685799764,"kopta":15,"salda":16,"innehav":13,"m":1},{"namn":"DA Trading AB","orgnr":"559237-8334","stad":"FALUN","bilar":6,"oms":4565426,"res":-558485,"sol":-1.61274304734535,"kopta":16,"salda":18,"innehav":6,"m":1},{"namn":"Lidköpings Fordon & Rekond AB","orgnr":"559303-3094","stad":"LIDKÖPING","bilar":6,"oms":null,"res":null,"sol":null,"kopta":25,"salda":23,"innehav":12,"m":1},{"namn":"Carhouse Västerås AB","orgnr":"559047-0596","stad":"VÄSTERÅS","bilar":6,"oms":7956994,"res":162980,"sol":0.2302187137610707,"kopta":70,"salda":65,"innehav":33,"m":1},{"namn":"Daxbil","orgnr":"761116-3796","stad":"","bilar":6,"oms":null,"res":null,"sol":null,"kopta":null,"salda":null,"innehav":null,"m":0},{"namn":"Ezzatssons Bil AB","orgnr":"559128-9896","stad":"VÅRBY","bilar":6,"oms":null,"res":null,"sol":null,"kopta":11,"salda":10,"innehav":7,"m":1},{"namn":"L Autohandel AB","orgnr":"559260-1727","stad":"STAFFANSTORP","bilar":6,"oms":19588666,"res":1292,"sol":0.0127098843161525,"kopta":203,"salda":193,"innehav":71,"m":1},{"namn":"Premia Bil AB","orgnr":"559465-1571","stad":"VÄLLINGBY","bilar":5,"oms":8061892,"res":253762,"sol":0.1677633592458835,"kopta":38,"salda":42,"innehav":18,"m":1},{"namn":"Örebro Bilpartner AB","orgnr":"559289-6244","stad":"ÖREBRO","bilar":5,"oms":305188,"res":520761,"sol":0.4932123598971025,"kopta":76,"salda":57,"innehav":30,"m":1},{"namn":"Carbob AB","orgnr":"559414-3397","stad":"GÄVLE","bilar":5,"oms":1908217,"res":9112,"sol":-0.3233428878538158,"kopta":50,"salda":46,"innehav":9,"m":1},{"namn":"Bilhuset Halland AB","orgnr":"559399-4667","stad":"FALKENBERG","bilar":5,"oms":null,"res":null,"sol":null,"kopta":79,"salda":72,"innehav":74,"m":1},{"namn":"City Automobile Försäljnings i Örebro AB","orgnr":"556624-8992","stad":"ÖREBRO","bilar":5,"oms":2250343,"res":35941,"sol":0.9793893682408926,"kopta":18,"salda":10,"innehav":12,"m":1},{"namn":"Däckindustri i Sverige AB","orgnr":"559137-0548","stad":"UPPLANDS VÄSBY","bilar":5,"oms":9014464,"res":731131,"sol":0.7231857525958174,"kopta":15,"salda":13,"innehav":4,"m":1},{"namn":"Zenas Bil","orgnr":"670520-4557","stad":"","bilar":5,"oms":null,"res":null,"sol":null,"kopta":null,"salda":null,"innehav":null,"m":0},{"namn":"Emil Olsson AB","orgnr":"559477-0413","stad":"ALINGSÅS","bilar":5,"oms":694700,"res":-38076,"sol":0.2579340514217325,"kopta":7,"salda":5,"innehav":4,"m":1},{"namn":"LEADING AUTOCENTER SVERIGE AB","orgnr":"559437-9447","stad":"LANDSKRONA","bilar":5,"oms":20340087,"res":1456122,"sol":0.7844668442335151,"kopta":207,"salda":189,"innehav":95,"m":1},{"namn":"PIXID AB","orgnr":"559221-8670","stad":"SUNDSVALL","bilar":5,"oms":12070373,"res":-136177,"sol":0.0237027881024712,"kopta":93,"salda":90,"innehav":26,"m":1},{"namn":"MBK Bilar AB","orgnr":"559419-2246","stad":"SURTE","bilar":5,"oms":null,"res":null,"sol":null,"kopta":72,"salda":74,"innehav":13,"m":1},{"namn":"First Auto AB","orgnr":"559390-3486","stad":"SUNDBYBERG","bilar":5,"oms":855596,"res":148371,"sol":0.0812489959764638,"kopta":67,"salda":67,"innehav":41,"m":1},{"namn":"NGS Consulting AB","orgnr":"559402-2310","stad":"MARIESTAD","bilar":5,"oms":9810605,"res":-366393,"sol":0.9219608294925856,"kopta":43,"salda":36,"innehav":14,"m":1},{"namn":"Fordonskompaniet Sverige AB","orgnr":"559154-5578","stad":"VÄSTERÅS","bilar":5,"oms":1657649,"res":30997,"sol":0.0837901967093807,"kopta":20,"salda":20,"innehav":12,"m":1},{"namn":"Uppsala Bilhörnan","orgnr":"551119-2170","stad":"","bilar":5,"oms":null,"res":null,"sol":null,"kopta":null,"salda":null,"innehav":null,"m":0},{"namn":"Johan Mörk Bil och Lack i Enköping AB","orgnr":"556582-4207","stad":"ENKÖPING","bilar":5,"oms":24174138,"res":496923,"sol":0.5234460209381289,"kopta":48,"salda":51,"innehav":27,"m":1},{"namn":"KP Bilparken AB","orgnr":"559204-9141","stad":"NORRKÖPING","bilar":5,"oms":16456953,"res":109678,"sol":0.588338622437469,"kopta":112,"salda":106,"innehav":79,"m":1},{"namn":"Linköpings bilvaruhus AB","orgnr":"559266-1465","stad":"LINKÖPING","bilar":5,"oms":null,"res":null,"sol":null,"kopta":34,"salda":45,"innehav":73,"m":1},{"namn":"VH Bilcenter AB","orgnr":"559520-5831","stad":"VÄSTERHANINGE","bilar":4,"oms":3910916,"res":107207,"sol":0.110997675217177,"kopta":43,"salda":43,"innehav":17,"m":1},{"namn":"Ksd Bilar AB","orgnr":"559494-9389","stad":"KRISTIANSTAD","bilar":4,"oms":null,"res":null,"sol":null,"kopta":32,"salda":24,"innehav":14,"m":1},{"namn":"ROSA BILAR AB","orgnr":"559228-6404","stad":"HALLSTAHAMMAR","bilar":4,"oms":4778050,"res":239200,"sol":0.3389850631962268,"kopta":69,"salda":64,"innehav":33,"m":1},{"namn":"Marcus Simons Invest AB","orgnr":"559434-0621","stad":"HÄGERSTEN","bilar":4,"oms":593487,"res":20273,"sol":0.188248537384752,"kopta":16,"salda":9,"innehav":8,"m":1},{"namn":"Auto Norrort AB","orgnr":"559062-8037","stad":"SPÅNGA","bilar":4,"oms":850540,"res":50562,"sol":0.1983667235807421,"kopta":41,"salda":28,"innehav":18,"m":1},{"namn":"Auto Flex Cars AB","orgnr":"559334-0150","stad":"PARTILLE","bilar":4,"oms":19753765,"res":347778,"sol":0.5240927447277358,"kopta":52,"salda":59,"innehav":18,"m":1},{"namn":"AMH Auto AB","orgnr":"559547-3405","stad":"TUMBA","bilar":4,"oms":null,"res":null,"sol":null,"kopta":7,"salda":5,"innehav":4,"m":1},{"namn":"Asplund Solutions AB","orgnr":"559528-5106","stad":"HUDDINGE","bilar":4,"oms":null,"res":null,"sol":null,"kopta":4,"salda":3,"innehav":0,"m":1},{"namn":"Storsjöbilar AB","orgnr":"556907-9931","stad":"ÖSTERSUND","bilar":4,"oms":29885469,"res":568521,"sol":0.2390719901165268,"kopta":168,"salda":175,"innehav":76,"m":1},{"namn":"Motala Bilcenter AB","orgnr":"559469-7368","stad":"MOTALA","bilar":4,"oms":36200,"res":150,"sol":0.2880903561323726,"kopta":50,"salda":46,"innehav":19,"m":1},{"namn":"Auto Deluxe Göteborg AB","orgnr":"559076-8247","stad":"HISINGS BACKA","bilar":4,"oms":1097833,"res":19306,"sol":0.0384657530731817,"kopta":38,"salda":35,"innehav":13,"m":1},{"namn":"Muhanad Abdul Karim","orgnr":"880626-7178","stad":"","bilar":4,"oms":null,"res":null,"sol":null,"kopta":null,"salda":null,"innehav":null,"m":0},{"namn":"V&D Motor Sweden AB","orgnr":"559107-1062","stad":"NORRKÖPING","bilar":4,"oms":123076935,"res":788531,"sol":0.4820319629234779,"kopta":220,"salda":219,"innehav":40,"m":1},{"namn":"E.P Bilar AB","orgnr":"559442-4854","stad":"ROSERSBERG","bilar":4,"oms":281599,"res":45679,"sol":0.4031628046194906,"kopta":66,"salda":66,"innehav":15,"m":1},{"namn":"Väsby Bildepå Kommanditbolag","orgnr":"969778-2515","stad":"UPPLANDS VÄSBY","bilar":4,"oms":null,"res":null,"sol":null,"kopta":47,"salda":49,"innehav":86,"m":1},{"namn":"CS AUTOGROUP AB","orgnr":"559285-0464","stad":"SÖDERTÄLJE","bilar":4,"oms":237435,"res":59925,"sol":-0.1126449388906299,"kopta":5,"salda":4,"innehav":8,"m":1},{"namn":"M2M Gävle Motors AB","orgnr":"559548-7934","stad":"GÄVLE","bilar":4,"oms":null,"res":null,"sol":null,"kopta":17,"salda":13,"innehav":6,"m":1},{"namn":"LA Bilcenter Norrköping AB","orgnr":"559264-8082","stad":"NORRKÖPING","bilar":4,"oms":2110940,"res":-213086,"sol":0.0512450066266104,"kopta":23,"salda":24,"innehav":8,"m":1},{"namn":"A&M Auto","orgnr":"030606-9436","stad":"","bilar":4,"oms":null,"res":null,"sol":null,"kopta":null,"salda":null,"innehav":null,"m":0},{"namn":"Premiumcars RN AB","orgnr":"559485-6782","stad":"JÖRLANDA","bilar":3,"oms":628719,"res":152061,"sol":0.6696988150036499,"kopta":31,"salda":34,"innehav":21,"m":1},{"namn":"Bilmagasinet Stockholm AB","orgnr":"559193-8302","stad":"VALLENTUNA","bilar":3,"oms":4233618,"res":62865,"sol":0.5383419469363705,"kopta":37,"salda":34,"innehav":29,"m":1},{"namn":"Davos CAR AB","orgnr":"559006-8630","stad":"SPÅNGA","bilar":3,"oms":null,"res":null,"sol":null,"kopta":26,"salda":28,"innehav":27,"m":1},{"namn":"Autowelt Nordic AB","orgnr":"559329-6659","stad":"LUND","bilar":3,"oms":null,"res":null,"sol":null,"kopta":81,"salda":79,"innehav":22,"m":1},{"namn":"Number One Cars I Sverige AB","orgnr":"559266-3982","stad":"LAHOLM","bilar":3,"oms":11452044,"res":7405,"sol":0.0379988862335103,"kopta":64,"salda":70,"innehav":26,"m":1},{"namn":"Jem Bilar","orgnr":"990608-0370","stad":"","bilar":3,"oms":null,"res":null,"sol":null,"kopta":null,"salda":null,"innehav":null,"m":0},{"namn":"Bilslottet AB","orgnr":"559518-3244","stad":"JÄRFÄLLA","bilar":3,"oms":null,"res":null,"sol":null,"kopta":70,"salda":69,"innehav":37,"m":1},{"namn":"Biloutleten i Motala","orgnr":"610905-7130","stad":"","bilar":3,"oms":null,"res":null,"sol":null,"kopta":null,"salda":null,"innehav":null,"m":0},{"namn":"Tonys X Bil AB","orgnr":"556900-6413","stad":"SVANEHOLM","bilar":3,"oms":12774741,"res":1558,"sol":0.3737906614260916,"kopta":101,"salda":99,"innehav":110,"m":1},{"namn":"Car Markt i Örebro AB","orgnr":"559072-5262","stad":"ÖREBRO","bilar":3,"oms":3189786,"res":178317,"sol":-0.0619740828004039,"kopta":29,"salda":32,"innehav":22,"m":1},{"namn":"Alux Bil AB","orgnr":"559221-4794","stad":"UDDEVALLA","bilar":3,"oms":14746923,"res":-87592,"sol":0.2280306680927251,"kopta":42,"salda":44,"innehav":10,"m":1},{"namn":"KZR AB","orgnr":"559513-6598","stad":"MARIESTAD","bilar":3,"oms":null,"res":null,"sol":null,"kopta":8,"salda":16,"innehav":7,"m":1},{"namn":"Drive 1 Motors AB","orgnr":"559062-8730","stad":"STOCKHOLM","bilar":3,"oms":0,"res":0,"sol":1,"kopta":65,"salda":59,"innehav":18,"m":1},{"namn":"Larsfrids Bil","orgnr":"060226-2198","stad":"","bilar":3,"oms":null,"res":null,"sol":null,"kopta":null,"salda":null,"innehav":null,"m":0},{"namn":"Emins åkeri AB","orgnr":"559118-2034","stad":"NORRKÖPING","bilar":3,"oms":2689992,"res":26395,"sol":0.6862798298402158,"kopta":19,"salda":18,"innehav":13,"m":1},{"namn":"J.Linds fordonscenter Handelsbolag","orgnr":"969790-5660","stad":"SÖDERTÄLJE","bilar":3,"oms":null,"res":null,"sol":null,"kopta":49,"salda":43,"innehav":26,"m":1},{"namn":"Roadlink AB","orgnr":"559488-2606","stad":"TUMBA","bilar":3,"oms":null,"res":null,"sol":null,"kopta":47,"salda":45,"innehav":13,"m":1},{"namn":"Cartrader i Växjö AB","orgnr":"559220-4654","stad":"VÄXJÖ","bilar":3,"oms":11425547,"res":-341979,"sol":0.1214138496793176,"kopta":11,"salda":17,"innehav":42,"m":1},{"namn":"Swest Auto AB","orgnr":"559154-2831","stad":"ESKILSTUNA","bilar":3,"oms":null,"res":null,"sol":null,"kopta":41,"salda":32,"innehav":56,"m":1},{"namn":"Challenge Car Center AB","orgnr":"559283-8394","stad":"HÄGERSTEN","bilar":3,"oms":8430393,"res":-314937,"sol":0.2353783547054899,"kopta":87,"salda":85,"innehav":33,"m":1},{"namn":"TR BIL AB","orgnr":"559380-3827","stad":"NACKA","bilar":3,"oms":127727,"res":-2314,"sol":0.1630084770831396,"kopta":14,"salda":14,"innehav":15,"m":1},{"namn":"Ace Of Cars Sweden AB","orgnr":"559341-4203","stad":"JÄRFÄLLA","bilar":3,"oms":2534946,"res":-54336,"sol":0.315332730168979,"kopta":10,"salda":15,"innehav":12,"m":1},{"namn":"Upplands Fordonscenter AB","orgnr":"559547-9238","stad":"KNIVSTA","bilar":3,"oms":null,"res":null,"sol":null,"kopta":23,"salda":17,"innehav":7,"m":1},{"namn":"Adam Bilcenter AB","orgnr":"559513-5053","stad":"VELLINGE","bilar":3,"oms":7184988,"res":16844,"sol":0.9268696346521004,"kopta":110,"salda":99,"innehav":32,"m":1},{"namn":"Norrorts Motorbolag AB","orgnr":"559311-2559","stad":"UPPSALA","bilar":3,"oms":1368947,"res":41637,"sol":0.5086795817475018,"kopta":24,"salda":21,"innehav":16,"m":1},{"namn":"Fordonshallen Eskilstuna AB","orgnr":"559331-0633","stad":"ESKILSTUNA","bilar":3,"oms":33844214,"res":297561,"sol":0.078723367990455,"kopta":102,"salda":107,"innehav":28,"m":1},{"namn":"WebBlixt Solutions AB","orgnr":"559187-9902","stad":"ANDERSTORP","bilar":2,"oms":1472974,"res":702685,"sol":0.7913025472132998,"kopta":6,"salda":11,"innehav":5,"m":1},{"namn":"Swedish Academic Center AB","orgnr":"559124-9171","stad":"NYBRO","bilar":2,"oms":1170127,"res":15406,"sol":0.1721690787430178,"kopta":2,"salda":2,"innehav":0,"m":1},{"namn":"Prime Auto Collection i Halmstad AB","orgnr":"559490-0218","stad":"HALMSTAD","bilar":2,"oms":22204201,"res":148222,"sol":0.6767960628072269,"kopta":62,"salda":64,"innehav":24,"m":1},{"namn":"AVAB AUTO AB","orgnr":"559072-2665","stad":"VÄXJÖ","bilar":2,"oms":6220529,"res":51797,"sol":0.2133457743093844,"kopta":38,"salda":49,"innehav":39,"m":1},{"namn":"G4 Cars AB","orgnr":"559579-9767","stad":"ÖREBRO","bilar":2,"oms":null,"res":null,"sol":null,"kopta":14,"salda":4,"innehav":10,"m":1},{"namn":"Ö & M Cars Handelsbolaget","orgnr":"969796-7330","stad":"KATRINEHOLM","bilar":2,"oms":null,"res":null,"sol":null,"kopta":62,"salda":64,"innehav":8,"m":1},{"namn":"Arthurssons Bil Aktiebolag","orgnr":"556112-1780","stad":"KUMLA","bilar":2,"oms":7906716,"res":-763359,"sol":0.9156285152056226,"kopta":46,"salda":42,"innehav":41,"m":1},{"namn":"3 Bilar Stockholm AB","orgnr":"559476-3194","stad":"SÖDERTÄLJE","bilar":2,"oms":null,"res":null,"sol":null,"kopta":70,"salda":81,"innehav":11,"m":1},{"namn":"Danielsson bil AB","orgnr":"559290-3966","stad":"ÖREBRO","bilar":2,"oms":null,"res":null,"sol":null,"kopta":64,"salda":103,"innehav":115,"m":1},{"namn":"A Tornberg AB","orgnr":"559515-3692","stad":"BANKERYD","bilar":2,"oms":5032251,"res":223439,"sol":0.3175040736125755,"kopta":47,"salda":42,"innehav":11,"m":1},{"namn":"BilTeam i Karlskrona AB","orgnr":"559264-9627","stad":"KARLSKRONA","bilar":2,"oms":28868519,"res":821732,"sol":0.1571111822546042,"kopta":60,"salda":73,"innehav":40,"m":1},{"namn":"M A Motor Invest AB","orgnr":"559544-8191","stad":"NORRKÖPING","bilar":2,"oms":null,"res":null,"sol":null,"kopta":23,"salda":17,"innehav":6,"m":1},{"namn":"VK Performance AB","orgnr":"559509-5737","stad":"KNIVSTA","bilar":2,"oms":null,"res":-8407,"sol":0.8057592385762152,"kopta":42,"salda":46,"innehav":5,"m":1},{"namn":"BILVALET MALMÖ AB","orgnr":"556699-9602","stad":"OXIE","bilar":2,"oms":10457157,"res":-559454,"sol":-1.679893339977816,"kopta":10,"salda":2,"innehav":10,"m":1},{"namn":"Nour Bilcenter AB","orgnr":"556958-8188","stad":"NORSBORG","bilar":2,"oms":9112090,"res":452142,"sol":0.5557998372809463,"kopta":25,"salda":23,"innehav":15,"m":1},{"namn":"Dixons Bil AB","orgnr":"556851-1900","stad":"VÄXJÖ","bilar":2,"oms":15920916,"res":-283148,"sol":0.6766039573868182,"kopta":52,"salda":58,"innehav":14,"m":1},{"namn":"Premium Import Lammhult AB","orgnr":"559288-8985","stad":"VÄXJÖ","bilar":2,"oms":10172606,"res":54233,"sol":0.4781823490156823,"kopta":2,"salda":2,"innehav":18,"m":1},{"namn":"Fordoncenter Halmstad AB","orgnr":"559431-7116","stad":"HALMSTAD","bilar":2,"oms":26153468,"res":578381,"sol":0.2535610124204331,"kopta":91,"salda":85,"innehav":34,"m":1},{"namn":"Bms Bilar","orgnr":"970314-9170","stad":"","bilar":2,"oms":null,"res":null,"sol":null,"kopta":null,"salda":null,"innehav":null,"m":0},{"namn":"MBA Bil AB","orgnr":"559458-3915","stad":"TÄBY","bilar":2,"oms":3117893,"res":271,"sol":0.0240601068512644,"kopta":14,"salda":6,"innehav":37,"m":1},{"namn":"Auto trade stockholm AB","orgnr":"559271-9883","stad":"JÄRFÄLLA","bilar":2,"oms":null,"res":null,"sol":null,"kopta":30,"salda":17,"innehav":31,"m":1},{"namn":"Mobility House Syd AB","orgnr":"559385-1586","stad":"TRELLEBORG","bilar":2,"oms":9947138,"res":779250,"sol":0.7806672434056818,"kopta":108,"salda":96,"innehav":26,"m":1},{"namn":"Södertälje City Bilcenter AB","orgnr":"556927-8343","stad":"SÖDERTÄLJE","bilar":2,"oms":null,"res":null,"sol":null,"kopta":84,"salda":89,"innehav":8,"m":1},{"namn":"AUTOVOX AUTOMOTIVE AB","orgnr":"559309-1332","stad":"BORÅS","bilar":2,"oms":8947252,"res":-45905,"sol":0.2671423509978848,"kopta":23,"salda":24,"innehav":23,"m":1},{"namn":"Ultimate Performance AB","orgnr":"559470-7068","stad":"NORRKÖPING","bilar":2,"oms":18371182,"res":-130300,"sol":0.0050139538335186,"kopta":72,"salda":71,"innehav":18,"m":1},{"namn":"Bil Labyrinten AB","orgnr":"559111-4896","stad":"HUDDINGE","bilar":2,"oms":22162670,"res":-259115,"sol":0.6756925041589572,"kopta":315,"salda":249,"innehav":183,"m":1},{"namn":"BME Invest","orgnr":"900413-4095","stad":"","bilar":2,"oms":null,"res":null,"sol":null,"kopta":null,"salda":null,"innehav":null,"m":0},{"namn":"Östersunds Bilhall AB","orgnr":"559237-3889","stad":"ÖSTERSUND","bilar":2,"oms":16335099,"res":677873,"sol":0.7278192456759579,"kopta":104,"salda":94,"innehav":51,"m":1},{"namn":"Grannland AB","orgnr":"556937-3359","stad":"SKÄRHOLMEN","bilar":2,"oms":3881385,"res":29031,"sol":0.535990446439828,"kopta":8,"salda":7,"innehav":70,"m":1},{"namn":"Fordonshuset Sweden AB","orgnr":"556790-7208","stad":"HANDEN","bilar":2,"oms":null,"res":null,"sol":null,"kopta":119,"salda":107,"innehav":46,"m":1},{"namn":"Auto.F AB","orgnr":"559284-0317","stad":"GÖTEBORG","bilar":2,"oms":10982384,"res":131245,"sol":0.474684288118839,"kopta":47,"salda":45,"innehav":19,"m":1},{"namn":"Hallsten Bil AB","orgnr":"556831-0824","stad":"TÄBY","bilar":2,"oms":84141095,"res":-252963,"sol":0.0150148507946947,"kopta":315,"salda":302,"innehav":106,"m":1},{"namn":"ARA Automotive AB","orgnr":"559425-9847","stad":"KNIVSTA","bilar":2,"oms":null,"res":null,"sol":null,"kopta":9,"salda":4,"innehav":6,"m":1},{"namn":"custom car sthlm AB","orgnr":"556959-8237","stad":"SÖDERTÄLJE","bilar":1,"oms":17055940,"res":-55211,"sol":0.5050707173410316,"kopta":23,"salda":25,"innehav":36,"m":1},{"namn":"Dawod Amiri","orgnr":"700122-5353","stad":"","bilar":1,"oms":null,"res":null,"sol":null,"kopta":null,"salda":null,"innehav":null,"m":0},{"namn":"URK Bil AB","orgnr":"559126-2125","stad":"BANDHAGEN","bilar":1,"oms":null,"res":-5415,"sol":0.9946442731420696,"kopta":5,"salda":7,"innehav":13,"m":1},{"namn":"Bilförmedlarna i Stockholm AB","orgnr":"556918-7080","stad":"HUDDINGE","bilar":1,"oms":62416063,"res":111516,"sol":0.2343607836611853,"kopta":60,"salda":57,"innehav":10,"m":1},{"namn":"Skånes Bilcenter i Oxie AB","orgnr":"556947-3670","stad":"SVEDALA","bilar":1,"oms":null,"res":null,"sol":null,"kopta":106,"salda":102,"innehav":35,"m":1},{"namn":"Bassel Investment AB","orgnr":"559244-5182","stad":"GUNNILSE","bilar":1,"oms":null,"res":null,"sol":null,"kopta":55,"salda":96,"innehav":29,"m":1},{"namn":"Kallerstad Bil AB","orgnr":"559343-8376","stad":"LINKÖPING","bilar":1,"oms":7996326,"res":27569,"sol":0.3786355666084546,"kopta":32,"salda":36,"innehav":24,"m":1},{"namn":"MCS Sverige AB","orgnr":"556116-3584","stad":"EKERÖ","bilar":1,"oms":124988928,"res":468680,"sol":0.8542103333663703,"kopta":227,"salda":214,"innehav":184,"m":1},{"namn":"Magnus Källberg Bil","orgnr":"721101-7830","stad":"","bilar":1,"oms":null,"res":null,"sol":null,"kopta":null,"salda":null,"innehav":null,"m":0},{"namn":"Berggren Bil AB","orgnr":"559376-7329","stad":"TÄBY","bilar":1,"oms":null,"res":null,"sol":null,"kopta":24,"salda":31,"innehav":18,"m":1},{"namn":"Share Bil AB","orgnr":"559071-1700","stad":"MJÖLBY","bilar":1,"oms":null,"res":-5923,"sol":1.0286308885665636,"kopta":47,"salda":38,"innehav":26,"m":1},{"namn":"Christers Bil i Skåne AB","orgnr":"556784-0169","stad":"STAFFANSTORP","bilar":1,"oms":3155,"res":-74312,"sol":0.0312399685984481,"kopta":2,"salda":0,"innehav":31,"m":1},{"namn":"FOS Bil AB","orgnr":"556785-9185","stad":"ESKILSTUNA","bilar":1,"oms":49535862,"res":-936790,"sol":0.0099188843344379,"kopta":131,"salda":227,"innehav":134,"m":1},{"namn":"Auto Gate Linköping AB","orgnr":"559107-9362","stad":"LINKÖPING","bilar":1,"oms":857831,"res":22989,"sol":0.0609048751542996,"kopta":2,"salda":24,"innehav":6,"m":1},{"namn":"Bil-Trade i Falköping AB","orgnr":"556943-6875","stad":"FALKÖPING","bilar":1,"oms":23150095,"res":744228,"sol":0.8157002285522653,"kopta":126,"salda":115,"innehav":52,"m":1},{"namn":"Ekmar Bil AB","orgnr":"559330-2788","stad":"MJÖLBY","bilar":1,"oms":14784397,"res":1156320,"sol":0.4438560122797048,"kopta":56,"salda":55,"innehav":32,"m":1},{"namn":"UKA Autocenter AB","orgnr":"559556-2546","stad":"FALKÖPING","bilar":1,"oms":null,"res":null,"sol":null,"kopta":28,"salda":27,"innehav":1,"m":1},{"namn":"Molkom Car Center AB","orgnr":"559270-0990","stad":"MOLKOM","bilar":1,"oms":null,"res":null,"sol":null,"kopta":53,"salda":62,"innehav":35,"m":1},{"namn":"Garage - 11 AB","orgnr":"556885-3567","stad":"OXIE","bilar":1,"oms":null,"res":null,"sol":null,"kopta":46,"salda":51,"innehav":70,"m":1},{"namn":"Fordonsgallerian Sverige AB","orgnr":"559173-6490","stad":"BORLÄNGE","bilar":1,"oms":6149303,"res":-140467,"sol":0.231523394538293,"kopta":32,"salda":19,"innehav":37,"m":1},{"namn":"CALJ Invest AB","orgnr":"556895-8622","stad":"GÖTEBORG","bilar":1,"oms":230273,"res":-51860,"sol":0.7162145244575236,"kopta":19,"salda":13,"innehav":13,"m":1},{"namn":"Bilförmedling i Kronoberg AB","orgnr":"559301-5661","stad":"ALVESTA","bilar":1,"oms":31259211,"res":1453660,"sol":0.9025779043128184,"kopta":174,"salda":177,"innehav":78,"m":1},{"namn":"Scandicars AB","orgnr":"559470-9254","stad":"LAHOLM","bilar":1,"oms":276600,"res":14598,"sol":0.2180601064821686,"kopta":34,"salda":37,"innehav":15,"m":1},{"namn":"Motorpartner i Stockholm AB","orgnr":"559230-0163","stad":"JÄRFÄLLA","bilar":1,"oms":104498522,"res":-1022570,"sol":0.3214744188157719,"kopta":226,"salda":201,"innehav":160,"m":1},{"namn":"Silver Fordon Bilhandel AB","orgnr":"559304-0024","stad":"LANDSKRONA","bilar":1,"oms":4188653,"res":-123847,"sol":-0.0456116644657596,"kopta":7,"salda":13,"innehav":6,"m":1},{"namn":"Bromsson AB","orgnr":"559315-2597","stad":"FLODA","bilar":1,"oms":1539592,"res":-33908,"sol":0.1348873659677465,"kopta":10,"salda":8,"innehav":5,"m":1},{"namn":"Logentra AB","orgnr":"559441-7213","stad":"KISTA","bilar":1,"oms":0,"res":-14618,"sol":1,"kopta":2,"salda":0,"innehav":2,"m":1},{"namn":"Kjells Bil i Kristianstad AB","orgnr":"559293-8491","stad":"KRISTIANSTAD","bilar":1,"oms":null,"res":null,"sol":null,"kopta":24,"salda":22,"innehav":10,"m":1},{"namn":"JU Handel AB","orgnr":"559363-0501","stad":"FRÖSÖN","bilar":1,"oms":21648,"res":-44957,"sol":1,"kopta":33,"salda":12,"innehav":21,"m":1},{"namn":"MS Car Center AB","orgnr":"559323-9451","stad":"ROSERSBERG","bilar":1,"oms":24927612,"res":68085,"sol":0.561932953212827,"kopta":61,"salda":69,"innehav":31,"m":1},{"namn":"Team Öhman","orgnr":"510107-7880","stad":"","bilar":1,"oms":null,"res":null,"sol":null,"kopta":null,"salda":null,"innehav":null,"m":0},{"namn":"Mittswedinvest AB","orgnr":"559353-5460","stad":"UPPSALA","bilar":1,"oms":5505942,"res":34043,"sol":0.1073119106961384,"kopta":4,"salda":2,"innehav":4,"m":1},{"namn":"K & S Bil AB","orgnr":"559326-4517","stad":"HELSINGBORG","bilar":1,"oms":1094496,"res":46412,"sol":0.8284864982679385,"kopta":4,"salda":5,"innehav":5,"m":1},{"namn":"BRA Bil Halmstad AB","orgnr":"559415-6977","stad":"OSKARSTRÖM","bilar":1,"oms":3182405,"res":89322,"sol":0.5599243151534677,"kopta":41,"salda":43,"innehav":26,"m":1},{"namn":"Trelleborg Bilarena AB","orgnr":"559485-4316","stad":"TRELLEBORG","bilar":1,"oms":2928627,"res":674675,"sol":0.2699606098850707,"kopta":186,"salda":169,"innehav":69,"m":1},{"namn":"FG Auto Arboga AB","orgnr":"559035-4394","stad":"ARBOGA","bilar":1,"oms":null,"res":null,"sol":null,"kopta":176,"salda":176,"innehav":74,"m":1},{"namn":"AutoStore Sverige AB","orgnr":"559321-0973","stad":"JÄRFÄLLA","bilar":1,"oms":367600,"res":-284152,"sol":0.0147288429584415,"kopta":161,"salda":156,"innehav":40,"m":1},{"namn":"Göteborgs Bil och Fritid AB","orgnr":"559265-0328","stad":"PARTILLE","bilar":1,"oms":14268315,"res":28996,"sol":0.1600853086878796,"kopta":87,"salda":85,"innehav":40,"m":1},{"namn":"M.E auto AB","orgnr":"559483-5059","stad":"SKENE","bilar":1,"oms":6726352,"res":522213,"sol":0.6440217065778597,"kopta":74,"salda":66,"innehav":18,"m":1},{"namn":"Antago Bygg AB","orgnr":"559417-3022","stad":"STOCKHOLM","bilar":1,"oms":6102633,"res":111719,"sol":0.3941873784123709,"kopta":22,"salda":12,"innehav":16,"m":1},{"namn":"Högdalen Bilhandel","orgnr":"911012-6324","stad":"","bilar":1,"oms":null,"res":null,"sol":null,"kopta":null,"salda":null,"innehav":null,"m":0},{"namn":"Nibben Handel AB","orgnr":"556491-7424","stad":"FALUN","bilar":1,"oms":null,"res":null,"sol":null,"kopta":9,"salda":8,"innehav":4,"m":1},{"namn":"Deutsche Autos Nordic AB","orgnr":"559332-1481","stad":"BRO","bilar":1,"oms":null,"res":null,"sol":null,"kopta":24,"salda":23,"innehav":49,"m":1},{"namn":"Bilarvet i Uppsala AB","orgnr":"559512-3331","stad":"UPPSALA","bilar":1,"oms":38111744,"res":103881,"sol":0.0956452681199076,"kopta":352,"salda":337,"innehav":91,"m":1},{"namn":"HLM Bilar","orgnr":"821211-9153","stad":"","bilar":1,"oms":null,"res":null,"sol":null,"kopta":null,"salda":null,"innehav":null,"m":0},{"namn":"AK1982 AB","orgnr":"559293-8509","stad":"UDDEVALLA","bilar":1,"oms":1544,"res":-99144,"sol":-0.9907435926532332,"kopta":13,"salda":10,"innehav":5,"m":1},{"namn":"SB Cars Stockholm AB","orgnr":"559417-2289","stad":"SÖDERBY","bilar":1,"oms":24224218,"res":113998,"sol":0.3100785016530955,"kopta":121,"salda":114,"innehav":20,"m":1},{"namn":"Nordic transport AR AB","orgnr":"559452-8621","stad":"SÖDERTÄLJE","bilar":1,"oms":1079573,"res":140152,"sol":0.3834317058842976,"kopta":6,"salda":1,"innehav":8,"m":1},{"namn":"SEDINS BIL AB","orgnr":"559464-0087","stad":"STAFFANSTORP","bilar":1,"oms":22040467,"res":665022,"sol":0.238883692697225,"kopta":162,"salda":144,"innehav":69,"m":1},{"namn":"Ann Car AB","orgnr":"559420-9891","stad":"NORRKÖPING","bilar":1,"oms":4824805,"res":12015,"sol":0.2844036235868413,"kopta":42,"salda":47,"innehav":13,"m":1},{"namn":"SI Quality Cars AB","orgnr":"559323-3462","stad":"UPPLANDS VÄSBY","bilar":1,"oms":null,"res":null,"sol":null,"kopta":2,"salda":2,"innehav":6,"m":1},{"namn":"AutoSäkra AB","orgnr":"559276-9698","stad":"BÅLSTA","bilar":1,"oms":7572128,"res":65582,"sol":0.3010731803708947,"kopta":38,"salda":28,"innehav":19,"m":1},{"namn":"Simonas Stanionis","orgnr":"881115-8834","stad":"","bilar":1,"oms":null,"res":null,"sol":null,"kopta":null,"salda":null,"innehav":null,"m":0},{"namn":"Bilcenter Personvagnar Norje Sölvesborg Handelsbolag","orgnr":"969732-3807","stad":"SÖLVESBORG","bilar":1,"oms":null,"res":null,"sol":null,"kopta":90,"salda":88,"innehav":53,"m":1},{"namn":"Smålands AutoPartner AB","orgnr":"559216-9485","stad":"VÄXJÖ","bilar":1,"oms":1251339,"res":146798,"sol":0.8879252808238849,"kopta":1,"salda":1,"innehav":0,"m":1},{"namn":"NS Fina bilar AB","orgnr":"559293-9713","stad":"NORRKÖPING","bilar":1,"oms":5271325,"res":99796,"sol":0.2977148020700538,"kopta":34,"salda":38,"innehav":23,"m":1},{"namn":"Sundqvist Bilteknik AB","orgnr":"556476-2465","stad":"SPÅNGA","bilar":1,"oms":770389,"res":-54431,"sol":-0.5283522082678184,"kopta":6,"salda":5,"innehav":4,"m":1},{"namn":"J&G AB","orgnr":"559453-9610","stad":"JÄRFÄLLA","bilar":1,"oms":7101543,"res":-368479,"sol":0.3427889819203588,"kopta":10,"salda":8,"innehav":4,"m":1},{"namn":"Loyalty cars sweden AB","orgnr":"559271-9701","stad":"FALUN","bilar":1,"oms":2794700,"res":41595,"sol":0.0753256488761797,"kopta":58,"salda":53,"innehav":14,"m":1},{"namn":"Hällstorps Bil AB","orgnr":"559119-6919","stad":"SKILLINGARYD","bilar":1,"oms":41560919,"res":1411946,"sol":0.262020927539865,"kopta":85,"salda":103,"innehav":36,"m":1},{"namn":"Säffle Bilar AB","orgnr":"556886-1461","stad":"SÄFFLE","bilar":1,"oms":null,"res":null,"sol":null,"kopta":94,"salda":89,"innehav":45,"m":1},{"namn":"Bilfocus i Sundsvall AB","orgnr":"556326-0123","stad":"SUNDSVALL","bilar":1,"oms":null,"res":null,"sol":null,"kopta":68,"salda":78,"innehav":50,"m":1},{"namn":"T.B. Performance AB","orgnr":"559083-1318","stad":"FRITSLA","bilar":1,"oms":5107623,"res":-9935,"sol":0.0962456348052098,"kopta":2,"salda":6,"innehav":22,"m":1},{"namn":"Craft & Cars Sthlm","orgnr":"811112-0195","stad":"","bilar":1,"oms":null,"res":null,"sol":null,"kopta":null,"salda":null,"innehav":null,"m":0},{"namn":"Tenn Bil Invest AB","orgnr":"559254-7698","stad":"BRO","bilar":1,"oms":89695363,"res":1342851,"sol":0.3319733305320758,"kopta":244,"salda":222,"innehav":130,"m":1},{"namn":"Paradis Bilar AB","orgnr":"559521-3496","stad":"STRÄNGNÄS","bilar":1,"oms":8730868,"res":518769,"sol":0.2913750115876128,"kopta":96,"salda":89,"innehav":28,"m":1},{"namn":"Titanium Fordon Syd AB","orgnr":"559390-2272","stad":"NÄSSJÖ","bilar":1,"oms":3441946,"res":-80661,"sol":0.0341168844461123,"kopta":8,"salda":10,"innehav":9,"m":1},{"namn":"Auto lyckan i Norrköping AB","orgnr":"559325-9848","stad":"NORRKÖPING","bilar":1,"oms":14412535,"res":246501,"sol":0.321671162603677,"kopta":96,"salda":93,"innehav":55,"m":1},{"namn":"TopGear Växjö AB","orgnr":"556794-1017","stad":"VÄXJÖ","bilar":1,"oms":24494188,"res":-423349,"sol":0.1502491906329376,"kopta":73,"salda":71,"innehav":37,"m":1},{"namn":"J9 Group AB","orgnr":"556819-9060","stad":"MOTALA","bilar":1,"oms":6766127,"res":224690,"sol":0.7434496247943492,"kopta":22,"salda":24,"innehav":13,"m":1},{"namn":"AMMBIG AB","orgnr":"556663-8416","stad":"MÖLNLYCKE","bilar":1,"oms":31293207,"res":2959156,"sol":0.9781474184978826,"kopta":191,"salda":192,"innehav":112,"m":1},{"namn":"EM Bil AB","orgnr":"559571-5326","stad":"SVÄRTINGE","bilar":1,"oms":null,"res":null,"sol":null,"kopta":28,"salda":14,"innehav":14,"m":1},{"namn":"Kalmar Automobil AB","orgnr":"559145-6750","stad":"KALMAR","bilar":1,"oms":37675912,"res":666001,"sol":0.3885101327506357,"kopta":88,"salda":91,"innehav":47,"m":1},{"namn":"Elite supplies i Örebro AB","orgnr":"559090-5575","stad":"ÖREBRO","bilar":1,"oms":1641852,"res":170459,"sol":0.7360566554386411,"kopta":4,"salda":5,"innehav":5,"m":1},{"namn":"Mekta Bilservice i Uppsala AB","orgnr":"559456-8569","stad":"UPPSALA","bilar":1,"oms":5119522,"res":785045,"sol":0.7053724941810553,"kopta":29,"salda":15,"innehav":16,"m":1},{"namn":"MLM Bruksbilar AB","orgnr":"559435-5868","stad":"FILIPSTAD","bilar":1,"oms":215399,"res":450,"sol":0.1559226084718971,"kopta":1,"salda":4,"innehav":2,"m":1},{"namn":"M&G Bilar AB","orgnr":"556981-9039","stad":"SKOGHALL","bilar":1,"oms":null,"res":null,"sol":null,"kopta":111,"salda":119,"innehav":8,"m":1},{"namn":"Linn & Elias bilfirma AB","orgnr":"559317-2488","stad":"FLEN","bilar":1,"oms":13115754,"res":-398083,"sol":0.1322638656149098,"kopta":106,"salda":113,"innehav":83,"m":1},{"namn":"VB AutoCenter AB","orgnr":"559537-9990","stad":"VARBERG","bilar":1,"oms":null,"res":null,"sol":null,"kopta":21,"salda":15,"innehav":12,"m":1},{"namn":"QvarnaBil AB","orgnr":"559515-4286","stad":"VAGGERYD","bilar":1,"oms":null,"res":null,"sol":null,"kopta":55,"salda":52,"innehav":10,"m":1},{"namn":"Baltikis Auto AB","orgnr":"559041-8934","stad":"MALMÖ","bilar":1,"oms":21815462,"res":1107664,"sol":0.4257080472029857,"kopta":0,"salda":0,"innehav":40,"m":1},{"namn":"Excellent Cars i Finspång AB","orgnr":"556969-3962","stad":"FINSPÅNG","bilar":1,"oms":8002006,"res":511566,"sol":0.7414805935846889,"kopta":67,"salda":57,"innehav":38,"m":1},{"namn":"KS Motors AB","orgnr":"559230-9438","stad":"JORDBRO","bilar":1,"oms":5766919,"res":-21851,"sol":0.1224897951852485,"kopta":37,"salda":38,"innehav":23,"m":1},{"namn":"BIL-LINE AB","orgnr":"559200-5721","stad":"LIDKÖPING","bilar":1,"oms":4477176,"res":-101417,"sol":-0.0178319608528806,"kopta":2,"salda":25,"innehav":2,"m":1},{"namn":"Växjö Bilhus Handelsbolag","orgnr":"969779-7067","stad":"VÄXJÖ","bilar":1,"oms":null,"res":null,"sol":null,"kopta":96,"salda":93,"innehav":44,"m":1},{"namn":"RIXBIL SVERIGE AB","orgnr":"559283-3197","stad":"HELSINGBORG","bilar":1,"oms":12234828,"res":-121662,"sol":0.3134053080998417,"kopta":80,"salda":64,"innehav":46,"m":1},{"namn":"Bilettan Eskilstuna AB","orgnr":"559380-6564","stad":"ESKILSTUNA","bilar":1,"oms":34042142,"res":1149155,"sol":0.6399694693159773,"kopta":55,"salda":58,"innehav":49,"m":1},{"namn":"Joels Bil AB","orgnr":"559405-0055","stad":"LIDKÖPING","bilar":1,"oms":7739453,"res":37335,"sol":0.340979590302054,"kopta":43,"salda":47,"innehav":13,"m":1},{"namn":"CarCloud AB","orgnr":"556965-3321","stad":"VAXHOLM","bilar":1,"oms":5366255,"res":60531,"sol":0.7529544081654214,"kopta":17,"salda":20,"innehav":2,"m":1},{"namn":"Car Trade Sweden AB","orgnr":"559076-9856","stad":"HANDEN","bilar":1,"oms":8473539,"res":592057,"sol":0.7238648700427869,"kopta":101,"salda":86,"innehav":77,"m":1},{"namn":"Älvsala Bil i Gustavsberg","orgnr":"600703-2151","stad":"","bilar":1,"oms":null,"res":null,"sol":null,"kopta":null,"salda":null,"innehav":null,"m":0},{"namn":"JQ MOTOR","orgnr":"040130-1452","stad":"","bilar":1,"oms":null,"res":null,"sol":null,"kopta":null,"salda":null,"innehav":null,"m":0},{"namn":"Sandauto AB","orgnr":"559413-2994","stad":"SANDVIKEN","bilar":1,"oms":4021879,"res":695681,"sol":0.6645441026823689,"kopta":3,"salda":3,"innehav":2,"m":1},{"namn":"Kennets Bil Hisingen","orgnr":"440703-4810","stad":"","bilar":1,"oms":null,"res":null,"sol":null,"kopta":null,"salda":null,"innehav":null,"m":0},{"namn":"OMK bil AB","orgnr":"559465-7297","stad":"HALMSTAD","bilar":1,"oms":16134458,"res":407519,"sol":0.1909780144114753,"kopta":159,"salda":155,"innehav":38,"m":1},{"namn":"Mälardalen marin och fordon AB","orgnr":"559337-8846","stad":"VÄSTERÅS","bilar":1,"oms":20891960,"res":737129,"sol":0.2385446550660911,"kopta":126,"salda":117,"innehav":79,"m":1}];
 
-/* ---------- derived fields ---------- */
+/* ---------- derived ---------- */
 DATA.forEach(d=>{
-  d.rmAndel = (d.kopta!=null && d.kopta>0) ? d.bilar/d.kopta : null;
-  d.netto   = (d.kopta!=null && d.salda!=null) ? d.kopta - d.salda : null;
-  d.omsHast = (d.innehav!=null && d.innehav>0 && d.salda!=null) ? d.salda/d.innehav : null;
+  d.rmAndel=(d.kopta!=null&&d.kopta>0)?d.bilar/d.kopta:null;
+  d.netto=(d.kopta!=null&&d.salda!=null)?d.kopta-d.salda:null;
+  d.omsHast=(d.innehav!=null&&d.innehav>0&&d.salda!=null)?d.salda/d.innehav:null;
 });
-const MATCHED = DATA.filter(d=>d.m===1);
-const UNMATCHED = DATA.filter(d=>d.m===0);
+const MATCHED=DATA.filter(d=>d.m===1);
+const UNMATCHED=DATA.filter(d=>d.m===0);
+const MAXKOPTA=Math.max(...MATCHED.map(d=>d.kopta));
+const B_KOPTA=MATCHED.reduce((s,d)=>s+d.kopta,0);
+const B_INNEHAV=MATCHED.reduce((s,d)=>s+d.innehav,0);
+const GEM_OMS=5e6, GEM_KOP=75;
+const selected=new Set();
 
-/* ---------- formatting (svenska) ---------- */
-const nf = new Intl.NumberFormat('sv-SE');
+/* ---------- formatting ---------- */
+const nf=new Intl.NumberFormat('sv-SE');
 function fInt(n){return n==null?na():nf.format(Math.round(n));}
-function fMkr(n){return n==null?na():nf.format(Math.round(n/1e6*10)/10).replace(/ /g,' ')+' Mkr';}
-function fMkr1(n){return (Math.round(n/1e6*10)/10).toLocaleString('sv-SE',{minimumFractionDigits:1,maximumFractionDigits:1})+' Mkr';}
+function fMkr(n){return n==null?na():(Math.round(n/1e6*10)/10).toLocaleString('sv-SE',{minimumFractionDigits:1,maximumFractionDigits:1})+' Mkr';}
 function fKr(n){return nf.format(Math.round(n))+' kr';}
 function fPct(n,dec){if(n==null)return na();return (n*100).toLocaleString('sv-SE',{minimumFractionDigits:dec||0,maximumFractionDigits:dec||0})+' %';}
+function fPctPlain(n,dec){if(n==null)return '–';return (n*100).toLocaleString('sv-SE',{minimumFractionDigits:dec||0,maximumFractionDigits:dec||0})+' %';}
 function fTkr(n){if(n==null)return na();const s=n<0?'−':'';return s+nf.format(Math.round(Math.abs(n)/1000))+' tkr';}
 function fRatio(n){if(n==null)return na();return n.toLocaleString('sv-SE',{minimumFractionDigits:1,maximumFractionDigits:1})+'×';}
 function na(){return '<span class="na">data saknas</span>';}
 
 /* ---------- match report ---------- */
 (function(){
-  const el = document.getElementById('matchinfo');
-  el.innerHTML =
-    '<span><b>'+MATCHED.length+'</b> av <b>'+DATA.length+'</b> handlare matchade mot Riddermarks aktivitetsdata (orgnr).</span>'+
+  const el=document.getElementById('matchinfo');
+  el.innerHTML='<span><b>'+MATCHED.length+'</b> av <b>'+DATA.length+'</b> handlare matchade mot Riddermarks aktivitetsdata.</span>'+
     '<span>Excel-rader utan match: <b>0</b>.</span>'+
-    '<span><b>'+UNMATCHED.length+'</b> bolag har finansiell data men saknar aktivitetsdata – '+
-    '<span class="link" id="toggleUnmatched">visa lista</span>.</span>'+
-    '<span style="color:#8a9aac">Orgnr normaliserade (bindestreck borttagna, jämförda som 10-siffriga strängar). Dubbletter i källdata sammanslagna på orgnr, bilar summerade.</span>'+
+    '<span><b>'+UNMATCHED.length+'</b> saknar aktivitetsdata – <span class="link" id="toggleUnmatched">visa</span>.</span>'+
     '<div class="unmatched-list" id="unmatchedList"></div>';
-  document.getElementById('unmatchedList').innerHTML =
-    UNMATCHED.sort((a,b)=>b.bilar-a.bilar).map(d=>d.namn+' ('+d.orgnr+') · '+d.bilar+' bilar').join('<br>');
-  document.getElementById('toggleUnmatched').addEventListener('click',function(){
-    const l=document.getElementById('unmatchedList');
-    const show=l.style.display!=='block';
-    l.style.display=show?'block':'none';
-    this.textContent=show?'dölj lista':'visa lista';
-  });
+  document.getElementById('unmatchedList').innerHTML=UNMATCHED.sort((a,b)=>b.bilar-a.bilar).map(d=>d.namn+' ('+d.orgnr+') · '+d.bilar+' bilar').join('<br>');
+  document.getElementById('toggleUnmatched').addEventListener('click',function(){const l=document.getElementById('unmatchedList');const s=l.style.display!=='block';l.style.display=s?'block':'none';this.textContent=s?'dölj':'visa';});
 })();
+
+/* ---------- badge + motivation ---------- */
+function isGem(d){return d.oms!=null&&d.oms<GEM_OMS&&d.kopta>=GEM_KOP;}
+function classify(d){
+  const pct=d.rmAndel!=null?Math.round(d.rmAndel*100):null;
+  if(isGem(d)) return {cls:'b-gem',label:'Snabbväxare',
+    motiv:`Köper ${d.kopta} bilar i år men redovisar bara ${fMkr(d.oms)} i omsättning – tillväxt som bokslutet inte hunnit visa.`};
+  if(d.kopta>=80 && (d.oms==null||d.sol==null)) return {cls:'b-unknown',label:'Stort men okänt bolag',
+    motiv:`Köper ${d.kopta} bilar i år men saknar publik bokslutsdata – svårbedömd med traditionell kreditlogik.`};
+  if(d.sol!=null && d.sol<0.15 && d.kopta>=40) return {cls:'b-weak',label:'Kapitalsvag men aktiv',
+    motiv:`Hög aktivitet (${d.kopta} köpta) men svag soliditet (${fPctPlain(d.sol)}) – sannolikt kapitalbegränsad idag.`};
+  if(d.rmAndel!=null && d.rmAndel>=0.5) return {cls:'b-rm',label:'Redan Riddermark-beroende',
+    motiv:`${pct} % av köpen kommer redan från Riddermark – naturlig kandidat för finansieringsupplägg.`};
+  if(d.omsHast!=null && d.omsHast>=2.5) return {cls:'b-hast',label:'Snabb lageromsättning',
+    motiv:`Omsätter lagret ${fRatio(d.omsHast)} på året – återkommande finansieringsbehov.`};
+  if(d.kopta>=100) return {cls:'b-vol',label:'Etablerad volymhandlare',
+    motiv:`${d.kopta} köpta bilar i år med ${d.innehav} i lager – stabil volym att bygga på.`};
+  return {cls:'b-active',label:'Aktiv handlare',
+    motiv:`${d.kopta} köpta bilar i år, ${d.innehav} i lager just nu.`};
+}
+function score(d){
+  const k=d.kopta/MAXKOPTA;
+  const gem=isGem(d)?1:0;
+  const hast=d.omsHast!=null?Math.min(d.omsHast/3,1):0;
+  const s=d.sol; let cap;
+  if(s==null)cap=0.6; else if(s<0)cap=1; else if(s<0.15)cap=0.9; else if(s<0.30)cap=0.5; else cap=0.1;
+  const grow=d.rmAndel!=null?(1-Math.min(d.rmAndel,1)):0.5;
+  return 40*k + 25*gem + 15*hast + 12*cap + 8*grow;
+}
+const RANKED=MATCHED.map(d=>({d,c:classify(d),s:score(d)})).sort((a,b)=>b.s-a.s);
 
 /* ---------- tabs ---------- */
-document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
-  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{switchView(t.dataset.view);}));
+function switchView(v){
+  document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.view===v));
   document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));
-  t.classList.add('active');
-  document.getElementById('view-'+t.dataset.view).classList.add('active');
-}));
+  document.getElementById('view-'+v).classList.add('active');
+  if(v==='business')renderBusiness();
+}
+document.getElementById('seltobiz').addEventListener('click',()=>switchView('business'));
 
-/* ==================== FLIK 1 ==================== */
-const FIELD_CFG = {
-  oms:  {min:0,max:200,step:1,val:0,unit:' Mkr',scale:1e6,label:'Omsättning minst'},
-  sol:  {min:0,max:100,step:1,val:0,unit:' %',scale:0.01,label:'Soliditet minst'},
-  netto:{min:-50,max:300,step:5,val:-50,unit:' st',scale:1,label:'Nettotillväxt minst'}
-};
-let sortKey='bilar', sortAsc=false;
+/* ==================== FLIK 1: ranked list ==================== */
+let showAll=false;
+function renderList(){
+  const cont=document.getElementById('ranklist');cont.innerHTML='';
+  const limit=showAll?RANKED.length:18;
+  RANKED.slice(0,limit).forEach((r,i)=>{
+    const d=r.d, sel=selected.has(d.orgnr);
+    const row=document.createElement('div');
+    row.className='rank'+(sel?' sel':'');
+    row.innerHTML=
+      `<input type="checkbox" class="rank-chk" data-org="${d.orgnr}" ${sel?'checked':''}>`+
+      `<div class="rank-num">${i+1}</div>`+
+      `<div class="rank-body">`+
+        `<div class="rank-head"><span class="rank-name">${d.namn}</span><span class="badge ${r.c.cls}">${r.c.label}</span><span class="rank-city">${d.stad||'–'}</span></div>`+
+        `<div class="rank-motiv">${r.c.motiv}</div>`+
+        `<div class="rank-nums"><span><b>${fInt(d.bilar)}</b> från Riddermark</span><span><b>${fInt(d.kopta)}</b> köpta totalt</span><span><b>${fInt(d.innehav)}</b> i lager</span><span>Soliditet <b>${fPctPlain(d.sol)}</b></span></div>`+
+      `</div>`;
+    cont.appendChild(row);
+  });
+  cont.querySelectorAll('.rank-chk').forEach(cb=>cb.addEventListener('change',()=>{
+    if(cb.checked)selected.add(cb.dataset.org); else selected.delete(cb.dataset.org);
+    cb.closest('.rank').classList.toggle('sel',cb.checked);
+    updateSelCount();
+  }));
+  const sm=document.getElementById('showmore');
+  if(RANKED.length>18){sm.style.display='block';sm.textContent=showAll?'Visa färre':`Visa fler (${RANKED.length-18} till)`;}
+  else sm.style.display='none';
+}
+document.getElementById('showmore').addEventListener('click',()=>{showAll=!showAll;renderList();});
+function updateSelCount(){
+  const n=selected.size;
+  document.getElementById('selcount').textContent=n+' handlare valda';
+  document.getElementById('seltobiz').disabled=n===0;
+  document.getElementById('selhint').textContent=n===0?'Bocka för de du vill satsa på – urvalet driver flik 2.':'Klart – gå till flik 2 för att se effekten för Riddermark.';
+}
+document.getElementById('selclear').addEventListener('click',()=>{selected.clear();renderList();updateSelCount();});
 
-const COLS = [
-  {key:'namn',   lbl:'Bolag',        cell:d=>'<strong style="font-weight:600">'+d.namn+'</strong>'+(d.gem?' <span class="pill">snabbväxare</span>':'')+'<br><span class="city">'+(d.stad||'–')+' · '+d.orgnr+'</span>'},
-  {key:'bilar',  lbl:'Bilar RM',     cell:d=>fInt(d.bilar)},
-  {key:'kopta',  lbl:'Köpta',        cell:d=>fInt(d.kopta)},
-  {key:'salda',  lbl:'Sålda',        cell:d=>fInt(d.salda)},
-  {key:'innehav',lbl:'Lager',        cell:d=>fInt(d.innehav)},
-  {key:'rmAndel',lbl:'RM-andel',     cell:d=>fPct(d.rmAndel,0)},
-  {key:'netto',  lbl:'Nettotillväxt',cell:d=>d.netto==null?na():'<span class="'+(d.netto>0?'pos':d.netto<0?'neg':'')+'">'+(d.netto>0?'+':'')+fInt(d.netto)+'</span>'},
-  {key:'omsHast',lbl:'Oms.hast.',    cell:d=>fRatio(d.omsHast)},
-  {key:'oms',    lbl:'Omsättning',   cell:d=>fMkr(d.oms)},
-  {key:'res',    lbl:'Resultat',     cell:d=>d.res==null?na():'<span class="'+(d.res>=0?'pos':'neg')+'">'+fTkr(d.res)+'</span>'},
-  {key:'sol',    lbl:'Soliditet',    cell:d=>fPct(d.sol,0)}
-];
-(function(){
-  const tr=document.getElementById('thead-row');
-  COLS.forEach(c=>{const th=document.createElement('th');th.textContent=c.lbl;th.dataset.key=c.key;
-    th.addEventListener('click',()=>{if(sortKey===c.key){sortAsc=!sortAsc;}else{sortKey=c.key;sortAsc=false;}updateProspects();});
-    tr.appendChild(th);});
+/* ==================== FLIK 2 ==================== */
+function renderBusiness(){
+  const c=document.getElementById('biz-content');
+  const sel=MATCHED.filter(d=>selected.has(d.orgnr));
+  if(sel.length===0){
+    c.innerHTML=
+      `<div class="card"><div class="empty"><div class="arrow">↖</div><div class="big">Välj handlare i flik 1 för att se effekten här</div>`+
+      `<div style="font-size:12.5px">Nedan visas hela populationen som referens.</div></div></div>`+
+      `<div class="metrics">`+
+        metric('Handlare totalt',MATCHED.length,'med aktivitetsdata')+
+        metric('Bilar köpta 2026',fInt(B_KOPTA),'hela populationen')+
+        metric('Aktuellt lager',fInt(B_INNEHAV),'bilar just nu')+
+      `</div>`;
+    return;
+  }
+  const selKopta=sel.reduce((s,d)=>s+d.kopta,0);
+  const selInnehav=sel.reduce((s,d)=>s+d.innehav,0);
+  const gems=sel.filter(isGem).length;
+  const weak=sel.filter(d=>d.sol!=null&&d.sol<0.15).length;
+  const unknown=sel.filter(d=>d.oms==null).length;
+  const hastArr=sel.filter(d=>d.omsHast!=null).map(d=>d.omsHast);
+  const avgHast=hastArr.length?hastArr.reduce((a,b)=>a+b,0)/hastArr.length:null;
+
+  c.innerHTML=
+    `<div class="card" style="background:#1a1a18;border-color:#1a1a18">`+
+      `<div class="card-title" style="color:#fff">Effekt av ${sel.length} valda handlare</div>`+
+      `<div class="card-sub" style="color:#aaa;margin:0">Vad ett finansieringssamarbete kring just dessa handlare kan betyda för Riddermark.</div>`+
+    `</div>`+
+    `<div class="metrics">`+
+      metric('Valda handlare',sel.length,'av '+MATCHED.length+' ('+fPctPlain(sel.length/MATCHED.length)+')')+
+      metric('Andel av köpvolym',fPctPlain(selKopta/B_KOPTA),fInt(selKopta)+' av '+fInt(B_KOPTA)+' bilar')+
+      metric('Andel av lager',fPctPlain(selInnehav/B_INNEHAV),fInt(selInnehav)+' av '+fInt(B_INNEHAV)+' bilar')+
+    `</div>`+
+    `<div class="card"><div class="card-title">Vad betyder det för Riddermark?</div>`+
+      `<div class="prose">${bizProse(sel.length,selKopta,selInnehav,gems,weak,unknown,avgHast)}</div></div>`+
+    `<div class="card"><div class="card-title">Finansieringsbehov för urvalet <span class="pill">illustrativ</span></div>`+
+      `<div class="card-sub">Förenklad modell för diskussion, inte en prognos. Sätt antaget snittpris och hur stor andel av köpen som finansieras via AOTO.</div>`+
+      `<div class="controls">`+
+        `<div class="ctrl-row"><span class="ctrl-label">Snittpris per bil:</span><input type="range" id="simPris" min="50000" max="500000" value="180000" step="10000"><span class="slider-val" id="simPrisVal"></span></div>`+
+        `<div class="ctrl-row"><span class="ctrl-label">Andel finansierad via AOTO:</span><input type="range" id="simAndel" min="5" max="100" value="40" step="5"><span class="slider-val" id="simAndelVal"></span></div>`+
+      `</div>`+
+      `<div class="sim-out">`+
+        `<div class="sim-card primary"><div class="sim-label">Årligt finansieringsflöde (köp × andel)</div><div class="sim-value" id="simFlow">–</div><div class="sim-sub" id="simFlowSub"></div></div>`+
+        `<div class="sim-card"><div class="sim-label">Utestående lagerfinansiering (lager × andel)</div><div class="sim-value" id="simStock">–</div><div class="sim-sub" id="simStockSub"></div></div>`+
+      `</div>`+
+      `<div class="disclaimer">⚠︎ Illustrativ modell. Snittpris och finansieringsandel är antaganden. Beräkningen bygger på de valda handlarnas faktiska köpta bilar (2026 hittills) och aktuella lager, men säger inget om marginaler, kreditförluster eller villkor.</div>`+
+    `</div>`;
+
+  // wire simulator
+  const pris=document.getElementById('simPris'), andel=document.getElementById('simAndel');
+  function sim(){
+    const p=+pris.value, a=+andel.value/100;
+    document.getElementById('simPrisVal').textContent=nf.format(p)+' kr';
+    document.getElementById('simAndelVal').textContent=(a*100)+' %';
+    const flow=selKopta*p*a, stock=selInnehav*p*a;
+    document.getElementById('simFlow').textContent=fKr(flow);
+    document.getElementById('simFlowSub').textContent=fMkr(flow)+' · '+fInt(selKopta)+' köpta × andel';
+    document.getElementById('simStock').textContent=fKr(stock);
+    document.getElementById('simStockSub').textContent=fMkr(stock)+' · '+fInt(selInnehav)+' i lager × andel';
+  }
+  pris.addEventListener('input',sim);andel.addEventListener('input',sim);sim();
+}
+function metric(label,val,sub){return `<div class="metric"><div class="metric-label">${label}</div><div class="metric-value">${val}</div><div class="metric-sub">${sub}</div></div>`;}
+function bizProse(n,kopta,innehav,gems,weak,unknown,avgHast){
+  let s=`De <b>${n}</b> valda handlarna står för <b>${fPctPlain(kopta/B_KOPTA)}</b> av Riddermarks totala köpvolym och <b>${fPctPlain(innehav/B_INNEHAV)}</b> av det samlade lagret. `;
+  const parts=[];
+  if(gems)parts.push(`<b>${gems}</b> snabbväxare vars bokslut underskattar dem`);
+  if(weak)parts.push(`<b>${weak}</b> med svag soliditet`);
+  if(unknown)parts.push(`<b>${unknown}</b> utan publik bokslutsdata`);
+  if(parts.length)s+=`Av urvalet: ${parts.join(', ').replace(/,([^,]*)$/,' och$1')} – precis de grupper där bättre lagerfinansiering direkt frigör köpkraft. `;
+  if(avgHast!=null)s+=`De omsätter sitt lager i snitt <b>${fRatio(avgHast)}</b> per år, så finansieringen återanvänds ofta. `;
+  s+=`För Riddermark betyder det <b>fler affärer</b>, <b>snabbare rörlighet</b> på bilarna och utrymme för <b>bättre pris</b> – eftersom en finansierad handlare kan köpa mer och oftare.`;
+  return s;
+}
+
+/* distribution (support info) */
+const BUCKETS=[[0,25],[26,50],[51,100],[101,200],[201,500],[501,99999]];
+const BKT_LBL=['≤ 25','26–50','51–100','101–200','201–500','500+'];
+(function drawDist(){
+  const cont=document.getElementById('dist');cont.innerHTML='';
+  const counts=BUCKETS.map(()=>0),vol=BUCKETS.map(()=>0);
+  MATCHED.forEach(d=>{const bi=BUCKETS.findIndex(b=>d.kopta>=b[0]&&d.kopta<=b[1]);if(bi>=0){counts[bi]++;vol[bi]+=d.kopta;}});
+  const maxC=Math.max(...counts);
+  BUCKETS.forEach((b,i)=>{const row=document.createElement('div');row.className='dist-row';
+    row.innerHTML=`<div class="dist-lbl">${BKT_LBL[i]} bilar</div><div class="dist-track"><div class="dist-fill" style="width:${counts[i]/maxC*100}%"></div></div><div class="dist-val">${counts[i]} st · ${fPct(vol[i]/B_KOPTA,0)} av volym</div>`;
+    cont.appendChild(row);});
+  const smallC=counts[0]+counts[1], smallV=vol[0]+vol[1];
+  document.getElementById('dist-callout').innerHTML=`<b>Långsvansen:</b> handlare med ≤50 köpta bilar utgör <b>${smallC} av ${MATCHED.length}</b> handlare (${fPct(smallC/MATCHED.length,0)}) men står ändå för <b>${fInt(smallV)} bilar</b> (${fPct(smallV/B_KOPTA,0)} av volymen). Det är främst dessa mindre, växande handlare som bättre lagerfinansiering frigör.`;
 })();
 
-function colorFor(a){ // riddermark-andel 0..1 -> blue..orange
-  if(a==null) return '#cfcfca';
-  const stops=[[0,[207,224,245]],[0.5,[91,143,214]],[1,[232,132,46]]];
-  a=Math.max(0,Math.min(1,a));
-  let i=1; while(i<stops.length && a>stops[i][0]) i++;
-  const [t0,c0]=stops[i-1],[t1,c1]=stops[i];
-  const f=(a-t0)/(t1-t0);
-  const c=c0.map((v,j)=>Math.round(v+(c1[j]-v)*f));
-  return 'rgb('+c.join(',')+')';
+/* ==================== ADVANCED (filter + scatter + table) ==================== */
+const FIELD_CFG={oms:{min:0,max:200,step:1,val:0,unit:' Mkr',scale:1e6,label:'Omsättning minst'},sol:{min:0,max:100,step:1,val:0,unit:' %',scale:0.01,label:'Soliditet minst'},netto:{min:-50,max:300,step:5,val:-50,unit:' st',scale:1,label:'Nettotillväxt minst'}};
+let sortKey='bilar',sortAsc=false;
+const COLS=[
+  {key:'namn',lbl:'Bolag',cell:d=>'<strong style="font-weight:600">'+d.namn+'</strong><br><span class="city">'+(d.stad||'–')+' · '+d.orgnr+'</span>'},
+  {key:'bilar',lbl:'Bilar RM',cell:d=>fInt(d.bilar)},{key:'kopta',lbl:'Köpta',cell:d=>fInt(d.kopta)},
+  {key:'salda',lbl:'Sålda',cell:d=>fInt(d.salda)},{key:'innehav',lbl:'Lager',cell:d=>fInt(d.innehav)},
+  {key:'rmAndel',lbl:'RM-andel',cell:d=>fPct(d.rmAndel,0)},
+  {key:'netto',lbl:'Nettotillväxt',cell:d=>d.netto==null?na():'<span class="'+(d.netto>0?'pos':d.netto<0?'neg':'')+'">'+(d.netto>0?'+':'')+fInt(d.netto)+'</span>'},
+  {key:'omsHast',lbl:'Oms.hast.',cell:d=>fRatio(d.omsHast)},{key:'oms',lbl:'Omsättning',cell:d=>fMkr(d.oms)},
+  {key:'res',lbl:'Resultat',cell:d=>d.res==null?na():'<span class="'+(d.res>=0?'pos':'neg')+'">'+fTkr(d.res)+'</span>'},
+  {key:'sol',lbl:'Soliditet',cell:d=>fPct(d.sol,0)}];
+(function(){const tr=document.getElementById('thead-row');COLS.forEach(c=>{const th=document.createElement('th');th.textContent=c.lbl;th.dataset.key=c.key;th.addEventListener('click',()=>{if(sortKey===c.key)sortAsc=!sortAsc;else{sortKey=c.key;sortAsc=false;}updateAdvanced();});tr.appendChild(th);});})();
+function colorFor(a){if(a==null)return '#cfcfca';const stops=[[0,[207,224,245]],[0.5,[91,143,214]],[1,[232,132,46]]];a=Math.max(0,Math.min(1,a));let i=1;while(i<stops.length&&a>stops[i][0])i++;const[t0,c0]=stops[i-1],[t1,c1]=stops[i];const f=(a-t0)/(t1-t0);return 'rgb('+c0.map((v,j)=>Math.round(v+(c1[j]-v)*f)).join(',')+')';}
+function advSet(){
+  let set=document.getElementById('incUnmatched').checked?DATA.slice():MATCHED.slice();
+  const field=document.getElementById('filterField').value,cfg=FIELD_CFG[field],thr=cfg.val*cfg.scale;
+  return set.filter(d=>{if(cfg.val<=cfg.min)return true;const v=d[field];if(v==null)return true;if(field==='netto')return v>=cfg.val;return v>=thr;});
 }
-
-function gemThresholds(){
-  return {oms:+document.getElementById('gemOms').value*1e6, kop:+document.getElementById('gemKop').value};
-}
-function isGem(d){
-  const g=gemThresholds();
-  return d.m===1 && d.oms!=null && d.oms<g.oms && d.kopta>=g.kop;
-}
-
-function currentSet(){
-  let set = document.getElementById('incUnmatched').checked ? DATA.slice() : MATCHED.slice();
-  const field=document.getElementById('filterField').value;
-  const cfg=FIELD_CFG[field];
-  const thr=cfg.val*cfg.scale;
-  const gemOnly=document.getElementById('gemOnly').checked;
-  set.forEach(d=>d.gem=isGem(d));
-  set = set.filter(d=>{
-    if(gemOnly && !d.gem) return false;
-    if(cfg.val<=cfg.min) return true;  // slider at minimum = ingen filtrering
-    const v=d[field];
-    if(v==null) return true;           // never hide rows lacking the field
-    if(field==='oms') return v>=thr;
-    if(field==='sol') return v>=thr;
-    return v>=cfg.val;                  // netto
-  });
-  return set;
-}
-
-function updateFilterSliderUI(){
-  const field=document.getElementById('filterField').value;
-  const cfg=FIELD_CFG[field];
-  const s=document.getElementById('filterSlider');
-  s.min=cfg.min;s.max=cfg.max;s.step=cfg.step;s.value=cfg.val;
-  document.getElementById('filterVal').textContent = cfg.label+': '+cfg.val+cfg.unit;
-}
-
-function updateProspects(){
-  const set=currentSet();
-  // sort
-  set.sort((a,b)=>{
-    let x=a[sortKey],y=b[sortKey];
-    if(x==null&&y==null)return 0; if(x==null)return 1; if(y==null)return -1;
-    if(typeof x==='string')return sortAsc?x.localeCompare(y,'sv'):y.localeCompare(x,'sv');
-    return sortAsc?x-y:y-x;
-  });
-  // metrics
-  document.getElementById('p-antal').textContent=set.length;
-  document.getElementById('p-antal-sub').textContent='av '+(document.getElementById('incUnmatched').checked?DATA.length:MATCHED.length);
-  document.getElementById('p-bilar').textContent=fInt(set.reduce((s,d)=>s+d.bilar,0));
-  document.getElementById('p-kopta').textContent=fInt(set.reduce((s,d)=>s+(d.kopta||0),0));
-  document.getElementById('p-gem').textContent=set.filter(d=>d.gem).length;
-  // header sort marker
+function updateFilterSliderUI(){const cfg=FIELD_CFG[document.getElementById('filterField').value];const s=document.getElementById('filterSlider');s.min=cfg.min;s.max=cfg.max;s.step=cfg.step;s.value=cfg.val;document.getElementById('filterVal').textContent=cfg.label+': '+cfg.val+cfg.unit;}
+function updateAdvanced(){
+  const set=advSet();
+  set.sort((a,b)=>{let x=a[sortKey],y=b[sortKey];if(x==null&&y==null)return 0;if(x==null)return 1;if(y==null)return -1;if(typeof x==='string')return sortAsc?x.localeCompare(y,'sv'):y.localeCompare(x,'sv');return sortAsc?x-y:y-x;});
   document.querySelectorAll('#thead-row th').forEach(th=>{th.classList.toggle('sorted',th.dataset.key===sortKey);th.classList.toggle('asc',th.dataset.key===sortKey&&sortAsc);});
-  // table
   const tb=document.getElementById('tbl-body');tb.innerHTML='';
-  set.forEach(d=>{
-    const tr=document.createElement('tr');
-    if(d.gem)tr.classList.add('gem');
-    if(d.m===0)tr.classList.add('unmatched');
-    tr.innerHTML=COLS.map(c=>'<td>'+c.cell(d)+'</td>').join('');
-    tb.appendChild(tr);
-  });
+  set.forEach(d=>{const tr=document.createElement('tr');if(d.m===0)tr.classList.add('unmatched');tr.innerHTML=COLS.map(c=>'<td>'+c.cell(d)+'</td>').join('');tb.appendChild(tr);});
   document.getElementById('tbl-count').textContent=set.length+' bolag';
   drawScatter(set);
 }
-
-/* ---------- scatter ---------- */
 function drawScatter(set){
-  const svg=document.getElementById('scatter');
-  const W=720,H=380,pad={l:52,r:16,t:14,b:40};
+  const svg=document.getElementById('scatter');const W=720,H=380,pad={l:52,r:16,t:14,b:40};
   const xField=document.getElementById('scatterX').value;
-  const pts=set.filter(d=>d.kopta!=null && d[xField]!=null);
+  const pts=set.filter(d=>d.kopta!=null&&d[xField]!=null);
   document.getElementById('scatter-count').textContent=pts.length+' bolag ritade';
-  const xMax = xField==='sol' ? Math.max(1,...pts.map(d=>d.sol)) : Math.max(1,...pts.map(d=>d.oms));
-  const yMax = Math.max(10,...pts.map(d=>d.kopta));
-  const iMax = Math.max(1,...pts.map(d=>d.innehav));
-  const px=v=>pad.l+(v/xMax)*(W-pad.l-pad.r);
-  const py=v=>H-pad.b-(v/yMax)*(H-pad.t-pad.b);
-  const pr=v=>4+Math.sqrt(v/iMax)*18;
+  const xMax=Math.max(1,...pts.map(d=>d[xField])),yMax=Math.max(10,...pts.map(d=>d.kopta)),iMax=Math.max(1,...pts.map(d=>d.innehav));
+  const px=v=>pad.l+(v/xMax)*(W-pad.l-pad.r),py=v=>H-pad.b-(v/yMax)*(H-pad.t-pad.b),pr=v=>4+Math.sqrt(v/iMax)*18;
   let s='';
-  // grid + ticks Y
-  for(let i=0;i<=4;i++){const yv=yMax*i/4;const y=py(yv);
-    s+='<line class="grid-line" x1="'+pad.l+'" y1="'+y+'" x2="'+(W-pad.r)+'" y2="'+y+'"/>';
-    s+='<text class="tick-txt" x="'+(pad.l-6)+'" y="'+(y+3)+'" text-anchor="end">'+fInt(yv)+'</text>';}
-  // ticks X
-  for(let i=0;i<=4;i++){const xv=xMax*i/4;const x=px(xv);
-    const lbl = xField==='sol' ? Math.round(xv*100)+'%' : Math.round(xv/1e6)+'M';
-    s+='<text class="tick-txt" x="'+x+'" y="'+(H-pad.b+14)+'" text-anchor="middle">'+lbl+'</text>';}
-  s+='<line class="axis-line" x1="'+pad.l+'" y1="'+(H-pad.b)+'" x2="'+(W-pad.r)+'" y2="'+(H-pad.b)+'"/>';
-  s+='<line class="axis-line" x1="'+pad.l+'" y1="'+pad.t+'" x2="'+pad.l+'" y2="'+(H-pad.b)+'"/>';
+  for(let i=0;i<=4;i++){const yv=yMax*i/4,y=py(yv);s+='<line class="grid-line" x1="'+pad.l+'" y1="'+y+'" x2="'+(W-pad.r)+'" y2="'+y+'"/><text class="tick-txt" x="'+(pad.l-6)+'" y="'+(y+3)+'" text-anchor="end">'+fInt(yv)+'</text>';}
+  for(let i=0;i<=4;i++){const xv=xMax*i/4,x=px(xv),lbl=xField==='sol'?Math.round(xv*100)+'%':Math.round(xv/1e6)+'M';s+='<text class="tick-txt" x="'+x+'" y="'+(H-pad.b+14)+'" text-anchor="middle">'+lbl+'</text>';}
+  s+='<line class="axis-line" x1="'+pad.l+'" y1="'+(H-pad.b)+'" x2="'+(W-pad.r)+'" y2="'+(H-pad.b)+'"/><line class="axis-line" x1="'+pad.l+'" y1="'+pad.t+'" x2="'+pad.l+'" y2="'+(H-pad.b)+'"/>';
   s+='<text class="axis-label" x="'+(pad.l+(W-pad.l-pad.r)/2)+'" y="'+(H-4)+'" text-anchor="middle">'+(xField==='sol'?'Soliditet':'Omsättning 2025')+'</text>';
   s+='<text class="axis-label" transform="translate(13,'+(pad.t+(H-pad.t-pad.b)/2)+') rotate(-90)" text-anchor="middle">Köpta bilar totalt 2026</text>';
-  // dots (large first so small on top)
-  pts.sort((a,b)=>b.innehav-a.innehav).forEach(d=>{
-    s+='<circle class="dot" cx="'+px(d[xField]).toFixed(1)+'" cy="'+py(d.kopta).toFixed(1)+'" r="'+pr(d.innehav).toFixed(1)+'" fill="'+colorFor(d.rmAndel)+'" '+(d.gem?'stroke="#e0a92e" stroke-width="2"':'')+' data-n="'+encodeURIComponent(d.namn)+'" data-x="'+(xField==='sol'?fPct(d.sol,0).replace(/<[^>]+>/g,''):fMkr(d.oms).replace(/<[^>]+>/g,''))+'" data-k="'+d.kopta+'" data-i="'+d.innehav+'" data-r="'+fPct(d.rmAndel,0).replace(/<[^>]+>/g,'')+'"/>';
-  });
+  pts.sort((a,b)=>b.innehav-a.innehav).forEach(d=>{s+='<circle class="dot" cx="'+px(d[xField]).toFixed(1)+'" cy="'+py(d.kopta).toFixed(1)+'" r="'+pr(d.innehav).toFixed(1)+'" fill="'+colorFor(d.rmAndel)+'" data-n="'+encodeURIComponent(d.namn)+'" data-x="'+(xField==='sol'?fPctPlain(d.sol):fMkr(d.oms))+'" data-k="'+d.kopta+'" data-i="'+d.innehav+'" data-r="'+fPctPlain(d.rmAndel)+'"/>';});
   svg.innerHTML=s;
   const tip=document.getElementById('tooltip');
-  svg.querySelectorAll('.dot').forEach(c=>{
-    c.addEventListener('mouseenter',e=>{
-      tip.innerHTML='<b>'+decodeURIComponent(c.dataset.n)+'</b><br>Köpta: '+c.dataset.k+' · Lager: '+c.dataset.i+'<br>'+(xField==='sol'?'Soliditet':'Oms')+': '+c.dataset.x+' · RM-andel: '+c.dataset.r;
-      tip.style.opacity=1;});
-    c.addEventListener('mousemove',e=>{tip.style.left=(e.clientX+12)+'px';tip.style.top=(e.clientY+12)+'px';});
-    c.addEventListener('mouseleave',()=>{tip.style.opacity=0;});
-  });
+  svg.querySelectorAll('.dot').forEach(cc=>{cc.addEventListener('mouseenter',()=>{tip.innerHTML='<b>'+decodeURIComponent(cc.dataset.n)+'</b><br>Köpta: '+cc.dataset.k+' · Lager: '+cc.dataset.i+'<br>'+(xField==='sol'?'Soliditet':'Oms')+': '+cc.dataset.x+' · RM-andel: '+cc.dataset.r;tip.style.opacity=1;});cc.addEventListener('mousemove',e=>{tip.style.left=(e.clientX+12)+'px';tip.style.top=(e.clientY+12)+'px';});cc.addEventListener('mouseleave',()=>{tip.style.opacity=0;});});
 }
-
-/* wire flik 1 controls */
-document.getElementById('filterField').addEventListener('change',()=>{updateFilterSliderUI();updateProspects();});
-document.getElementById('filterSlider').addEventListener('input',e=>{
-  const field=document.getElementById('filterField').value;const cfg=FIELD_CFG[field];
-  cfg.val=+e.target.value;
-  document.getElementById('filterVal').textContent=cfg.label+': '+cfg.val+cfg.unit;
-  updateProspects();
-});
-document.getElementById('gemOnly').addEventListener('change',e=>{
-  document.getElementById('gemThreshRow').style.display=e.target.checked?'flex':'none';updateProspects();});
-['gemOms','gemKop'].forEach(id=>document.getElementById(id).addEventListener('input',()=>{
-  document.getElementById('gemOmsVal').textContent='< '+document.getElementById('gemOms').value+' Mkr';
-  document.getElementById('gemKopVal').textContent='≥ '+document.getElementById('gemKop').value;
-  updateProspects();}));
-document.getElementById('incUnmatched').addEventListener('change',updateProspects);
-document.getElementById('scatterX').addEventListener('change',updateProspects);
-
-/* ==================== FLIK 2 ==================== */
-const B_KOPTA=MATCHED.reduce((s,d)=>s+d.kopta,0);
-const B_INNEHAV=MATCHED.reduce((s,d)=>s+d.innehav,0);
-
-function updateBusiness(){
-  document.getElementById('b-antal').textContent=MATCHED.length;
-  document.getElementById('b-kopta').textContent=fInt(B_KOPTA);
-  document.getElementById('b-innehav').textContent=fInt(B_INNEHAV);
-  // svag soliditet
-  const thr=+document.getElementById('solThresh').value;
-  document.getElementById('solThreshVal').textContent=thr+' %';
-  const withSol=MATCHED.filter(d=>d.sol!=null);
-  const svag=withSol.filter(d=>d.sol<thr/100);
-  document.getElementById('b-svag').textContent=fPct(withSol.length?svag.length/withSol.length:null,0);
-  document.getElementById('b-svag-sub').textContent=svag.length+' av '+withSol.length+' m. bokslut (<'+thr+'%)';
-  drawDist();
-  updateSim();
-}
-
-/* distribution */
-const BUCKETS=[[0,25],[26,50],[51,100],[101,200],[201,500],[501,99999]];
-const BKT_LBL=['≤ 25','26–50','51–100','101–200','201–500','500+'];
-function drawDist(){
-  const cont=document.getElementById('dist');cont.innerHTML='';
-  const counts=BUCKETS.map(()=>0), vol=BUCKETS.map(()=>0);
-  MATCHED.forEach(d=>{const k=d.kopta;const bi=BUCKETS.findIndex(b=>k>=b[0]&&k<=b[1]);if(bi>=0){counts[bi]++;vol[bi]+=k;}});
-  const maxC=Math.max(...counts);
-  BUCKETS.forEach((b,i)=>{
-    const row=document.createElement('div');row.className='dist-row';
-    row.innerHTML='<div class="dist-lbl">'+BKT_LBL[i]+' bilar</div>'+
-      '<div class="dist-track"><div class="dist-fill" style="width:'+(counts[i]/maxC*100)+'%"></div></div>'+
-      '<div class="dist-val">'+counts[i]+' st · '+fPct(vol[i]/B_KOPTA,0)+' av volym</div>';
-    cont.appendChild(row);
-  });
-  // long-tail callout: dealers with <=50 köpta
-  const smallIdx=[0,1];
-  const smallCount=smallIdx.reduce((s,i)=>s+counts[i],0);
-  const smallVol=smallIdx.reduce((s,i)=>s+vol[i],0);
-  document.getElementById('dist-callout').innerHTML=
-    '<b>Långsvansen:</b> handlare med ≤50 köpta bilar utgör <b>'+smallCount+' av '+MATCHED.length+'</b> handlare ('+
-    fPct(smallCount/MATCHED.length,0)+') men står ändå för <b>'+fInt(smallVol)+' bilar</b> ('+fPct(smallVol/B_KOPTA,0)+
-    ' av volymen). Det är främst dessa mindre och växande handlare som bättre lagerfinansiering frigör – vilket ökar deras köpkraft hos Riddermark.';
-}
-
-/* simulator */
-function updateSim(){
-  const pris=+document.getElementById('simPris').value;
-  const andel=+document.getElementById('simAndel').value/100;
-  document.getElementById('simPrisVal').textContent=nf.format(pris)+' kr';
-  document.getElementById('simAndelVal').textContent=(andel*100)+' %';
-  const flow=B_KOPTA*pris*andel;
-  const stock=B_INNEHAV*pris*andel;
-  document.getElementById('simFlow').textContent=fKr(flow);
-  document.getElementById('simFlowSub').textContent=fMkr1(flow)+' · '+fInt(B_KOPTA)+' köpta × andel';
-  document.getElementById('simStock').textContent=fKr(stock);
-  document.getElementById('simStockSub').textContent=fMkr1(stock)+' · '+fInt(B_INNEHAV)+' i lager × andel';
-}
-['solThresh'].forEach(id=>document.getElementById(id).addEventListener('input',updateBusiness));
-['simPris','simAndel'].forEach(id=>document.getElementById(id).addEventListener('input',updateSim));
+document.getElementById('filterField').addEventListener('change',()=>{updateFilterSliderUI();updateAdvanced();});
+document.getElementById('filterSlider').addEventListener('input',e=>{const cfg=FIELD_CFG[document.getElementById('filterField').value];cfg.val=+e.target.value;document.getElementById('filterVal').textContent=cfg.label+': '+cfg.val+cfg.unit;updateAdvanced();});
+document.getElementById('incUnmatched').addEventListener('change',updateAdvanced);
+document.getElementById('scatterX').addEventListener('change',updateAdvanced);
 
 /* ---------- init ---------- */
-updateFilterSliderUI();
-updateProspects();
-updateBusiness();
+renderList();updateSelCount();
+updateFilterSliderUI();updateAdvanced();
+renderBusiness();
 </script>
 </body>
 </html>
