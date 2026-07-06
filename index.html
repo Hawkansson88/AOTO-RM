@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AOTO × Riddermark – Beslutsstöd 2026</title>
+<title>AOTO × Riddermark – Handlarstatus 2026</title>
 <style>
   *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
   body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f5f3;color:#1a1a18;min-height:100vh;padding:1.25rem 1rem;font-size:16px}
-  .container{max-width:920px;margin:0 auto}
+  .container{max-width:1200px;margin:0 auto}
   h1{font-size:19px;font-weight:600;margin-bottom:4px;color:#1a1a18}
   .subtitle{font-size:12px;color:#888;margin-bottom:1rem;line-height:1.5}
   .card{background:#fff;border:1px solid #e5e4df;border-radius:12px;padding:1rem;margin-bottom:1rem}
@@ -18,6 +18,7 @@
   .tabs{display:flex;gap:6px;margin-bottom:1rem;background:#ebebea;padding:4px;border-radius:10px}
   .tab{flex:1;padding:11px 8px;border:none;background:transparent;border-radius:7px;font-size:13.5px;font-weight:500;color:#666;cursor:pointer;font-family:inherit;transition:all .15s;line-height:1.3}
   .tab.active{background:#fff;color:#1a1a18;box-shadow:0 1px 2px rgba(0,0,0,.06)}
+  .tab:disabled{color:#b0b0ac;cursor:not-allowed;opacity:.65}
   .view{display:none}
   .view.active{display:block}
 
@@ -97,8 +98,29 @@
   .dist-track{background:#ebebea;border-radius:5px;height:20px;overflow:hidden}
   .dist-fill{height:100%;border-radius:5px;background:#2a78d6;transition:width .3s}
   .dist-val{font-size:11px;color:#555;white-space:nowrap}
+  .filter-bar{margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid #f0f0ee}
+  .filter-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px;padding:10px;background:#f9f9f7;border:1px solid #ebebea;border-radius:8px}
+  .filter-row select{min-width:140px}
+  .filter-row input[type=range]{flex:1;min-width:100px}
+  .filter-row .slider-val{font-size:12px;min-width:150px;text-align:right}
+  .filter-num{font-size:11px;font-weight:600;color:#888;min-width:52px}
+  .btn-sm{font-size:11px;padding:5px 9px}
+  .btn-outline{background:#fff;color:#666;border-color:#d8d7d2}
+  .page-nav{margin-bottom:1rem}
   .callout{background:#f0f7f2;border:1px solid #cfe7d8;border-radius:8px;padding:10px 12px;font-size:12px;color:#2a6b47;line-height:1.6;margin-top:6px}
   .callout b{font-weight:600}
+  .threshold-wrap{margin-bottom:14px;padding:12px;background:#f9f9f7;border:1px solid #ebebea;border-radius:10px}
+  .threshold-wrap .card-sub{margin-bottom:8px}
+  .thr-line{fill:none;stroke:#5b8fd6;stroke-width:2.5;stroke-linejoin:round}
+  .thr-dot{cursor:pointer}.thr-cur{fill:#d03b3b;stroke:#fff;stroke-width:1.5}.thr-knee{fill:#1b7a5a;stroke:#fff;stroke-width:1.5}
+  .thr-ref{stroke:#e8842e;stroke-width:1.5;stroke-dasharray:5 4;opacity:.85}
+  .conc-title{font-size:12px;font-weight:600;color:#555;margin-top:12px;margin-bottom:6px}
+  .conc-table{width:100%;border-collapse:collapse;font-size:11.5px;margin-top:4px}
+  .conc-table th{text-align:right;padding:6px 8px;font-weight:500;color:#666;border-bottom:1px solid #ebebea;font-size:10px;text-transform:uppercase;letter-spacing:.03em}
+  .conc-table th:first-child,.conc-table td:first-child{text-align:left}
+  .conc-table td{padding:5px 8px;border-bottom:1px solid #f0f0ee;text-align:right;font-variant-numeric:tabular-nums;color:#1a1a18}
+  .conc-table tr.conc-knee{background:#f0f7f2}
+  .conc-table tr.conc-knee td{font-weight:600;color:#1b7a5a}
 
   /* Advanced */
   details.adv{margin-bottom:1rem}
@@ -117,8 +139,26 @@
   tbody td{padding:7px 5px;color:#1a1a18;border-bottom:1px solid #f0f0ee;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
   tbody td:first-child{text-align:left;white-space:normal}
   tbody tr.unmatched{opacity:.7}
+  tbody tr.sel{background:#f4f8fd}
+  .chk-col{width:34px;text-align:center!important;padding:7px 4px!important;cursor:default}
+  .row-chk,.chk-all{width:16px;height:16px;accent-color:#2a78d6;cursor:pointer}
+  thead th.chk-col{cursor:default}
+  .analysis-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem}
+  .chart-card{background:#f9f9f7;border:1px solid #ebebea;border-radius:10px;padding:12px}
+  .chart-card h3{font-size:12px;font-weight:600;color:#555;margin-bottom:4px}
+  .chart-card p{font-size:10.5px;color:#999;margin-bottom:10px;line-height:1.45}
+  .bar-row{display:grid;grid-template-columns:minmax(72px,110px) 1fr;align-items:center;gap:8px;margin-bottom:6px;font-size:10px}
+  .bar-name{color:#666;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right}
+  .bar-group{display:flex;height:14px;border-radius:3px;overflow:hidden;background:#ebebea}
+  .bar-seg{height:100%;min-width:1px}
+  .bar-k{background:#5b8fd6}.bar-s{background:#3aaf7a}.bar-l{background:#b0b0a8}
+  .bar-legend{display:flex;gap:12px;margin-top:8px;font-size:10px;color:#888}
+  .bar-legend span::before{content:'';display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:4px;vertical-align:middle}
+  .bar-legend .lk::before{background:#5b8fd6}.bar-legend .ls::before{background:#3aaf7a}.bar-legend .ll::before{background:#b0b0a8}
+  tfoot td{padding:8px 5px;font-weight:600;color:#1a1a18;border-top:2px solid #d8d7d2;background:#f5f5f3;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;position:sticky;bottom:0;z-index:1}
+  tfoot td:first-child{text-align:left;white-space:normal}
   .na{color:#c0bfba;font-style:italic}
-  .tbl-wrap{max-height:52vh;overflow:auto;border-top:1px solid #f0f0ee;margin-top:10px}
+  .tbl-wrap{max-height:calc(100vh - 200px);overflow:auto;border-top:1px solid #f0f0ee;margin-top:10px}
   .city{font-size:10px;color:#aaa}
   .pos{color:#0ca30c}.neg{color:#d03b3b}
   .chartbox{width:100%;overflow-x:auto}
@@ -133,83 +173,88 @@
   @media(max-width:600px){
     .metrics{grid-template-columns:1fr}
     .sim-out{grid-template-columns:1fr}
+    .analysis-grid{grid-template-columns:1fr}
     body{padding:1rem .75rem}
   }
 </style>
 </head>
 <body>
 <div class="container">
-  <h1>AOTO × Riddermark – Beslutsstöd 2026</h1>
-  <p class="subtitle">Vilka handlare ska vi prata med, och vad tjänar Riddermark på det · finansiell data via Bolagsverket · aktivitet (köpt/sålt/lager 2026) från Riddermark Bil · 2026-07-04 // Anton</p>
-
-  <div class="tabs">
-    <button class="tab active" data-view="prospects">1 · Vilka ska AOTO satsa på?</button>
-    <button class="tab" data-view="business">2 · Vad tjänar Riddermark på det?</button>
-  </div>
+  <h1>AOTO × Riddermark – Handlarstatus 2026</h1>
+  <p class="subtitle">Aktuell status per handlare · finansiell data via Bolagsverket · aktivitet (köpt/sålt/lager 2026) från Riddermark Bil · 2026-07-04 // Anton</p>
 
   <div class="info" id="matchinfo"></div>
 
-  <!-- ==================== FLIK 1 ==================== -->
-  <div class="view active" id="view-prospects">
-    <div class="selbar">
-      <div>
-        <div class="n" id="selcount">0 handlare valda</div>
-        <div class="hint" id="selhint">Bocka för de du vill satsa på – urvalet driver flik 2.</div>
-      </div>
-      <div class="selbar-actions">
-        <button class="btn btn-ghost" id="selclear">Rensa</button>
-        <button class="btn btn-primary" id="seltobiz" disabled>Se effekten →</button>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="card-title">Prioriterade handlare för lagerfinansiering</div>
-      <div class="card-sub">Rangordnade efter hur väl de passar AOTO: hög köpaktivitet, snabb lageromsättning och tecken på kapitalbehov som traditionell kreditbedömning missar.</div>
-      <div id="ranklist"></div>
-      <button class="showmore" id="showmore" style="display:none"></button>
-    </div>
-
-    <details class="adv">
-      <summary>Avancerat · all data (filter, diagram, full tabell)</summary>
-      <div class="adv-body">
-        <div class="ctrl-row" style="margin-bottom:12px">
-          <span class="ctrl-label">Filtrera på:</span>
-          <select id="filterField">
-            <option value="oms">Omsättning (2025)</option>
-            <option value="sol">Soliditet</option>
-            <option value="netto">Nettotillväxt (köpt − sålt)</option>
-          </select>
-          <input type="range" id="filterSlider">
-          <span class="slider-val" id="filterVal"></span>
-        </div>
-        <label style="font-size:12px;color:#666;display:flex;gap:8px;align-items:center;margin-bottom:12px">
-          <input type="checkbox" id="incUnmatched" style="width:16px;height:16px;accent-color:#2a78d6"> Inkludera 32 omatchade bolag (endast finansiell data)
-        </label>
-        <div class="ctrl-row" style="margin-bottom:6px">
-          <span class="ctrl-label">Diagram X-axel:</span>
-          <select id="scatterX"><option value="sol">Soliditet</option><option value="oms">Omsättning (2025)</option></select>
-          <span class="dist-val" id="scatter-count"></span>
-        </div>
-        <div class="chartbox"><svg id="scatter" viewBox="0 0 720 380" preserveAspectRatio="xMidYMid meet"></svg></div>
-        <div class="legend"><span>Riddermark-andel:</span><span>låg</span><div class="legend-grad"></div><span>hög</span><span style="margin-left:10px">◦ litet / ● stort lager</span></div>
-        <div class="tbl-wrap">
-          <table><thead><tr id="thead-row"></tr></thead><tbody id="tbl-body"></tbody></table>
-        </div>
-        <div class="dist-val" id="tbl-count" style="margin-top:8px"></div>
-      </div>
-    </details>
+  <div class="tabs page-nav">
+    <button class="tab active" data-page="list">1 · Handlarlista</button>
+    <button class="tab" data-page="analysis" id="tabAnalysis" disabled>2 · Djupanalys</button>
   </div>
 
-  <!-- ==================== FLIK 2 ==================== -->
-  <div class="view" id="view-business">
-    <div id="biz-content"></div>
-
-    <div class="card">
-      <div class="card-title">Storleksfördelning – långsvansen av mindre handlare</div>
-      <div class="card-sub">Stödinfo: antal handlare per storleksklass (köpta bilar 2026), med klassens andel av total köpvolym.</div>
-      <div id="dist"></div>
-      <div class="callout" id="dist-callout"></div>
+  <!-- ========== SIDA 1 ========== -->
+  <div class="view active" id="view-list">
+  <div class="card">
+    <div class="card-title">Alla handlare</div>
+    <div class="card-sub">Filtrera med en eller flera sliders, bocka ur handlare och ta med dem till sida 2.</div>
+    <div class="selbar" id="selbar" style="display:none">
+      <div>
+        <div class="n" id="selcount">0 handlare valda</div>
+        <div class="hint" id="selhint">Urval från aktuellt filter – bocka i tabellen eller markera alla synliga.</div>
+      </div>
+      <div class="selbar-actions">
+        <button class="btn btn-ghost" id="selAllVisible">Alla synliga</button>
+        <button class="btn btn-ghost" id="selclear">Rensa</button>
+        <button class="btn btn-primary" id="selAnalyze">Ta med till analys →</button>
+      </div>
     </div>
+    <div class="filter-bar">
+      <div id="filterSliders"></div>
+      <button class="btn btn-outline btn-sm" id="addFilter" type="button">+ Lägg till filter</button>
+    </div>
+    <div class="threshold-wrap" id="threshold-wrap">
+      <div class="card-title" style="font-size:13px;margin-bottom:2px">Gränsanalys – handlare vs volym</div>
+      <div class="card-sub" id="threshold-sub" style="margin-bottom:8px">Varje punkt = en möjlig minimigräns. Kurvan visar avvägningen mellan få handlare och mycket volym.</div>
+      <div class="chartbox"><svg id="chart-threshold" viewBox="0 0 720 220" preserveAspectRatio="xMidYMid meet"></svg></div>
+      <div class="callout" id="threshold-callout"></div>
+      <div id="conc-table-wrap"></div>
+      <div class="callout" id="conc-recommend" style="display:none"></div>
+    </div>
+    <div class="tbl-wrap">
+      <table><thead><tr id="thead-row"></tr></thead><tbody id="tbl-body"></tbody><tfoot><tr id="tbl-foot"></tr></tfoot></table>
+    </div>
+    <div class="dist-val" id="tbl-count" style="margin-top:8px"></div>
+  </div>
+  </div>
+
+  <!-- ========== SIDA 2 ========== -->
+  <div class="view" id="view-analysis">
+  <div class="card">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:12px">
+      <div>
+        <div class="card-title" style="margin:0">Djupanalys · valda handlare</div>
+        <div class="card-sub" style="margin:8px 0 0" id="analysis-subtitle"></div>
+      </div>
+      <button class="btn btn-outline btn-sm" id="backToList" type="button">← Tillbaka till listan</button>
+    </div>
+    <div class="metrics" id="analysis-metrics"></div>
+    <div class="analysis-grid">
+      <div class="chart-card">
+        <h3>Bubbeldiagram – kapital vs aktivitet</h3>
+        <p>X-axel = finansiell styrka · Y = köpta bilar 2026 · bubbelstorlek = lager · färg = RM-andel. Hovra för detaljer.</p>
+        <div class="ctrl-row" style="margin-bottom:8px">
+          <span class="ctrl-label">X-axel:</span>
+          <select id="bubbleX"><option value="sol">Soliditet</option><option value="oms">Omsättning (2025)</option></select>
+        </div>
+        <div class="chartbox"><svg id="chart-bubble" viewBox="0 0 720 340" preserveAspectRatio="xMidYMid meet"></svg></div>
+        <div class="legend"><span>RM-andel:</span><span>låg</span><div class="legend-grad"></div><span>hög</span><span style="margin-left:8px">◦ litet · ● stort lager</span></div>
+      </div>
+      <div class="chart-card">
+        <h3>Aktivitet per handlare</h3>
+        <p>Staplar = köpta (blå) · sålda (grön) · lager (grå). Visar upp till 15 handlare, sorterade på RM-bilar.</p>
+        <div id="chart-bars"></div>
+        <div class="bar-legend"><span class="lk">Köpta</span><span class="ls">Sålda</span><span class="ll">Lager</span></div>
+      </div>
+    </div>
+  </div>
   </div>
 </div>
 
@@ -226,11 +271,6 @@ DATA.forEach(d=>{
 });
 const MATCHED=DATA.filter(d=>d.m===1);
 const UNMATCHED=DATA.filter(d=>d.m===0);
-const MAXKOPTA=Math.max(...MATCHED.map(d=>d.kopta));
-const B_KOPTA=MATCHED.reduce((s,d)=>s+d.kopta,0);
-const B_INNEHAV=MATCHED.reduce((s,d)=>s+d.innehav,0);
-const GEM_OMS=5e6, GEM_KOP=75;
-const selected=new Set();
 
 /* ---------- formatting ---------- */
 const nf=new Intl.NumberFormat('sv-SE');
@@ -254,176 +294,10 @@ function na(){return '<span class="na">data saknas</span>';}
   document.getElementById('toggleUnmatched').addEventListener('click',function(){const l=document.getElementById('unmatchedList');const s=l.style.display!=='block';l.style.display=s?'block':'none';this.textContent=s?'dölj':'visa';});
 })();
 
-/* ---------- badge + motivation ---------- */
-function isGem(d){return d.oms!=null&&d.oms<GEM_OMS&&d.kopta>=GEM_KOP;}
-function classify(d){
-  const pct=d.rmAndel!=null?Math.round(d.rmAndel*100):null;
-  if(isGem(d)) return {cls:'b-gem',label:'Snabbväxare',
-    motiv:`Köper ${d.kopta} bilar i år men redovisar bara ${fMkr(d.oms)} i omsättning – tillväxt som bokslutet inte hunnit visa.`};
-  if(d.kopta>=80 && (d.oms==null||d.sol==null)) return {cls:'b-unknown',label:'Stort men okänt bolag',
-    motiv:`Köper ${d.kopta} bilar i år men saknar publik bokslutsdata – svårbedömd med traditionell kreditlogik.`};
-  if(d.sol!=null && d.sol<0.15 && d.kopta>=40) return {cls:'b-weak',label:'Kapitalsvag men aktiv',
-    motiv:`Hög aktivitet (${d.kopta} köpta) men svag soliditet (${fPctPlain(d.sol)}) – sannolikt kapitalbegränsad idag.`};
-  if(d.rmAndel!=null && d.rmAndel>=0.5) return {cls:'b-rm',label:'Redan Riddermark-beroende',
-    motiv:`${pct} % av köpen kommer redan från Riddermark – naturlig kandidat för finansieringsupplägg.`};
-  if(d.omsHast!=null && d.omsHast>=2.5) return {cls:'b-hast',label:'Snabb lageromsättning',
-    motiv:`Omsätter lagret ${fRatio(d.omsHast)} på året – återkommande finansieringsbehov.`};
-  if(d.kopta>=100) return {cls:'b-vol',label:'Etablerad volymhandlare',
-    motiv:`${d.kopta} köpta bilar i år med ${d.innehav} i lager – stabil volym att bygga på.`};
-  return {cls:'b-active',label:'Aktiv handlare',
-    motiv:`${d.kopta} köpta bilar i år, ${d.innehav} i lager just nu.`};
-}
-function score(d){
-  const k=d.kopta/MAXKOPTA;
-  const gem=isGem(d)?1:0;
-  const hast=d.omsHast!=null?Math.min(d.omsHast/3,1):0;
-  const s=d.sol; let cap;
-  if(s==null)cap=0.6; else if(s<0)cap=1; else if(s<0.15)cap=0.9; else if(s<0.30)cap=0.5; else cap=0.1;
-  const grow=d.rmAndel!=null?(1-Math.min(d.rmAndel,1)):0.5;
-  return 40*k + 25*gem + 15*hast + 12*cap + 8*grow;
-}
-const RANKED=MATCHED.map(d=>({d,c:classify(d),s:score(d)})).sort((a,b)=>b.s-a.s);
-
-/* ---------- tabs ---------- */
-document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{switchView(t.dataset.view);}));
-function switchView(v){
-  document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.view===v));
-  document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));
-  document.getElementById('view-'+v).classList.add('active');
-  if(v==='business')renderBusiness();
-}
-document.getElementById('seltobiz').addEventListener('click',()=>switchView('business'));
-
-/* ==================== FLIK 1: ranked list ==================== */
-let showAll=false;
-function renderList(){
-  const cont=document.getElementById('ranklist');cont.innerHTML='';
-  const limit=showAll?RANKED.length:18;
-  RANKED.slice(0,limit).forEach((r,i)=>{
-    const d=r.d, sel=selected.has(d.orgnr);
-    const row=document.createElement('div');
-    row.className='rank'+(sel?' sel':'');
-    row.innerHTML=
-      `<input type="checkbox" class="rank-chk" data-org="${d.orgnr}" ${sel?'checked':''}>`+
-      `<div class="rank-num">${i+1}</div>`+
-      `<div class="rank-body">`+
-        `<div class="rank-head"><span class="rank-name">${d.namn}</span><span class="badge ${r.c.cls}">${r.c.label}</span><span class="rank-city">${d.stad||'–'}</span></div>`+
-        `<div class="rank-motiv">${r.c.motiv}</div>`+
-        `<div class="rank-nums"><span><b>${fInt(d.bilar)}</b> från Riddermark</span><span><b>${fInt(d.kopta)}</b> köpta totalt</span><span><b>${fInt(d.innehav)}</b> i lager</span><span>Soliditet <b>${fPctPlain(d.sol)}</b></span></div>`+
-      `</div>`;
-    cont.appendChild(row);
-  });
-  cont.querySelectorAll('.rank-chk').forEach(cb=>cb.addEventListener('change',()=>{
-    if(cb.checked)selected.add(cb.dataset.org); else selected.delete(cb.dataset.org);
-    cb.closest('.rank').classList.toggle('sel',cb.checked);
-    updateSelCount();
-  }));
-  const sm=document.getElementById('showmore');
-  if(RANKED.length>18){sm.style.display='block';sm.textContent=showAll?'Visa färre':`Visa fler (${RANKED.length-18} till)`;}
-  else sm.style.display='none';
-}
-document.getElementById('showmore').addEventListener('click',()=>{showAll=!showAll;renderList();});
-function updateSelCount(){
-  const n=selected.size;
-  document.getElementById('selcount').textContent=n+' handlare valda';
-  document.getElementById('seltobiz').disabled=n===0;
-  document.getElementById('selhint').textContent=n===0?'Bocka för de du vill satsa på – urvalet driver flik 2.':'Klart – gå till flik 2 för att se effekten för Riddermark.';
-}
-document.getElementById('selclear').addEventListener('click',()=>{selected.clear();renderList();updateSelCount();});
-
-/* ==================== FLIK 2 ==================== */
-function renderBusiness(){
-  const c=document.getElementById('biz-content');
-  const sel=MATCHED.filter(d=>selected.has(d.orgnr));
-  if(sel.length===0){
-    c.innerHTML=
-      `<div class="card"><div class="empty"><div class="arrow">↖</div><div class="big">Välj handlare i flik 1 för att se effekten här</div>`+
-      `<div style="font-size:12.5px">Nedan visas hela populationen som referens.</div></div></div>`+
-      `<div class="metrics">`+
-        metric('Handlare totalt',MATCHED.length,'med aktivitetsdata')+
-        metric('Bilar köpta 2026',fInt(B_KOPTA),'hela populationen')+
-        metric('Aktuellt lager',fInt(B_INNEHAV),'bilar just nu')+
-      `</div>`;
-    return;
-  }
-  const selKopta=sel.reduce((s,d)=>s+d.kopta,0);
-  const selInnehav=sel.reduce((s,d)=>s+d.innehav,0);
-  const gems=sel.filter(isGem).length;
-  const weak=sel.filter(d=>d.sol!=null&&d.sol<0.15).length;
-  const unknown=sel.filter(d=>d.oms==null).length;
-  const hastArr=sel.filter(d=>d.omsHast!=null).map(d=>d.omsHast);
-  const avgHast=hastArr.length?hastArr.reduce((a,b)=>a+b,0)/hastArr.length:null;
-
-  c.innerHTML=
-    `<div class="card" style="background:#1a1a18;border-color:#1a1a18">`+
-      `<div class="card-title" style="color:#fff">Effekt av ${sel.length} valda handlare</div>`+
-      `<div class="card-sub" style="color:#aaa;margin:0">Vad ett finansieringssamarbete kring just dessa handlare kan betyda för Riddermark.</div>`+
-    `</div>`+
-    `<div class="metrics">`+
-      metric('Valda handlare',sel.length,'av '+MATCHED.length+' ('+fPctPlain(sel.length/MATCHED.length)+')')+
-      metric('Andel av köpvolym',fPctPlain(selKopta/B_KOPTA),fInt(selKopta)+' av '+fInt(B_KOPTA)+' bilar')+
-      metric('Andel av lager',fPctPlain(selInnehav/B_INNEHAV),fInt(selInnehav)+' av '+fInt(B_INNEHAV)+' bilar')+
-    `</div>`+
-    `<div class="card"><div class="card-title">Vad betyder det för Riddermark?</div>`+
-      `<div class="prose">${bizProse(sel.length,selKopta,selInnehav,gems,weak,unknown,avgHast)}</div></div>`+
-    `<div class="card"><div class="card-title">Finansieringsbehov för urvalet <span class="pill">illustrativ</span></div>`+
-      `<div class="card-sub">Förenklad modell för diskussion, inte en prognos. Sätt antaget snittpris och hur stor andel av köpen som finansieras via AOTO.</div>`+
-      `<div class="controls">`+
-        `<div class="ctrl-row"><span class="ctrl-label">Snittpris per bil:</span><input type="range" id="simPris" min="50000" max="500000" value="180000" step="10000"><span class="slider-val" id="simPrisVal"></span></div>`+
-        `<div class="ctrl-row"><span class="ctrl-label">Andel finansierad via AOTO:</span><input type="range" id="simAndel" min="5" max="100" value="40" step="5"><span class="slider-val" id="simAndelVal"></span></div>`+
-      `</div>`+
-      `<div class="sim-out">`+
-        `<div class="sim-card primary"><div class="sim-label">Årligt finansieringsflöde (köp × andel)</div><div class="sim-value" id="simFlow">–</div><div class="sim-sub" id="simFlowSub"></div></div>`+
-        `<div class="sim-card"><div class="sim-label">Utestående lagerfinansiering (lager × andel)</div><div class="sim-value" id="simStock">–</div><div class="sim-sub" id="simStockSub"></div></div>`+
-      `</div>`+
-      `<div class="disclaimer">⚠︎ Illustrativ modell. Snittpris och finansieringsandel är antaganden. Beräkningen bygger på de valda handlarnas faktiska köpta bilar (2026 hittills) och aktuella lager, men säger inget om marginaler, kreditförluster eller villkor.</div>`+
-    `</div>`;
-
-  // wire simulator
-  const pris=document.getElementById('simPris'), andel=document.getElementById('simAndel');
-  function sim(){
-    const p=+pris.value, a=+andel.value/100;
-    document.getElementById('simPrisVal').textContent=nf.format(p)+' kr';
-    document.getElementById('simAndelVal').textContent=(a*100)+' %';
-    const flow=selKopta*p*a, stock=selInnehav*p*a;
-    document.getElementById('simFlow').textContent=fKr(flow);
-    document.getElementById('simFlowSub').textContent=fMkr(flow)+' · '+fInt(selKopta)+' köpta × andel';
-    document.getElementById('simStock').textContent=fKr(stock);
-    document.getElementById('simStockSub').textContent=fMkr(stock)+' · '+fInt(selInnehav)+' i lager × andel';
-  }
-  pris.addEventListener('input',sim);andel.addEventListener('input',sim);sim();
-}
-function metric(label,val,sub){return `<div class="metric"><div class="metric-label">${label}</div><div class="metric-value">${val}</div><div class="metric-sub">${sub}</div></div>`;}
-function bizProse(n,kopta,innehav,gems,weak,unknown,avgHast){
-  let s=`De <b>${n}</b> valda handlarna står för <b>${fPctPlain(kopta/B_KOPTA)}</b> av Riddermarks totala köpvolym och <b>${fPctPlain(innehav/B_INNEHAV)}</b> av det samlade lagret. `;
-  const parts=[];
-  if(gems)parts.push(`<b>${gems}</b> snabbväxare vars bokslut underskattar dem`);
-  if(weak)parts.push(`<b>${weak}</b> med svag soliditet`);
-  if(unknown)parts.push(`<b>${unknown}</b> utan publik bokslutsdata`);
-  if(parts.length)s+=`Av urvalet: ${parts.join(', ').replace(/,([^,]*)$/,' och$1')} – precis de grupper där bättre lagerfinansiering direkt frigör köpkraft. `;
-  if(avgHast!=null)s+=`De omsätter sitt lager i snitt <b>${fRatio(avgHast)}</b> per år, så finansieringen återanvänds ofta. `;
-  s+=`För Riddermark betyder det <b>fler affärer</b>, <b>snabbare rörlighet</b> på bilarna och utrymme för <b>bättre pris</b> – eftersom en finansierad handlare kan köpa mer och oftare.`;
-  return s;
-}
-
-/* distribution (support info) */
-const BUCKETS=[[0,25],[26,50],[51,100],[101,200],[201,500],[501,99999]];
-const BKT_LBL=['≤ 25','26–50','51–100','101–200','201–500','500+'];
-(function drawDist(){
-  const cont=document.getElementById('dist');cont.innerHTML='';
-  const counts=BUCKETS.map(()=>0),vol=BUCKETS.map(()=>0);
-  MATCHED.forEach(d=>{const bi=BUCKETS.findIndex(b=>d.kopta>=b[0]&&d.kopta<=b[1]);if(bi>=0){counts[bi]++;vol[bi]+=d.kopta;}});
-  const maxC=Math.max(...counts);
-  BUCKETS.forEach((b,i)=>{const row=document.createElement('div');row.className='dist-row';
-    row.innerHTML=`<div class="dist-lbl">${BKT_LBL[i]} bilar</div><div class="dist-track"><div class="dist-fill" style="width:${counts[i]/maxC*100}%"></div></div><div class="dist-val">${counts[i]} st · ${fPct(vol[i]/B_KOPTA,0)} av volym</div>`;
-    cont.appendChild(row);});
-  const smallC=counts[0]+counts[1], smallV=vol[0]+vol[1];
-  document.getElementById('dist-callout').innerHTML=`<b>Långsvansen:</b> handlare med ≤50 köpta bilar utgör <b>${smallC} av ${MATCHED.length}</b> handlare (${fPct(smallC/MATCHED.length,0)}) men står ändå för <b>${fInt(smallV)} bilar</b> (${fPct(smallV/B_KOPTA,0)} av volymen). Det är främst dessa mindre, växande handlare som bättre lagerfinansiering frigör.`;
-})();
-
-/* ==================== ADVANCED (filter + scatter + table) ==================== */
-const FIELD_CFG={oms:{min:0,max:200,step:1,val:0,unit:' Mkr',scale:1e6,label:'Omsättning minst'},sol:{min:0,max:100,step:1,val:0,unit:' %',scale:0.01,label:'Soliditet minst'},netto:{min:-50,max:300,step:5,val:-50,unit:' st',scale:1,label:'Nettotillväxt minst'}};
+/* ==================== SORTABLE TABLE ==================== */
 let sortKey='bilar',sortAsc=false;
+const selected=new Set();
+let visibleSet=[];
 const COLS=[
   {key:'namn',lbl:'Bolag',cell:d=>'<strong style="font-weight:600">'+d.namn+'</strong><br><span class="city">'+(d.stad||'–')+' · '+d.orgnr+'</span>'},
   {key:'bilar',lbl:'Bilar RM',cell:d=>fInt(d.bilar)},{key:'kopta',lbl:'Köpta',cell:d=>fInt(d.kopta)},
@@ -433,50 +307,381 @@ const COLS=[
   {key:'omsHast',lbl:'Oms.hast.',cell:d=>fRatio(d.omsHast)},{key:'oms',lbl:'Omsättning',cell:d=>fMkr(d.oms)},
   {key:'res',lbl:'Resultat',cell:d=>d.res==null?na():'<span class="'+(d.res>=0?'pos':'neg')+'">'+fTkr(d.res)+'</span>'},
   {key:'sol',lbl:'Soliditet',cell:d=>fPct(d.sol,0)}];
-(function(){const tr=document.getElementById('thead-row');COLS.forEach(c=>{const th=document.createElement('th');th.textContent=c.lbl;th.dataset.key=c.key;th.addEventListener('click',()=>{if(sortKey===c.key)sortAsc=!sortAsc;else{sortKey=c.key;sortAsc=false;}updateAdvanced();});tr.appendChild(th);});})();
-function colorFor(a){if(a==null)return '#cfcfca';const stops=[[0,[207,224,245]],[0.5,[91,143,214]],[1,[232,132,46]]];a=Math.max(0,Math.min(1,a));let i=1;while(i<stops.length&&a>stops[i][0])i++;const[t0,c0]=stops[i-1],[t1,c1]=stops[i];const f=(a-t0)/(t1-t0);return 'rgb('+c0.map((v,j)=>Math.round(v+(c1[j]-v)*f)).join(',')+')';}
-function advSet(){
-  let set=document.getElementById('incUnmatched').checked?DATA.slice():MATCHED.slice();
-  const field=document.getElementById('filterField').value,cfg=FIELD_CFG[field],thr=cfg.val*cfg.scale;
-  return set.filter(d=>{if(cfg.val<=cfg.min)return true;const v=d[field];if(v==null)return true;if(field==='netto')return v>=cfg.val;return v>=thr;});
+const FILTER_COLS=COLS.filter(c=>c.key!=='namn');
+const FILTER_CFG={};
+let nextFilterId=1;
+let filters=[];
+(function buildFilterCfg(){
+  const specs={
+    bilar:{unit:' st',step:1,fmt:v=>nf.format(v)},
+    kopta:{unit:' st',step:1,fmt:v=>nf.format(v)},
+    salda:{unit:' st',step:1,fmt:v=>nf.format(v)},
+    innehav:{unit:' st',step:1,fmt:v=>nf.format(v)},
+    rmAndel:{unit:' %',step:1,fmt:v=>v+' %',toThr:v=>v/100},
+    netto:{unit:' st',step:1,fmt:v=>(v>0?'+':'')+nf.format(v)},
+    omsHast:{unit:'×',step:1,fmt:v=>v.toLocaleString('sv-SE',{minimumFractionDigits:1,maximumFractionDigits:1})+'×',toThr:v=>v/10},
+    oms:{unit:' Mkr',step:1,fmt:v=>v.toLocaleString('sv-SE')+' Mkr',toThr:v=>v*1e6},
+    res:{unit:' tkr',step:10,fmt:v=>(v<0?'−':'')+nf.format(Math.abs(v))+' tkr',toThr:v=>v*1000},
+    sol:{unit:' %',step:1,fmt:v=>v+' %',toThr:v=>v/100}
+  };
+  FILTER_COLS.forEach(c=>{
+    const s=specs[c.key],vals=DATA.map(d=>d[c.key]).filter(v=>v!=null);
+    const dataMin=vals.length?Math.min(...vals):0,dataMax=vals.length?Math.max(...vals):100;
+    let sliderMin,sliderMax;
+    if(c.key==='netto'){sliderMin=Math.floor(dataMin/5)*5-5;sliderMax=Math.ceil(dataMax/5)*5;}
+    else if(c.key==='oms'){sliderMin=0;sliderMax=Math.max(10,Math.ceil(dataMax/1e6));}
+    else if(c.key==='res'){sliderMin=Math.floor(dataMin/10000)*10;sliderMax=Math.ceil(dataMax/10000)*10;}
+    else if(c.key==='rmAndel'||c.key==='sol'){sliderMin=0;sliderMax=100;}
+    else if(c.key==='omsHast'){sliderMin=0;sliderMax=Math.max(10,Math.ceil(dataMax*10));}
+    else{sliderMin=0;sliderMax=Math.max(10,Math.ceil(dataMax/10)*10);}
+    FILTER_CFG[c.key]={lbl:c.lbl,unit:s.unit,step:s.step,fmt:s.fmt,toThr:s.toThr||(v=>v),sliderMin,sliderMax};
+  });
+})();
+function newFilter(field){return {id:nextFilterId++,field,val:FILTER_CFG[field].sliderMin};}
+filters.push(newFilter('bilar'));
+function renderFilters(){
+  const cont=document.getElementById('filterSliders');cont.innerHTML='';
+  filters.forEach((f,i)=>{
+    const cfg=FILTER_CFG[f.field],row=document.createElement('div');row.className='filter-row';
+    row.innerHTML=
+      '<span class="filter-num">Filter '+(i+1)+'</span>'+
+      '<select class="filter-field" data-id="'+f.id+'">'+FILTER_COLS.map(c=>'<option value="'+c.key+'"'+(c.key===f.field?' selected':'')+'>'+c.lbl+'</option>').join('')+'</select>'+
+      '<input type="range" class="filter-slider" data-id="'+f.id+'" min="'+cfg.sliderMin+'" max="'+cfg.sliderMax+'" step="'+cfg.step+'" value="'+f.val+'">'+
+      '<span class="slider-val filter-val" data-id="'+f.id+'">'+cfg.lbl+' minst: '+cfg.fmt(f.val)+'</span>'+
+      (filters.length>1?'<button class="btn btn-outline btn-sm filter-rm" data-id="'+f.id+'" type="button">Ta bort</button>':'');
+    cont.appendChild(row);
+  });
+  cont.querySelectorAll('.filter-field').forEach(el=>el.addEventListener('change',e=>{
+    const f=filters.find(x=>x.id===+e.target.dataset.id);
+    f.field=e.target.value;f.val=FILTER_CFG[f.field].sliderMin;renderFilters();renderTable();
+  }));
+  cont.querySelectorAll('.filter-slider').forEach(el=>el.addEventListener('input',e=>{
+    const f=filters.find(x=>x.id===+e.target.dataset.id),cfg=FILTER_CFG[f.field];
+    f.val=+e.target.value;
+    cont.querySelector('.filter-val[data-id="'+f.id+'"]').textContent=cfg.lbl+' minst: '+cfg.fmt(f.val);
+    renderTable();
+  }));
+  cont.querySelectorAll('.filter-rm').forEach(el=>el.addEventListener('click',e=>{
+    filters=filters.filter(x=>x.id!==+e.target.dataset.id);renderFilters();renderTable();
+  }));
 }
-function updateFilterSliderUI(){const cfg=FIELD_CFG[document.getElementById('filterField').value];const s=document.getElementById('filterSlider');s.min=cfg.min;s.max=cfg.max;s.step=cfg.step;s.value=cfg.val;document.getElementById('filterVal').textContent=cfg.label+': '+cfg.val+cfg.unit;}
-function updateAdvanced(){
-  const set=advSet();
+document.getElementById('addFilter').addEventListener('click',()=>{
+  const used=new Set(filters.map(f=>f.field));
+  const next=FILTER_COLS.find(c=>!used.has(c.key))||FILTER_COLS[0];
+  filters.push(newFilter(next.key));renderFilters();renderTable();
+});
+function passesSingleFilter(d,f){
+  const cfg=FILTER_CFG[f.field];
+  if(f.val<=cfg.sliderMin)return true;
+  const v=d[f.field];
+  if(v==null)return true;
+  return v>=cfg.toThr(f.val);
+}
+function passesFilterExcept(d,excludeId,thrVal){
+  return filters.every(f=>{
+    if(f.id===excludeId){
+      const cfg=FILTER_CFG[f.field];
+      if(thrVal<=cfg.sliderMin)return true;
+      const v=d[f.field];
+      if(v==null)return true;
+      return v>=cfg.toThr(thrVal);
+    }
+    return passesSingleFilter(d,f);
+  });
+}
+function passesFilter(d){
+  return filters.every(f=>passesSingleFilter(d,f));
+}
+function buildThresholdCurve(filterId){
+  const f=filters.find(x=>x.id===filterId);
+  if(!f)return [];
+  const cfg=FILTER_CFG[f.field],best=new Map();
+  for(let t=cfg.sliderMin;t<=cfg.sliderMax;t+=cfg.step){
+    const subset=DATA.filter(d=>passesFilterExcept(d,filterId,t));
+    const pt={thr:t,n:subset.length,sum:sumField(subset,f.field)};
+    const key=pt.n+'|'+pt.sum;
+    if(!best.has(key)||t<best.get(key).thr)best.set(key,pt);
+  }
+  return [...best.values()].sort((a,b)=>b.n-a.n);
+}
+function findElbow(points){
+  if(points.length<3)return points[Math.floor(points.length/2)]||points[0];
+  const a=points[0],b=points[points.length-1];
+  const rx=Math.max(...points.map(p=>p.n))-Math.min(...points.map(p=>p.n))||1;
+  const ry=Math.max(...points.map(p=>p.sum))-Math.min(...points.map(p=>p.sum))||1;
+  let best=null,bestD=-1;
+  for(let i=1;i<points.length-1;i++){
+    const p=points[i],px=(p.n-a.n)/rx,py=(p.sum-a.sum)/ry,qx=(b.n-a.n)/rx,qy=(b.sum-a.sum)/ry;
+    const d=Math.abs(qy*px-qx*py)/Math.hypot(qx,qy);
+    if(d>bestD){bestD=d;best=p;}
+  }
+  return best;
+}
+function findVolumeTarget(points,totAll,target){
+  if(!totAll)return points[0];
+  let best=null;
+  points.forEach(p=>{if(p.sum/totAll>=target&&(!best||p.thr>best.thr))best=p;});
+  return best||points[0];
+}
+function sumFmt(field,v){
+  if(field==='oms')return fMkr(v);
+  if(field==='res')return fTkr(v);
+  if(field==='rmAndel'||field==='sol')return fPct(v,1);
+  if(field==='omsHast')return fRatio(v);
+  return fInt(v);
+}
+function fieldThrFmt(field,raw){
+  if(raw==null)return '–';
+  const cfg=FILTER_CFG[field];
+  if(field==='oms')return cfg.fmt(Math.round(raw/1e6));
+  if(field==='res')return cfg.fmt(Math.round(raw/1000));
+  if(field==='rmAndel'||field==='sol')return cfg.fmt(Math.round(raw*100));
+  if(field==='omsHast')return cfg.fmt(Math.round(raw*10));
+  return cfg.fmt(Math.round(raw));
+}
+function getRankedByField(field){
+  return DATA.slice().sort((a,b)=>{
+    const x=a[field],y=b[field];
+    if(x==null&&y==null)return 0;
+    if(x==null)return 1;
+    if(y==null)return -1;
+    return y-x;
+  });
+}
+const CONC_MILESTONES=[1,5,10,15,20,25,30,40,50,70,100];
+function renderConcentrationTable(){
+  const wrap=document.getElementById('conc-table-wrap'),rec=document.getElementById('conc-recommend');
+  const focus=filters[0];
+  if(!focus){wrap.innerHTML='';rec.style.display='none';return;}
+  const field=focus.field,cfg=FILTER_CFG[field];
+  const ranked=getRankedByField(field),total=ranked.length;
+  if(!total){wrap.innerHTML='';rec.style.display='none';return;}
+  const totAll=sumField(DATA,field),totLbl=cfg.lbl.toLowerCase();
+  const ms=CONC_MILESTONES.filter(n=>n<=total);
+  if(ms[ms.length-1]!==total)ms.push(total);
+  const topVal=ranked[0][field];
+  const kneeThr=topVal!=null?topVal*0.3:null;
+  let prevN=0,prevCum=0,kneeRow=null,rows=[];
+  ms.forEach(n=>{
+    const slice=ranked.slice(0,n),cum=sumField(slice,field);
+    const marg=n>prevN?(cum-prevCum)/(n-prevN):null;
+    const row={n,cum,pct:totAll?cum/totAll*100:0,marg,thr:slice[n-1][field]};
+    if(kneeThr!=null&&kneeRow==null&&marg!=null&&marg<kneeThr)kneeRow=row;
+    rows.push(row);prevN=n;prevCum=cum;
+  });
+  let html='<div class="conc-title">Koncentration – topp handlare sorterade på '+cfg.lbl+'</div><table class="conc-table"><thead><tr>'+
+    '<th>Antal handlare</th><th>Kumulativ volym</th><th>Andel</th><th>Marginellt snitt</th></tr></thead><tbody>';
+  rows.forEach(r=>{
+    const isKnee=kneeRow&&r.n===kneeRow.n;
+    html+='<tr'+(isKnee?' class="conc-knee"':'')+'><td>'+fInt(r.n)+(isKnee?' ◆':'')+'</td><td>'+sumFmt(field,r.cum)+'</td><td>'+Math.round(r.pct)+' %</td><td>'+
+      (r.marg==null?'–':sumFmt(field,r.marg))+'</td></tr>';
+  });
+  html+='</tbody></table>';
+  wrap.innerHTML=html;
+  if(kneeRow){
+    rec.style.display='block';
+    rec.innerHTML='Vid gräns ≥ <b>'+fieldThrFmt(field,kneeRow.thr)+'</b> behöver du samarbeta med endast <b>'+kneeRow.n+'</b> handlare för att nå <b>'+Math.round(kneeRow.pct)+' %</b> av den totala volymen i '+totLbl+'.';
+  }else{
+    rec.style.display='block';
+    const last=rows[rows.length-1];
+    rec.innerHTML='Ingen tydlig knäpunkt – marginellt snitt sjunker inte under 30 % av största handlaren. Alla <b>'+last.n+'</b> handlare krävs för <b>'+Math.round(last.pct)+' %</b> av '+totLbl+'.';
+  }
+}
+function drawThresholdAnalysis(){
+  const wrap=document.getElementById('threshold-wrap'),svg=document.getElementById('chart-threshold'),callout=document.getElementById('threshold-callout');
+  const focus=filters[0];
+  if(!focus){wrap.style.display='none';return;}
+  const cfg=FILTER_CFG[focus.field],points=buildThresholdCurve(focus.id);
+  if(points.length<2){wrap.style.display='none';return;}
+  wrap.style.display='block';
+  const totAll=sumField(DATA,focus.field),totLbl=cfg.lbl.toLowerCase();
+  document.getElementById('threshold-sub').textContent='Filter 1 · '+cfg.lbl+' · X = antal handlare · Y = totalt '+totLbl+' i urvalet'+(filters.length>1?' (övriga filter tillämpas)':'')+'. Klicka på kurvan för att sätta gränsen.';
+  const W=720,H=220,pad={l:52,r:20,t:16,b:36};
+  const nMin=Math.min(...points.map(p=>p.n)),nMax=Math.max(...points.map(p=>p.n));
+  const sMin=Math.min(...points.map(p=>p.sum)),sMax=Math.max(...points.map(p=>p.sum)||[1]);
+  const px=n=>pad.l+((n-nMin)/(nMax-nMin||1))*(W-pad.l-pad.r);
+  const py=s=>H-pad.b-((s-sMin)/(sMax-sMin||1))*(H-pad.t-pad.b);
+  const knee=findElbow(points),suggest=findVolumeTarget(points,totAll,0.65);
+  const cur=points.find(p=>p.thr===focus.val)||points.reduce((a,b)=>Math.abs(b.thr-focus.val)<Math.abs(a.thr-focus.val)?b:a);
+  const pct=v=>totAll?Math.round(v/totAll*100):0;
+  let s='';
+  const targetY=totAll*0.65;
+  if(sMax>sMin&&targetY>=sMin&&targetY<=sMax){
+    const y65=py(targetY);
+    s+='<line class="grid-line" x1="'+pad.l+'" y1="'+y65+'" x2="'+(W-pad.r)+'" y2="'+y65+'" stroke="#cfe7d8" stroke-width="1"/><text class="tick-txt" x="'+(pad.l+4)+'" y="'+(y65-3)+'">65 % av totalt</text>';
+  }
+  for(let i=0;i<=4;i++){
+    const yv=sMin+(sMax-sMin)*i/4,y=py(yv);
+    s+='<line class="grid-line" x1="'+pad.l+'" y1="'+y+'" x2="'+(W-pad.r)+'" y2="'+y+'"/>';
+    s+='<text class="tick-txt" x="'+(pad.l-6)+'" y="'+(y+3)+'" text-anchor="end">'+sumFmt(focus.field,yv)+'</text>';
+  }
+  for(let i=0;i<=4;i++){
+    const xv=nMin+(nMax-nMin)*i/4,x=px(xv);
+    s+='<text class="tick-txt" x="'+x+'" y="'+(H-pad.b+14)+'" text-anchor="middle">'+fInt(Math.round(xv))+'</text>';
+  }
+  s+='<line class="axis-line" x1="'+pad.l+'" y1="'+(H-pad.b)+'" x2="'+(W-pad.r)+'" y2="'+(H-pad.b)+'"/><line class="axis-line" x1="'+pad.l+'" y1="'+pad.t+'" x2="'+pad.l+'" y2="'+(H-pad.b)+'"/>';
+  s+='<text class="axis-label" x="'+(pad.l+(W-pad.l-pad.r)/2)+'" y="'+(H-4)+'" text-anchor="middle">Antal handlare</text>';
+  s+='<text class="axis-label" transform="translate(14,'+(pad.t+(H-pad.t-pad.b)/2)+') rotate(-90)" text-anchor="middle">Totalt '+totLbl+'</text>';
+  const path=points.map((p,i)=>(i?'L':'M')+px(p.n).toFixed(1)+','+py(p.sum).toFixed(1)).join(' ');
+  s+='<path class="thr-line" d="'+path+'"/>';
+  s+='<line class="thr-ref" x1="'+px(suggest.n)+'" y1="'+py(suggest.sum)+'" x2="'+px(cur.n)+'" y2="'+py(cur.sum)+'"/>';
+  points.forEach(p=>{
+    s+='<circle class="thr-dot" data-thr="'+p.thr+'" cx="'+px(p.n).toFixed(1)+'" cy="'+py(p.sum).toFixed(1)+'" r="4" fill="#5b8fd6" stroke="#fff" stroke-width="1"/>';
+  });
+  s+='<circle class="thr-dot thr-knee" data-thr="'+suggest.thr+'" cx="'+px(suggest.n).toFixed(1)+'" cy="'+py(suggest.sum).toFixed(1)+'" r="6" title="Föreslagen gräns"/>';
+  s+='<circle class="thr-dot thr-cur" data-thr="'+cur.thr+'" cx="'+px(cur.n).toFixed(1)+'" cy="'+py(cur.sum).toFixed(1)+'" r="6" title="Nuvarande gräns"/>';
+  svg.innerHTML=s;
+  const tip=document.getElementById('tooltip');
+  svg.querySelectorAll('.thr-dot').forEach(cc=>{
+    const thr=+cc.dataset.thr,p=points.find(x=>x.thr===thr)||{n:0,sum:0,thr};
+    cc.addEventListener('mouseenter',()=>{tip.innerHTML='<b>Gräns ≥ '+cfg.fmt(thr)+'</b><br>'+p.n+' handlare · '+sumFmt(focus.field,p.sum)+'<br>'+pct(p.sum)+' % av alla '+totLbl;tip.style.opacity=1;});
+    cc.addEventListener('mousemove',e=>{tip.style.left=(e.clientX+12)+'px';tip.style.top=(e.clientY+12)+'px';});
+    cc.addEventListener('mouseleave',()=>{tip.style.opacity=0;});
+    cc.addEventListener('click',()=>{focus.val=thr;renderFilters();renderTable();});
+  });
+  const curPct=pct(cur.sum),sugPct=pct(suggest.sum),kneePct=pct(knee.sum);
+  callout.innerHTML='<b>Nuvarande:</b> gräns ≥ '+cfg.fmt(focus.val)+' → '+cur.n+' handlare, '+sumFmt(focus.field,cur.sum)+' ('+curPct+' % av totalt)<br>'+
+    '<b>Föreslagen gräns:</b> ≥ '+cfg.fmt(suggest.thr)+' → '+suggest.n+' handlare, '+sumFmt(focus.field,suggest.sum)+' ('+sugPct+' % av totalt) – högsta tröskel som behåller minst 65 % av volymen<br>'+
+    '<span style="color:#5a7a62">Knäpunkt på kurvan: ≥ '+cfg.fmt(knee.thr)+' → '+knee.n+' handlare ('+kneePct+' % volym)</span>';
+}
+function sumField(set,key){return set.reduce((s,d)=>d[key]!=null?s+d[key]:s,0);}
+function summarizeFoot(set){
+  const n=set.length;
+  const bilar=sumField(set,'bilar'),kopta=sumField(set,'kopta'),salda=sumField(set,'salda'),innehav=sumField(set,'innehav');
+  const netto=set.some(d=>d.netto!=null)?sumField(set,'netto'):null;
+  const oms=set.some(d=>d.oms!=null)?sumField(set,'oms'):null;
+  const res=set.some(d=>d.res!=null)?sumField(set,'res'):null;
+  const solVals=set.map(d=>d.sol).filter(v=>v!=null);
+  const solAvg=solVals.length?solVals.reduce((a,b)=>a+b,0)/solVals.length:null;
+  const rmAndel=kopta>0?bilar/kopta:null;
+  const omsHast=innehav>0?salda/innehav:null;
+  return [
+    '<strong>Summa</strong><br><span class="city">'+n+' handlare</span>',
+    fInt(bilar),fInt(kopta),fInt(salda),fInt(innehav),fPct(rmAndel,0),
+    netto==null?na():'<span class="'+(netto>0?'pos':netto<0?'neg':'')+'">'+(netto>0?'+':'')+fInt(netto)+'</span>',
+    fRatio(omsHast),fMkr(oms),
+    res==null?na():'<span class="'+(res>=0?'pos':'neg')+'">'+fTkr(res)+'</span>',
+    fPct(solAvg,0)
+  ];
+}
+(function(){
+  const tr=document.getElementById('thead-row');
+  const th0=document.createElement('th');th0.className='chk-col';
+  th0.innerHTML='<input type="checkbox" class="chk-all" id="chkAll" title="Markera alla synliga">';
+  tr.appendChild(th0);
+  COLS.forEach(c=>{const th=document.createElement('th');th.textContent=c.lbl;th.dataset.key=c.key;th.addEventListener('click',()=>{if(sortKey===c.key)sortAsc=!sortAsc;else{sortKey=c.key;sortAsc=false;}renderTable();});tr.appendChild(th);});
+  document.getElementById('chkAll').addEventListener('change',e=>{
+    visibleSet.forEach(d=>{if(e.target.checked)selected.add(d.orgnr);else selected.delete(d.orgnr);});
+    updateSelUI();renderTable();
+  });
+})();
+function updateSelUI(){
+  const n=selected.size;
+  document.getElementById('selbar').style.display=n>0?'flex':'none';
+  document.getElementById('selcount').textContent=n+' handlare valda';
+  document.getElementById('tabAnalysis').disabled=n===0;
+  const chkAll=document.getElementById('chkAll');
+  if(chkAll)chkAll.checked=visibleSet.length>0&&visibleSet.every(d=>selected.has(d.orgnr));
+  if(chkAll)chkAll.indeterminate=visibleSet.some(d=>selected.has(d.orgnr))&&!visibleSet.every(d=>selected.has(d.orgnr));
+  if(document.getElementById('view-analysis').classList.contains('active'))renderAnalysis();
+}
+function showPage(page){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t.dataset.page===page));
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById('view-'+page).classList.add('active');
+  if(page==='analysis')renderAnalysis();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{if(!t.disabled)showPage(t.dataset.page);}));
+document.getElementById('backToList').addEventListener('click',()=>showPage('list'));
+function toggleSel(orgnr,on){if(on)selected.add(orgnr);else selected.delete(orgnr);updateSelUI();}
+function renderTable(){
+  const set=DATA.filter(passesFilter);
+  visibleSet=set;
   set.sort((a,b)=>{let x=a[sortKey],y=b[sortKey];if(x==null&&y==null)return 0;if(x==null)return 1;if(y==null)return -1;if(typeof x==='string')return sortAsc?x.localeCompare(y,'sv'):y.localeCompare(x,'sv');return sortAsc?x-y:y-x;});
   document.querySelectorAll('#thead-row th').forEach(th=>{th.classList.toggle('sorted',th.dataset.key===sortKey);th.classList.toggle('asc',th.dataset.key===sortKey&&sortAsc);});
   const tb=document.getElementById('tbl-body');tb.innerHTML='';
-  set.forEach(d=>{const tr=document.createElement('tr');if(d.m===0)tr.classList.add('unmatched');tr.innerHTML=COLS.map(c=>'<td>'+c.cell(d)+'</td>').join('');tb.appendChild(tr);});
-  document.getElementById('tbl-count').textContent=set.length+' bolag';
-  drawScatter(set);
+  set.forEach(d=>{
+    const tr=document.createElement('tr');
+    if(d.m===0)tr.classList.add('unmatched');
+    if(selected.has(d.orgnr))tr.classList.add('sel');
+    const chk=selected.has(d.orgnr)?' checked':'';
+    tr.innerHTML='<td class="chk-col"><input type="checkbox" class="row-chk" data-org="'+d.orgnr+'"'+chk+'></td>'+COLS.map(c=>'<td>'+c.cell(d)+'</td>').join('');
+    tr.querySelector('.row-chk').addEventListener('change',e=>{toggleSel(d.orgnr,e.target.checked);tr.classList.toggle('sel',e.target.checked);});
+    tb.appendChild(tr);
+  });
+  const foot=summarizeFoot(set);
+  document.getElementById('tbl-foot').innerHTML='<td class="chk-col"></td>'+foot.map(v=>'<td>'+v+'</td>').join('');
+  document.getElementById('tbl-count').textContent=set.length+' av '+DATA.length+' handlare · '+MATCHED.length+' med aktivitetsdata';
+  drawThresholdAnalysis();
+  renderConcentrationTable();
+  updateSelUI();
 }
-function drawScatter(set){
-  const svg=document.getElementById('scatter');const W=720,H=380,pad={l:52,r:16,t:14,b:40};
-  const xField=document.getElementById('scatterX').value;
-  const pts=set.filter(d=>d.kopta!=null&&d[xField]!=null);
-  document.getElementById('scatter-count').textContent=pts.length+' bolag ritade';
-  const xMax=Math.max(1,...pts.map(d=>d[xField])),yMax=Math.max(10,...pts.map(d=>d.kopta)),iMax=Math.max(1,...pts.map(d=>d.innehav));
-  const px=v=>pad.l+(v/xMax)*(W-pad.l-pad.r),py=v=>H-pad.b-(v/yMax)*(H-pad.t-pad.b),pr=v=>4+Math.sqrt(v/iMax)*18;
+document.getElementById('selclear').addEventListener('click',()=>{selected.clear();updateSelUI();renderTable();});
+document.getElementById('selAllVisible').addEventListener('click',()=>{visibleSet.forEach(d=>selected.add(d.orgnr));updateSelUI();renderTable();});
+document.getElementById('selAnalyze').addEventListener('click',()=>{if(selected.size)showPage('analysis');});
+
+/* ==================== ANALYSIS ==================== */
+function metricCard(label,val,sub){return '<div class="metric"><div class="metric-label">'+label+'</div><div class="metric-value">'+val+'</div><div class="metric-sub">'+sub+'</div></div>';}
+function colorFor(a){if(a==null)return '#cfcfca';const stops=[[0,[207,224,245]],[0.5,[91,143,214]],[1,[232,132,46]]];a=Math.max(0,Math.min(1,a));let i=1;while(i<stops.length&&a>stops[i][0])i++;const[t0,c0]=stops[i-1],[t1,c1]=stops[i];const f=(a-t0)/(t1-t0);return 'rgb('+c0.map((v,j)=>Math.round(v+(c1[j]-v)*f)).join(',')+')';}
+function shortName(n){return n.length>22?n.slice(0,20)+'…':n;}
+function renderAnalysis(){
+  const sel=DATA.filter(d=>selected.has(d.orgnr));
+  document.getElementById('analysis-subtitle').textContent=sel.length+' handlare i urvalet · visualisering av kapital, aktivitet och lagerflöde';
+  const bilar=sumField(sel,'bilar'),kopta=sumField(sel,'kopta'),innehav=sumField(sel,'innehav');
+  const totB=sumField(DATA,'bilar'),totK=sumField(DATA,'kopta'),totI=sumField(DATA,'innehav');
+  document.getElementById('analysis-metrics').innerHTML=
+    metricCard('Valda handlare',sel.length,'av '+DATA.length+' totalt')+
+    metricCard('RM-bilar i urval',fInt(bilar),fPctPlain(bilar/totB)+' av alla')+
+    metricCard('Köpta bilar',fInt(kopta),fPctPlain(kopta/totK)+' av total volym')+
+    metricCard('Lager',fInt(innehav),fPctPlain(innehav/totI)+' av totalt lager');
+  drawBubble(sel);
+  drawBars(sel);
+}
+function drawBubble(sel){
+  const svg=document.getElementById('chart-bubble'),xField=document.getElementById('bubbleX').value;
+  const W=720,H=340,pad={l:52,r:16,t:14,b:40};
+  const pts=sel.filter(d=>d.kopta!=null&&d[xField]!=null);
+  if(!pts.length){svg.innerHTML='<text x="'+(W/2)+'" y="'+(H/2)+'" text-anchor="middle" class="tick-txt">Ingen data att visa – saknar '+ (xField==='sol'?'soliditet':'omsättning')+' eller köpvolym</text>';return;}
+  const xMax=Math.max(xField==='sol'?0.01:1e6,...pts.map(d=>d[xField])),yMax=Math.max(10,...pts.map(d=>d.kopta)),iMax=Math.max(1,...pts.map(d=>d.innehav||0));
+  const px=v=>pad.l+(v/xMax)*(W-pad.l-pad.r),py=v=>H-pad.b-(v/yMax)*(H-pad.t-pad.b),pr=v=>5+Math.sqrt((v||0)/iMax)*20;
   let s='';
   for(let i=0;i<=4;i++){const yv=yMax*i/4,y=py(yv);s+='<line class="grid-line" x1="'+pad.l+'" y1="'+y+'" x2="'+(W-pad.r)+'" y2="'+y+'"/><text class="tick-txt" x="'+(pad.l-6)+'" y="'+(y+3)+'" text-anchor="end">'+fInt(yv)+'</text>';}
   for(let i=0;i<=4;i++){const xv=xMax*i/4,x=px(xv),lbl=xField==='sol'?Math.round(xv*100)+'%':Math.round(xv/1e6)+'M';s+='<text class="tick-txt" x="'+x+'" y="'+(H-pad.b+14)+'" text-anchor="middle">'+lbl+'</text>';}
   s+='<line class="axis-line" x1="'+pad.l+'" y1="'+(H-pad.b)+'" x2="'+(W-pad.r)+'" y2="'+(H-pad.b)+'"/><line class="axis-line" x1="'+pad.l+'" y1="'+pad.t+'" x2="'+pad.l+'" y2="'+(H-pad.b)+'"/>';
   s+='<text class="axis-label" x="'+(pad.l+(W-pad.l-pad.r)/2)+'" y="'+(H-4)+'" text-anchor="middle">'+(xField==='sol'?'Soliditet':'Omsättning 2025')+'</text>';
-  s+='<text class="axis-label" transform="translate(13,'+(pad.t+(H-pad.t-pad.b)/2)+') rotate(-90)" text-anchor="middle">Köpta bilar totalt 2026</text>';
-  pts.sort((a,b)=>b.innehav-a.innehav).forEach(d=>{s+='<circle class="dot" cx="'+px(d[xField]).toFixed(1)+'" cy="'+py(d.kopta).toFixed(1)+'" r="'+pr(d.innehav).toFixed(1)+'" fill="'+colorFor(d.rmAndel)+'" data-n="'+encodeURIComponent(d.namn)+'" data-x="'+(xField==='sol'?fPctPlain(d.sol):fMkr(d.oms))+'" data-k="'+d.kopta+'" data-i="'+d.innehav+'" data-r="'+fPctPlain(d.rmAndel)+'"/>';});
-  svg.innerHTML=s;
+  s+='<text class="axis-label" transform="translate(13,'+(pad.t+(H-pad.t-pad.b)/2)+') rotate(-90)" text-anchor="middle">Köpta bilar 2026</text>';
   const tip=document.getElementById('tooltip');
-  svg.querySelectorAll('.dot').forEach(cc=>{cc.addEventListener('mouseenter',()=>{tip.innerHTML='<b>'+decodeURIComponent(cc.dataset.n)+'</b><br>Köpta: '+cc.dataset.k+' · Lager: '+cc.dataset.i+'<br>'+(xField==='sol'?'Soliditet':'Oms')+': '+cc.dataset.x+' · RM-andel: '+cc.dataset.r;tip.style.opacity=1;});cc.addEventListener('mousemove',e=>{tip.style.left=(e.clientX+12)+'px';tip.style.top=(e.clientY+12)+'px';});cc.addEventListener('mouseleave',()=>{tip.style.opacity=0;});});
+  pts.sort((a,b)=>(b.innehav||0)-(a.innehav||0)).forEach(d=>{
+    s+='<circle class="dot" cx="'+px(d[xField]).toFixed(1)+'" cy="'+py(d.kopta).toFixed(1)+'" r="'+pr(d.innehav).toFixed(1)+'" fill="'+colorFor(d.rmAndel)+'" data-n="'+encodeURIComponent(d.namn)+'" data-x="'+(xField==='sol'?fPctPlain(d.sol):fMkr(d.oms))+'" data-k="'+d.kopta+'" data-i="'+(d.innehav??'–')+'" data-r="'+fPctPlain(d.rmAndel)+'"/>';
+  });
+  svg.innerHTML=s;
+  svg.querySelectorAll('.dot').forEach(cc=>{
+    cc.addEventListener('mouseenter',()=>{tip.innerHTML='<b>'+decodeURIComponent(cc.dataset.n)+'</b><br>Köpta: '+cc.dataset.k+' · Lager: '+cc.dataset.i+'<br>'+(xField==='sol'?'Soliditet':'Oms')+': '+cc.dataset.x+' · RM-andel: '+cc.dataset.r;tip.style.opacity=1;});
+    cc.addEventListener('mousemove',e=>{tip.style.left=(e.clientX+12)+'px';tip.style.top=(e.clientY+12)+'px';});
+    cc.addEventListener('mouseleave',()=>{tip.style.opacity=0;});
+  });
 }
-document.getElementById('filterField').addEventListener('change',()=>{updateFilterSliderUI();updateAdvanced();});
-document.getElementById('filterSlider').addEventListener('input',e=>{const cfg=FIELD_CFG[document.getElementById('filterField').value];cfg.val=+e.target.value;document.getElementById('filterVal').textContent=cfg.label+': '+cfg.val+cfg.unit;updateAdvanced();});
-document.getElementById('incUnmatched').addEventListener('change',updateAdvanced);
-document.getElementById('scatterX').addEventListener('change',updateAdvanced);
+function drawBars(sel){
+  const cont=document.getElementById('chart-bars');cont.innerHTML='';
+  const rows=sel.slice().sort((a,b)=>b.bilar-a.bilar).slice(0,15);
+  const maxV=Math.max(1,...rows.flatMap(d=>[d.kopta||0,d.salda||0,d.innehav||0]));
+  rows.forEach(d=>{
+    const k=d.kopta||0,s=d.salda||0,l=d.innehav||0,tot=k+s+l||1;
+    const row=document.createElement('div');row.className='bar-row';
+    row.innerHTML='<div class="bar-name" title="'+d.namn+'">'+shortName(d.namn)+'</div><div class="bar-group">'+
+      '<div class="bar-seg bar-k" style="width:'+(k/maxV*100).toFixed(1)+'%" title="Köpta: '+k+'"></div>'+
+      '<div class="bar-seg bar-s" style="width:'+(s/maxV*100).toFixed(1)+'%" title="Sålda: '+s+'"></div>'+
+      '<div class="bar-seg bar-l" style="width:'+(l/maxV*100).toFixed(1)+'%" title="Lager: '+l+'"></div></div>';
+    cont.appendChild(row);
+  });
+  if(sel.length>15){const m=document.createElement('p');m.style.cssText='font-size:10px;color:#aaa;margin-top:8px';m.textContent='+ '+(sel.length-15)+' handlare till i urvalet (ej visade)';cont.appendChild(m);}
+}
+document.getElementById('bubbleX').addEventListener('change',()=>{if(document.getElementById('view-analysis').classList.contains('active'))drawBubble(DATA.filter(d=>selected.has(d.orgnr)));});
 
 /* ---------- init ---------- */
-renderList();updateSelCount();
-updateFilterSliderUI();updateAdvanced();
-renderBusiness();
+renderFilters();
+renderTable();
 </script>
 </body>
 </html>
