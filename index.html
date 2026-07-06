@@ -3,49 +3,74 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#f5f5f3">
+<meta name="theme-color" content="#0891b2">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <title>AOTO × Riddermark – Handlarstatus 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
+  :root{
+    --rm-primary:#0891b2;
+    --rm-primary-dark:#0e7490;
+    --rm-heading:#1e3a5f;
+    --rm-heading-dark:#0c4a6e;
+    --rm-tint:#ecfeff;
+    --rm-tint-border:#a5f3fc;
+    --rm-green:#059669;
+    --rm-green-light:#34d399;
+    --rm-neg:#b45309;
+    --rm-bg:#f5f5f5;
+    --rm-surface:#fff;
+    --rm-muted:#f8f8f8;
+    --rm-border:#E3E3E3;
+    --rm-text:#2d2d2d;
+    --rm-text-muted:#7c7c7c;
+    --rm-shadow:0 1px 3px rgba(30,58,95,.06),0 4px 14px rgba(8,145,178,.06);
+  }
   *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-  body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f5f5f3;color:#1a1a18;min-height:100vh;min-height:100dvh;padding:1.25rem max(1rem,env(safe-area-inset-right)) max(1rem,env(safe-area-inset-bottom)) max(1rem,env(safe-area-inset-left));font-size:16px;-webkit-text-size-adjust:100%}
+  body{font-family:'Open Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:var(--rm-bg);color:var(--rm-text);min-height:100vh;min-height:100dvh;padding:1.25rem max(1rem,env(safe-area-inset-right)) max(1rem,env(safe-area-inset-bottom)) max(1rem,env(safe-area-inset-left));font-size:16px;-webkit-text-size-adjust:100%}
   .container{max-width:1200px;margin:0 auto}
-  h1{font-size:19px;font-weight:600;margin-bottom:4px;color:#1a1a18}
-  .subtitle{font-size:12px;color:#888;margin-bottom:1rem;line-height:1.5}
-  .card{background:#fff;border:1px solid #e5e4df;border-radius:12px;padding:1rem;margin-bottom:1rem}
-  .card-title{font-size:14px;font-weight:600;color:#1a1a18;margin-bottom:2px}
-  .card-sub{font-size:11.5px;color:#999;margin-bottom:12px;line-height:1.5}
+  .page-header{margin-bottom:1.1rem;padding-bottom:1rem;border-bottom:3px solid transparent;border-image:linear-gradient(90deg,var(--rm-primary-dark),var(--rm-heading)) 1}
+  h1{font-size:21px;font-weight:700;margin-bottom:6px;background:linear-gradient(90deg,var(--rm-primary),var(--rm-heading));-webkit-background-clip:text;background-clip:text;color:transparent;letter-spacing:-.02em;line-height:1.25}
+  .subtitle{font-size:12px;color:var(--rm-text-muted);margin-bottom:0;line-height:1.55}
+  .card{background:var(--rm-surface);border:1px solid var(--rm-border);border-radius:14px;padding:1.1rem;margin-bottom:1rem;box-shadow:var(--rm-shadow)}
+  .card-title{font-size:14px;font-weight:700;color:var(--rm-heading);margin-bottom:2px}
+  .card-sub{font-size:11.5px;color:var(--rm-text-muted);margin-bottom:12px;line-height:1.5}
 
   /* Tabs */
-  .tabs{display:flex;gap:6px;margin-bottom:1rem;background:#ebebea;padding:4px;border-radius:10px}
-  .tab{flex:1;padding:11px 8px;border:none;background:transparent;border-radius:7px;font-size:13.5px;font-weight:500;color:#666;cursor:pointer;font-family:inherit;transition:all .15s;line-height:1.3}
-  .tab.active{background:#fff;color:#1a1a18;box-shadow:0 1px 2px rgba(0,0,0,.06)}
-  .tab:disabled{color:#b0b0ac;cursor:not-allowed;opacity:.65}
+  .tabs{display:flex;gap:6px;margin-bottom:1rem;background:var(--rm-muted);padding:4px;border-radius:12px;border:1px solid var(--rm-border)}
+  .tab{flex:1;padding:11px 8px;border:none;background:transparent;border-radius:9px;font-size:13.5px;font-weight:600;color:var(--rm-text-muted);cursor:pointer;font-family:inherit;transition:all .18s;line-height:1.3}
+  .tab.active{background:var(--rm-surface);color:var(--rm-primary);box-shadow:0 2px 8px rgba(8,145,178,.14)}
+  .tab:disabled{color:#b0b0ac;cursor:not-allowed;opacity:.55}
   .view{display:none}
   .view.active{display:block}
 
   /* Info / match report */
-  .info{display:flex;flex-wrap:wrap;gap:4px 14px;background:#eef4fb;border:1px solid #d6e4f5;border-radius:8px;padding:9px 12px;font-size:11px;color:#3a5a7a;margin-bottom:1rem;line-height:1.5}
-  .info b{color:#2a5580;font-weight:600}
-  .info .link{color:#2a78d6;cursor:pointer;text-decoration:underline;text-underline-offset:2px}
-  .unmatched-list{display:none;margin-top:8px;max-height:150px;overflow-y:auto;font-size:10.5px;color:#6a7a8a;line-height:1.6;border-top:1px solid #d6e4f5;padding-top:8px;width:100%}
+  .info{display:flex;flex-wrap:wrap;gap:4px 14px;background:linear-gradient(135deg,#ecfeff 0%,#f0f9ff 100%);border:1px solid var(--rm-tint-border);border-radius:10px;padding:9px 12px;font-size:11px;color:#334155;margin-bottom:1rem;line-height:1.5}
+  .info b{color:var(--rm-primary);font-weight:700}
+  .info .link{color:var(--rm-primary);cursor:pointer;text-decoration:underline;text-underline-offset:2px;font-weight:600}
+  .unmatched-list{display:none;margin-top:8px;max-height:150px;overflow-y:auto;font-size:10.5px;color:var(--rm-text-muted);line-height:1.6;border-top:1px solid var(--rm-tint-border);padding-top:8px;width:100%}
 
   /* Selection bar */
-  .selbar{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:10px;background:#1a1a18;color:#fff;border-radius:10px;padding:11px 14px;margin-bottom:1rem;flex-wrap:wrap}
-  .selbar .n{font-size:14px;font-weight:600}
-  .selbar .hint{font-size:11px;color:#b7b7b3}
+  .selbar{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;gap:10px;background:linear-gradient(135deg,var(--rm-heading) 0%,var(--rm-heading-dark) 100%);color:#fff;border-radius:12px;padding:11px 14px;margin-bottom:1rem;flex-wrap:wrap;box-shadow:0 4px 16px rgba(30,58,95,.22)}
+  .selbar .n{font-size:14px;font-weight:700}
+  .selbar .hint{font-size:11px;color:rgba(255,255,255,.72)}
   .selbar-actions{display:flex;gap:8px;align-items:center}
-  .btn{font-family:inherit;font-size:12.5px;font-weight:500;border-radius:7px;padding:7px 12px;cursor:pointer;border:1px solid transparent;touch-action:manipulation}
-  .btn-primary{background:#2a78d6;color:#fff}
-  .btn-primary:disabled{background:#3a3a38;color:#888;cursor:default}
-  .btn-ghost{background:transparent;color:#cfcfca;border-color:#444}
+  .btn{font-family:inherit;font-size:12.5px;font-weight:600;border-radius:8px;padding:7px 14px;cursor:pointer;border:1px solid transparent;touch-action:manipulation;transition:background .15s,transform .1s}
+  .btn:active{transform:scale(.98)}
+  .btn-primary{background:var(--rm-primary);color:#fff;box-shadow:0 2px 8px rgba(8,145,178,.3)}
+  .btn-primary:hover{background:var(--rm-primary-dark)}
+  .btn-primary:disabled{background:#94a3b8;color:rgba(255,255,255,.55);cursor:default;box-shadow:none}
+  .btn-ghost{background:rgba(255,255,255,.1);color:#fff;border-color:rgba(255,255,255,.28)}
+  .btn-ghost:hover{background:rgba(255,255,255,.18)}
 
   /* Ranked cards */
   .rank{display:flex;gap:12px;align-items:flex-start;padding:13px 4px;border-bottom:1px solid #f0f0ee}
   .rank:last-child{border-bottom:none}
-  .rank.sel{background:#f4f8fd;border-radius:8px;padding-left:10px;padding-right:10px}
-  .rank-chk{margin-top:3px;width:19px;height:19px;accent-color:#2a78d6;cursor:pointer;flex-shrink:0}
+  .rank.sel{background:var(--rm-tint);border-radius:8px;padding-left:10px;padding-right:10px}
+  .rank-chk{margin-top:3px;width:19px;height:19px;accent-color:var(--rm-primary);cursor:pointer;flex-shrink:0}
   .rank-num{font-size:12px;font-weight:600;color:#c0bfba;min-width:20px;text-align:right;margin-top:2px;font-variant-numeric:tabular-nums}
   .rank-body{flex:1;min-width:0}
   .rank-head{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
@@ -53,23 +78,23 @@
   .rank-city{font-size:11px;color:#aaa}
   .badge{display:inline-block;border-radius:20px;padding:2px 9px;font-size:10.5px;font-weight:600;white-space:nowrap}
   .b-gem{background:#fff3d6;color:#8a6d1a}
-  .b-unknown{background:#ede8f5;color:#6a5a8a}
-  .b-weak{background:#fbe4e4;color:#b23a3a}
-  .b-rm{background:#e3edfb;color:#2a5580}
-  .b-hast{background:#e0f2ec;color:#1b7a5a}
+  .b-unknown{background:#e0f2fe;color:#0369a1}
+  .b-weak{background:#fef3c7;color:#b45309}
+  .b-rm{background:var(--rm-tint);color:var(--rm-primary-dark)}
+  .b-hast{background:#e8f7f0;color:var(--rm-green)}
   .b-vol{background:#e8e8e5;color:#555}
   .b-active{background:#f0f0ee;color:#999}
   .rank-motiv{font-size:13px;color:#3a3a38;line-height:1.5;margin:5px 0 6px}
   .rank-nums{font-size:11px;color:#999;display:flex;gap:14px;flex-wrap:wrap}
   .rank-nums b{color:#555;font-weight:600}
-  .showmore{width:100%;text-align:center;padding:11px;background:#f5f5f3;border:1px solid #e5e4df;border-radius:8px;font-size:12.5px;color:#2a78d6;cursor:pointer;font-family:inherit;font-weight:500;margin-top:6px}
+  .showmore{width:100%;text-align:center;padding:11px;background:var(--rm-muted);border:1px solid var(--rm-border);border-radius:8px;font-size:12.5px;color:var(--rm-primary);cursor:pointer;font-family:inherit;font-weight:600;margin-top:6px}
 
   /* Metrics */
   .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:1rem}
-  .metric{background:#f5f5f3;border-radius:8px;padding:0.8rem;text-align:center}
-  .metric-label{font-size:11px;color:#888;margin-bottom:4px;line-height:1.3}
-  .metric-value{font-size:21px;font-weight:600;color:#1a1a18}
-  .metric-sub{font-size:10px;color:#aaa;margin-top:2px;line-height:1.3}
+  .metric{background:var(--rm-muted);border:1px solid var(--rm-border);border-radius:10px;padding:0.8rem;text-align:center}
+  .metric-label{font-size:11px;color:var(--rm-text-muted);margin-bottom:4px;line-height:1.3}
+  .metric-value{font-size:21px;font-weight:700;color:var(--rm-heading)}
+  .metric-sub{font-size:10px;color:var(--rm-text-muted);margin-top:2px;line-height:1.3}
 
   /* Empty state */
   .empty{text-align:center;padding:2rem 1rem;color:#999}
@@ -77,18 +102,18 @@
   .empty .arrow{font-size:26px;margin-bottom:10px}
 
   /* Summary prose */
-  .prose{background:#f0f7f2;border:1px solid #cfe7d8;border-radius:8px;padding:14px 16px;font-size:13.5px;color:#2a5a42;line-height:1.65}
-  .prose b{font-weight:600;color:#1b7a5a}
+  .prose{background:#e8f7f0;border:1px solid #b8e6d0;border-radius:8px;padding:14px 16px;font-size:13.5px;color:#1a5c40;line-height:1.65}
+  .prose b{font-weight:700;color:var(--rm-green)}
 
   /* Simulator */
   .controls{display:flex;flex-direction:column;gap:14px}
   .ctrl-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
   .ctrl-label{font-size:12.5px;color:#666}
-  input[type=range]{flex:1;min-width:120px;accent-color:#2a78d6;cursor:pointer;height:28px;touch-action:pan-x}
+  input[type=range]{flex:1;min-width:120px;accent-color:var(--rm-primary);cursor:pointer;height:28px;touch-action:pan-x}
   .slider-val{font-size:16px;font-weight:600;min-width:104px;color:#1a1a18;text-align:right;font-variant-numeric:tabular-nums}
   .sim-out{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
   .sim-card{background:#f5f5f3;border-radius:8px;padding:12px;text-align:center}
-  .sim-card.primary{background:#eef4fb;border:1px solid #d6e4f5}
+  .sim-card.primary{background:var(--rm-tint);border:1px solid var(--rm-tint-border)}
   .sim-label{font-size:11px;color:#888;margin-bottom:4px;line-height:1.3}
   .sim-value{font-size:19px;font-weight:600;color:#1a1a18}
   .sim-sub{font-size:10px;color:#aaa;margin-top:3px}
@@ -99,7 +124,7 @@
   .dist-row{display:grid;grid-template-columns:88px 1fr auto;align-items:center;gap:10px;margin-bottom:9px;font-size:12px}
   .dist-lbl{color:#666;text-align:right;font-variant-numeric:tabular-nums}
   .dist-track{background:#ebebea;border-radius:5px;height:20px;overflow:hidden}
-  .dist-fill{height:100%;border-radius:5px;background:#2a78d6;transition:width .3s}
+  .dist-fill{height:100%;border-radius:5px;background:linear-gradient(90deg,var(--rm-primary-dark),var(--rm-primary));transition:width .3s}
   .dist-val{font-size:11px;color:#555;white-space:nowrap}
   .filter-bar{margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid #f0f0ee}
   .filter-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:10px;padding:10px;background:#f9f9f7;border:1px solid #ebebea;border-radius:8px}
@@ -108,22 +133,28 @@
   .filter-row .slider-val{font-size:12px;min-width:150px;text-align:right}
   .filter-num{font-size:11px;font-weight:600;color:#888;min-width:52px}
   .btn-sm{font-size:11px;padding:5px 9px}
-  .btn-outline{background:#fff;color:#666;border-color:#d8d7d2}
+  .btn-outline{background:var(--rm-surface);color:var(--rm-heading);border-color:var(--rm-border);font-weight:600}
+  .btn-outline:hover{border-color:var(--rm-primary);color:var(--rm-primary)}
   .page-nav{margin-bottom:1rem}
-  .callout{background:#f0f7f2;border:1px solid #cfe7d8;border-radius:8px;padding:10px 12px;font-size:12px;color:#2a6b47;line-height:1.6;margin-top:6px}
-  .callout b{font-weight:600}
-  .threshold-wrap{margin-bottom:14px;padding:12px;background:#f9f9f7;border:1px solid #ebebea;border-radius:10px}
+  .callout{background:#e8f7f0;border:1px solid #b8e6d0;border-radius:10px;padding:10px 12px;font-size:12px;color:#1a5c40;line-height:1.6;margin-top:6px}
+  .callout b{font-weight:700;color:var(--rm-green)}
+  .threshold-wrap{margin-bottom:14px;padding:12px;background:var(--rm-muted);border:1px solid var(--rm-border);border-radius:12px}
   .threshold-wrap .card-sub{margin-bottom:8px}
-  .thr-line{fill:none;stroke:#5b8fd6;stroke-width:2.5;stroke-linejoin:round}
-  .thr-dot{cursor:pointer}.thr-cur{fill:#d03b3b;stroke:#fff;stroke-width:1.5}.thr-knee{fill:#1b7a5a;stroke:#fff;stroke-width:1.5}
-  .thr-ref{stroke:#e8842e;stroke-width:1.5;stroke-dasharray:5 4;opacity:.85}
+  .thr-line{fill:none;stroke-width:2.5;stroke-linejoin:round}
+  .thr-dot{cursor:pointer}
+  .live-cur{fill:var(--rm-primary);stroke:#fff;stroke-width:2.5;filter:drop-shadow(0 2px 4px rgba(8,145,178,.35))}
+  .live-readout{font-size:18px;font-weight:700;line-height:1.5;margin:14px 0;color:var(--rm-text);font-variant-numeric:tabular-nums}
+  .live-readout .hl{color:var(--rm-primary)}
+  .live-controls{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+  .live-controls input[type=range]{flex:1;min-width:140px}
+  .live-hit{cursor:pointer;fill:transparent;stroke:none}
   .conc-title{font-size:12px;font-weight:600;color:#555;margin-top:12px;margin-bottom:6px}
   .conc-table{width:100%;border-collapse:collapse;font-size:11.5px;margin-top:4px}
   .conc-table th{text-align:right;padding:6px 8px;font-weight:500;color:#666;border-bottom:1px solid #ebebea;font-size:10px;text-transform:uppercase;letter-spacing:.03em}
   .conc-table th:first-child,.conc-table td:first-child{text-align:left}
   .conc-table td{padding:5px 8px;border-bottom:1px solid #f0f0ee;text-align:right;font-variant-numeric:tabular-nums;color:#1a1a18}
-  .conc-table tr.conc-knee{background:#f0f7f2}
-  .conc-table tr.conc-knee td{font-weight:600;color:#1b7a5a}
+  .conc-table tr.conc-knee{background:#e8f7f0}
+  .conc-table tr.conc-knee td{font-weight:600;color:var(--rm-green)}
 
   /* Advanced */
   details.adv{margin-bottom:1rem}
@@ -137,41 +168,41 @@
   table{width:100%;border-collapse:collapse;font-size:12px;table-layout:auto}
   thead th{text-align:right;padding:7px 5px;font-weight:500;color:#666;border-bottom:1px solid #ebebea;font-size:10px;text-transform:uppercase;letter-spacing:.03em;position:sticky;top:0;background:#fff;z-index:1;cursor:pointer;white-space:nowrap;user-select:none}
   thead th:first-child{text-align:left}
-  thead th.sorted::after{content:' ▾';color:#2a78d6}
+  thead th.sorted::after{content:' ▾';color:var(--rm-primary)}
   thead th.sorted.asc::after{content:' ▴'}
   tbody td{padding:7px 5px;color:#1a1a18;border-bottom:1px solid #f0f0ee;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
   tbody td:first-child{text-align:left;white-space:normal}
   tbody tr.unmatched{opacity:.7}
-  tbody tr.sel{background:#f4f8fd}
+  tbody tr.sel{background:var(--rm-tint)}
   .chk-col{width:34px;text-align:center!important;padding:7px 4px!important;cursor:default}
-  .row-chk,.chk-all{width:16px;height:16px;accent-color:#2a78d6;cursor:pointer}
+  .row-chk,.chk-all{width:16px;height:16px;accent-color:var(--rm-primary);cursor:pointer}
   thead th.chk-col{cursor:default}
   .analysis-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:1rem}
-  .chart-card{background:#f9f9f7;border:1px solid #ebebea;border-radius:10px;padding:12px}
-  .chart-card h3{font-size:12px;font-weight:600;color:#555;margin-bottom:4px}
+  .chart-card{background:var(--rm-muted);border:1px solid var(--rm-border);border-radius:12px;padding:12px}
+  .chart-card h3{font-size:12px;font-weight:700;color:var(--rm-heading);margin-bottom:4px}
   .chart-card p{font-size:10.5px;color:#999;margin-bottom:10px;line-height:1.45}
   .bar-row{display:grid;grid-template-columns:minmax(72px,110px) 1fr;align-items:center;gap:8px;margin-bottom:6px;font-size:10px}
   .bar-name{color:#666;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:right}
   .bar-group{display:flex;height:14px;border-radius:3px;overflow:hidden;background:#ebebea}
   .bar-seg{height:100%;min-width:1px}
-  .bar-k{background:#5b8fd6}.bar-s{background:#3aaf7a}.bar-l{background:#b0b0a8}
-  .bar-legend{display:flex;gap:12px;margin-top:8px;font-size:10px;color:#888}
+  .bar-k{background:var(--rm-primary)}.bar-s{background:var(--rm-green)}.bar-l{background:#969696}
+  .bar-legend{display:flex;gap:12px;margin-top:8px;font-size:10px;color:var(--rm-text-muted)}
   .bar-legend span::before{content:'';display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:4px;vertical-align:middle}
-  .bar-legend .lk::before{background:#5b8fd6}.bar-legend .ls::before{background:#3aaf7a}.bar-legend .ll::before{background:#b0b0a8}
-  tfoot td{padding:8px 5px;font-weight:600;color:#1a1a18;border-top:2px solid #d8d7d2;background:#f5f5f3;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;position:sticky;bottom:0;z-index:1}
+  .bar-legend .lk::before{background:var(--rm-primary)}.bar-legend .ls::before{background:var(--rm-green)}.bar-legend .ll::before{background:#969696}
+  tfoot td{padding:8px 5px;font-weight:700;color:var(--rm-heading);border-top:2px solid var(--rm-border);background:var(--rm-muted);text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;position:sticky;bottom:0;z-index:1}
   tfoot td:first-child{text-align:left;white-space:normal}
   .na{color:#c0bfba;font-style:italic}
   .tbl-wrap{max-height:calc(100vh - 200px);overflow:auto;border-top:1px solid #f0f0ee;margin-top:10px;-webkit-overflow-scrolling:touch}
   .city{font-size:10px;color:#aaa}
-  .pos{color:#0ca30c}.neg{color:#d03b3b}
+  .pos{color:var(--rm-green)}.neg{color:var(--rm-neg)}
   .chartbox{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
   svg{display:block;max-width:100%}
-  .grid-line{stroke:#f0f0ee;stroke-width:1}.axis-line{stroke:#d8d7d2;stroke-width:1}
-  .tick-txt{font-size:9.5px;fill:#aaa}.axis-label{font-size:10px;fill:#999}
+  .grid-line{stroke:#ececec;stroke-width:1}.axis-line{stroke:var(--rm-border);stroke-width:1}
+  .tick-txt{font-size:9.5px;fill:var(--rm-text-muted)}.axis-label{font-size:10px;fill:var(--rm-text-muted);font-weight:600}
   .dot{stroke:#fff;stroke-width:.8;cursor:pointer}
-  .legend{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-top:10px;font-size:10.5px;color:#888}
-  .legend-grad{width:110px;height:10px;border-radius:5px;background:linear-gradient(90deg,#cfe0f5,#5b8fd6,#e8842e)}
-  .tooltip{position:fixed;pointer-events:none;background:#1a1a18;color:#fff;font-size:11px;padding:6px 9px;border-radius:6px;opacity:0;transition:opacity .1s;z-index:20;line-height:1.5;max-width:220px}
+  .legend{display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-top:10px;font-size:10.5px;color:var(--rm-text-muted)}
+  .legend-grad{width:110px;height:10px;border-radius:5px;background:linear-gradient(90deg,#cffafe,var(--rm-primary),var(--rm-heading))}
+  .tooltip{position:fixed;pointer-events:none;background:var(--rm-heading);color:#fff;font-size:11px;padding:6px 9px;border-radius:8px;opacity:0;transition:opacity .1s;z-index:20;line-height:1.5;max-width:220px;box-shadow:0 4px 12px rgba(30,58,95,.28)}
 
   #conc-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;margin-top:8px}
 
@@ -213,8 +244,8 @@
     thead th:nth-child(1),tbody td:nth-child(1),tfoot td:nth-child(1){position:sticky;left:0;z-index:2;background:#fff;box-shadow:2px 0 4px rgba(0,0,0,.05)}
     thead th:nth-child(2),tbody td:nth-child(2),tfoot td:nth-child(2){position:sticky;left:34px;z-index:2;background:#fff;box-shadow:4px 0 6px rgba(0,0,0,.04)}
     thead th:nth-child(1),thead th:nth-child(2){z-index:4;background:#fff}
-    tfoot td:nth-child(1),tfoot td:nth-child(2){background:#f5f5f3}
-    tbody tr.sel td:nth-child(1),tbody tr.sel td:nth-child(2){background:#f4f8fd}
+    tfoot td:nth-child(1),tfoot td:nth-child(2){background:var(--rm-muted)}
+    tbody tr.sel td:nth-child(1),tbody tr.sel td:nth-child(2){background:var(--rm-tint)}
     .row-chk,.chk-all{width:20px;height:20px}
     thead th,tbody td,tfoot td{padding:8px 4px;font-size:11px}
     thead th:nth-child(8),thead th:nth-child(9),thead th:nth-child(11),
@@ -225,6 +256,9 @@
     #backToList{width:100%;min-height:44px;margin-top:4px}
     .legend{gap:8px;font-size:10px}
     .legend-grad{width:80px}
+    .live-readout{font-size:15px}
+    .live-controls{flex-direction:column;align-items:stretch}
+    .live-controls input[type=range]{width:100%;height:36px}
   }
 
   @media(max-width:380px){
@@ -236,43 +270,41 @@
 </head>
 <body>
 <div class="container">
-  <h1>AOTO × Riddermark – Handlarstatus 2026</h1>
-  <p class="subtitle">Aktuell status per handlare · finansiell data via Bolagsverket · aktivitet (köpt/sålt/lager 2026) från Riddermark Bil · 2026-07-04 // Anton</p>
+  <div class="page-header">
+    <h1>AOTO × Riddermark – Handlarstatus 2026</h1>
+    <p class="subtitle">Aktuell status per handlare · finansiell data via Bolagsverket · aktivitet (köpt/sålt/lager 2026) från Riddermark Bil · 2026-07-06 // Anton</p>
+  </div>
 
   <div class="info" id="matchinfo"></div>
 
   <div class="tabs page-nav">
-    <button class="tab active" data-page="list">1 · Handlarlista</button>
+    <button class="tab active" data-page="live">1 · RM-gräns</button>
     <button class="tab" data-page="analysis" id="tabAnalysis" disabled>2 · Djupanalys</button>
   </div>
 
-  <!-- ========== SIDA 1 ========== -->
-  <div class="view active" id="view-list">
+  <!-- ========== SIDA 1 · RM-gräns ========== -->
+  <div class="view active" id="view-live">
   <div class="card">
-    <div class="card-title">Alla handlare</div>
-    <div class="card-sub">Filtrera med en eller flera sliders, bocka ur handlare och ta med dem till sida 2.</div>
+    <div class="card-title">RM-gräns</div>
+    <div class="card-sub">Dra slidern eller klicka på kurvan för att sätta minimigräns på RM-bilar. Listan nedan visar handlare som uppfyller gränsen – bocka ur och ta med till djupanalys.</div>
+    <div class="live-controls">
+      <input type="range" id="liveBilarSlider" min="0" max="100" step="1" value="0">
+    </div>
+    <div class="live-readout" id="liveBilarReadout"></div>
+    <div class="threshold-wrap" style="margin-bottom:14px">
+      <div class="chartbox"><svg id="chart-live" viewBox="0 0 720 280" preserveAspectRatio="xMidYMid meet"></svg></div>
+      <div class="callout" id="live-recommend"></div>
+    </div>
     <div class="selbar" id="selbar" style="display:none">
       <div>
         <div class="n" id="selcount">0 handlare valda</div>
-        <div class="hint" id="selhint">Urval från aktuellt filter – bocka i tabellen eller markera alla synliga.</div>
+        <div class="hint" id="selhint">Urval från listan nedan – bocka i tabellen eller markera alla synliga.</div>
       </div>
       <div class="selbar-actions">
         <button class="btn btn-ghost" id="selAllVisible">Alla synliga</button>
         <button class="btn btn-ghost" id="selclear">Rensa</button>
         <button class="btn btn-primary" id="selAnalyze">Ta med till analys →</button>
       </div>
-    </div>
-    <div class="filter-bar">
-      <div id="filterSliders"></div>
-      <button class="btn btn-outline btn-sm" id="addFilter" type="button">+ Lägg till filter</button>
-    </div>
-    <div class="threshold-wrap" id="threshold-wrap">
-      <div class="card-title" style="font-size:13px;margin-bottom:2px">Gränsanalys – handlare vs volym</div>
-      <div class="card-sub" id="threshold-sub" style="margin-bottom:8px">Varje punkt = en möjlig minimigräns. Kurvan visar avvägningen mellan få handlare och mycket volym.</div>
-      <div class="chartbox"><svg id="chart-threshold" viewBox="0 0 720 220" preserveAspectRatio="xMidYMid meet"></svg></div>
-      <div class="callout" id="threshold-callout"></div>
-      <div id="conc-table-wrap"></div>
-      <div class="callout" id="conc-recommend" style="display:none"></div>
     </div>
     <div class="tbl-wrap">
       <table><thead><tr id="thead-row"></tr></thead><tbody id="tbl-body"></tbody><tfoot><tr id="tbl-foot"></tr></tfoot></table>
@@ -281,7 +313,7 @@
   </div>
   </div>
 
-  <!-- ========== SIDA 2 ========== -->
+  <!-- ========== SIDA 2 · Djupanalys ========== -->
   <div class="view" id="view-analysis">
   <div class="card">
     <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-bottom:12px">
@@ -289,7 +321,7 @@
         <div class="card-title" style="margin:0">Djupanalys · valda handlare</div>
         <div class="card-sub" style="margin:8px 0 0" id="analysis-subtitle"></div>
       </div>
-      <button class="btn btn-outline btn-sm" id="backToList" type="button">← Tillbaka till listan</button>
+      <button class="btn btn-outline btn-sm" id="backToList" type="button">← Tillbaka till RM-gräns</button>
     </div>
     <div class="metrics" id="analysis-metrics"></div>
     <div class="analysis-grid">
@@ -363,103 +395,6 @@ const COLS=[
   {key:'omsHast',lbl:'Oms.hast.',cell:d=>fRatio(d.omsHast)},{key:'oms',lbl:'Omsättning',cell:d=>fMkr(d.oms)},
   {key:'res',lbl:'Resultat',cell:d=>d.res==null?na():'<span class="'+(d.res>=0?'pos':'neg')+'">'+fTkr(d.res)+'</span>'},
   {key:'sol',lbl:'Soliditet',cell:d=>fPct(d.sol,0)}];
-const FILTER_COLS=COLS.filter(c=>c.key!=='namn');
-const FILTER_CFG={};
-let nextFilterId=1;
-let filters=[];
-(function buildFilterCfg(){
-  const specs={
-    bilar:{unit:' st',step:1,fmt:v=>nf.format(v)},
-    kopta:{unit:' st',step:1,fmt:v=>nf.format(v)},
-    salda:{unit:' st',step:1,fmt:v=>nf.format(v)},
-    innehav:{unit:' st',step:1,fmt:v=>nf.format(v)},
-    rmAndel:{unit:' %',step:1,fmt:v=>v+' %',toThr:v=>v/100},
-    netto:{unit:' st',step:1,fmt:v=>(v>0?'+':'')+nf.format(v)},
-    omsHast:{unit:'×',step:1,fmt:v=>v.toLocaleString('sv-SE',{minimumFractionDigits:1,maximumFractionDigits:1})+'×',toThr:v=>v/10},
-    oms:{unit:' Mkr',step:1,fmt:v=>v.toLocaleString('sv-SE')+' Mkr',toThr:v=>v*1e6},
-    res:{unit:' tkr',step:10,fmt:v=>(v<0?'−':'')+nf.format(Math.abs(v))+' tkr',toThr:v=>v*1000},
-    sol:{unit:' %',step:1,fmt:v=>v+' %',toThr:v=>v/100}
-  };
-  FILTER_COLS.forEach(c=>{
-    const s=specs[c.key],vals=DATA.map(d=>d[c.key]).filter(v=>v!=null);
-    const dataMin=vals.length?Math.min(...vals):0,dataMax=vals.length?Math.max(...vals):100;
-    let sliderMin,sliderMax;
-    if(c.key==='netto'){sliderMin=Math.floor(dataMin/5)*5-5;sliderMax=Math.ceil(dataMax/5)*5;}
-    else if(c.key==='oms'){sliderMin=0;sliderMax=Math.max(10,Math.ceil(dataMax/1e6));}
-    else if(c.key==='res'){sliderMin=Math.floor(dataMin/10000)*10;sliderMax=Math.ceil(dataMax/10000)*10;}
-    else if(c.key==='rmAndel'||c.key==='sol'){sliderMin=0;sliderMax=100;}
-    else if(c.key==='omsHast'){sliderMin=0;sliderMax=Math.max(10,Math.ceil(dataMax*10));}
-    else{sliderMin=0;sliderMax=Math.max(10,Math.ceil(dataMax/10)*10);}
-    FILTER_CFG[c.key]={lbl:c.lbl,unit:s.unit,step:s.step,fmt:s.fmt,toThr:s.toThr||(v=>v),sliderMin,sliderMax};
-  });
-})();
-function newFilter(field){return {id:nextFilterId++,field,val:FILTER_CFG[field].sliderMin};}
-filters.push(newFilter('bilar'));
-function renderFilters(){
-  const cont=document.getElementById('filterSliders');cont.innerHTML='';
-  filters.forEach((f,i)=>{
-    const cfg=FILTER_CFG[f.field],row=document.createElement('div');row.className='filter-row';
-    row.innerHTML=
-      '<span class="filter-num">Filter '+(i+1)+'</span>'+
-      '<select class="filter-field" data-id="'+f.id+'">'+FILTER_COLS.map(c=>'<option value="'+c.key+'"'+(c.key===f.field?' selected':'')+'>'+c.lbl+'</option>').join('')+'</select>'+
-      '<input type="range" class="filter-slider" data-id="'+f.id+'" min="'+cfg.sliderMin+'" max="'+cfg.sliderMax+'" step="'+cfg.step+'" value="'+f.val+'">'+
-      '<span class="slider-val filter-val" data-id="'+f.id+'">'+cfg.lbl+' minst: '+cfg.fmt(f.val)+'</span>'+
-      (filters.length>1?'<button class="btn btn-outline btn-sm filter-rm" data-id="'+f.id+'" type="button">Ta bort</button>':'');
-    cont.appendChild(row);
-  });
-  cont.querySelectorAll('.filter-field').forEach(el=>el.addEventListener('change',e=>{
-    const f=filters.find(x=>x.id===+e.target.dataset.id);
-    f.field=e.target.value;f.val=FILTER_CFG[f.field].sliderMin;renderFilters();renderTable();
-  }));
-  cont.querySelectorAll('.filter-slider').forEach(el=>el.addEventListener('input',e=>{
-    const f=filters.find(x=>x.id===+e.target.dataset.id),cfg=FILTER_CFG[f.field];
-    f.val=+e.target.value;
-    cont.querySelector('.filter-val[data-id="'+f.id+'"]').textContent=cfg.lbl+' minst: '+cfg.fmt(f.val);
-    renderTable();
-  }));
-  cont.querySelectorAll('.filter-rm').forEach(el=>el.addEventListener('click',e=>{
-    filters=filters.filter(x=>x.id!==+e.target.dataset.id);renderFilters();renderTable();
-  }));
-}
-document.getElementById('addFilter').addEventListener('click',()=>{
-  const used=new Set(filters.map(f=>f.field));
-  const next=FILTER_COLS.find(c=>!used.has(c.key))||FILTER_COLS[0];
-  filters.push(newFilter(next.key));renderFilters();renderTable();
-});
-function passesSingleFilter(d,f){
-  const cfg=FILTER_CFG[f.field];
-  if(f.val<=cfg.sliderMin)return true;
-  const v=d[f.field];
-  if(v==null)return true;
-  return v>=cfg.toThr(f.val);
-}
-function passesFilterExcept(d,excludeId,thrVal){
-  return filters.every(f=>{
-    if(f.id===excludeId){
-      const cfg=FILTER_CFG[f.field];
-      if(thrVal<=cfg.sliderMin)return true;
-      const v=d[f.field];
-      if(v==null)return true;
-      return v>=cfg.toThr(thrVal);
-    }
-    return passesSingleFilter(d,f);
-  });
-}
-function passesFilter(d){
-  return filters.every(f=>passesSingleFilter(d,f));
-}
-function buildThresholdCurve(filterId){
-  const f=filters.find(x=>x.id===filterId);
-  if(!f)return [];
-  const cfg=FILTER_CFG[f.field],best=new Map();
-  for(let t=cfg.sliderMin;t<=cfg.sliderMax;t+=cfg.step){
-    const subset=DATA.filter(d=>passesFilterExcept(d,filterId,t));
-    const pt={thr:t,n:subset.length,sum:sumField(subset,f.field)};
-    const key=pt.n+'|'+pt.sum;
-    if(!best.has(key)||t<best.get(key).thr)best.set(key,pt);
-  }
-  return [...best.values()].sort((a,b)=>b.n-a.n);
-}
 function findElbow(points){
   if(points.length<3)return points[Math.floor(points.length/2)]||points[0];
   const a=points[0],b=points[points.length-1];
@@ -473,133 +408,8 @@ function findElbow(points){
   }
   return best;
 }
-function findVolumeTarget(points,totAll,target){
-  if(!totAll)return points[0];
-  let best=null;
-  points.forEach(p=>{if(p.sum/totAll>=target&&(!best||p.thr>best.thr))best=p;});
-  return best||points[0];
-}
-function sumFmt(field,v){
-  if(field==='oms')return fMkr(v);
-  if(field==='res')return fTkr(v);
-  if(field==='rmAndel'||field==='sol')return fPct(v,1);
-  if(field==='omsHast')return fRatio(v);
-  return fInt(v);
-}
-function fieldThrFmt(field,raw){
-  if(raw==null)return '–';
-  const cfg=FILTER_CFG[field];
-  if(field==='oms')return cfg.fmt(Math.round(raw/1e6));
-  if(field==='res')return cfg.fmt(Math.round(raw/1000));
-  if(field==='rmAndel'||field==='sol')return cfg.fmt(Math.round(raw*100));
-  if(field==='omsHast')return cfg.fmt(Math.round(raw*10));
-  return cfg.fmt(Math.round(raw));
-}
-function getRankedByField(field){
-  return DATA.slice().sort((a,b)=>{
-    const x=a[field],y=b[field];
-    if(x==null&&y==null)return 0;
-    if(x==null)return 1;
-    if(y==null)return -1;
-    return y-x;
-  });
-}
-const CONC_MILESTONES=[1,5,10,15,20,25,30,40,50,70,100];
-function renderConcentrationTable(){
-  const wrap=document.getElementById('conc-table-wrap'),rec=document.getElementById('conc-recommend');
-  const focus=filters[0];
-  if(!focus){wrap.innerHTML='';rec.style.display='none';return;}
-  const field=focus.field,cfg=FILTER_CFG[field];
-  const ranked=getRankedByField(field),total=ranked.length;
-  if(!total){wrap.innerHTML='';rec.style.display='none';return;}
-  const totAll=sumField(DATA,field),totLbl=cfg.lbl.toLowerCase();
-  const ms=CONC_MILESTONES.filter(n=>n<=total);
-  if(ms[ms.length-1]!==total)ms.push(total);
-  const topVal=ranked[0][field];
-  const kneeThr=topVal!=null?topVal*0.3:null;
-  let prevN=0,prevCum=0,kneeRow=null,rows=[];
-  ms.forEach(n=>{
-    const slice=ranked.slice(0,n),cum=sumField(slice,field);
-    const marg=n>prevN?(cum-prevCum)/(n-prevN):null;
-    const row={n,cum,pct:totAll?cum/totAll*100:0,marg,thr:slice[n-1][field]};
-    if(kneeThr!=null&&kneeRow==null&&marg!=null&&marg<kneeThr)kneeRow=row;
-    rows.push(row);prevN=n;prevCum=cum;
-  });
-  let html='<div class="conc-title">Koncentration – topp handlare sorterade på '+cfg.lbl+'</div><table class="conc-table"><thead><tr>'+
-    '<th>Antal handlare</th><th>Kumulativ volym</th><th>Andel</th><th>Marginellt snitt</th></tr></thead><tbody>';
-  rows.forEach(r=>{
-    const isKnee=kneeRow&&r.n===kneeRow.n;
-    html+='<tr'+(isKnee?' class="conc-knee"':'')+'><td>'+fInt(r.n)+(isKnee?' ◆':'')+'</td><td>'+sumFmt(field,r.cum)+'</td><td>'+Math.round(r.pct)+' %</td><td>'+
-      (r.marg==null?'–':sumFmt(field,r.marg))+'</td></tr>';
-  });
-  html+='</tbody></table>';
-  wrap.innerHTML=html;
-  if(kneeRow){
-    rec.style.display='block';
-    rec.innerHTML='Vid gräns ≥ <b>'+fieldThrFmt(field,kneeRow.thr)+'</b> behöver du samarbeta med endast <b>'+kneeRow.n+'</b> handlare för att nå <b>'+Math.round(kneeRow.pct)+' %</b> av den totala volymen i '+totLbl+'.';
-  }else{
-    rec.style.display='block';
-    const last=rows[rows.length-1];
-    rec.innerHTML='Ingen tydlig knäpunkt – marginellt snitt sjunker inte under 30 % av största handlaren. Alla <b>'+last.n+'</b> handlare krävs för <b>'+Math.round(last.pct)+' %</b> av '+totLbl+'.';
-  }
-}
-function drawThresholdAnalysis(){
-  const wrap=document.getElementById('threshold-wrap'),svg=document.getElementById('chart-threshold'),callout=document.getElementById('threshold-callout');
-  const focus=filters[0];
-  if(!focus){wrap.style.display='none';return;}
-  const cfg=FILTER_CFG[focus.field],points=buildThresholdCurve(focus.id);
-  if(points.length<2){wrap.style.display='none';return;}
-  wrap.style.display='block';
-  const totAll=sumField(DATA,focus.field),totLbl=cfg.lbl.toLowerCase();
-  document.getElementById('threshold-sub').textContent='Filter 1 · '+cfg.lbl+' · X = antal handlare · Y = totalt '+totLbl+' i urvalet'+(filters.length>1?' (övriga filter tillämpas)':'')+'. Klicka på kurvan för att sätta gränsen.';
-  const W=720,H=220,pad={l:52,r:20,t:16,b:36};
-  const nMin=Math.min(...points.map(p=>p.n)),nMax=Math.max(...points.map(p=>p.n));
-  const sMin=Math.min(...points.map(p=>p.sum)),sMax=Math.max(...points.map(p=>p.sum)||[1]);
-  const px=n=>pad.l+((n-nMin)/(nMax-nMin||1))*(W-pad.l-pad.r);
-  const py=s=>H-pad.b-((s-sMin)/(sMax-sMin||1))*(H-pad.t-pad.b);
-  const knee=findElbow(points),suggest=findVolumeTarget(points,totAll,0.65);
-  const cur=points.find(p=>p.thr===focus.val)||points.reduce((a,b)=>Math.abs(b.thr-focus.val)<Math.abs(a.thr-focus.val)?b:a);
-  const pct=v=>totAll?Math.round(v/totAll*100):0;
-  let s='';
-  const targetY=totAll*0.65;
-  if(sMax>sMin&&targetY>=sMin&&targetY<=sMax){
-    const y65=py(targetY);
-    s+='<line class="grid-line" x1="'+pad.l+'" y1="'+y65+'" x2="'+(W-pad.r)+'" y2="'+y65+'" stroke="#cfe7d8" stroke-width="1"/><text class="tick-txt" x="'+(pad.l+4)+'" y="'+(y65-3)+'">65 % av totalt</text>';
-  }
-  for(let i=0;i<=4;i++){
-    const yv=sMin+(sMax-sMin)*i/4,y=py(yv);
-    s+='<line class="grid-line" x1="'+pad.l+'" y1="'+y+'" x2="'+(W-pad.r)+'" y2="'+y+'"/>';
-    s+='<text class="tick-txt" x="'+(pad.l-6)+'" y="'+(y+3)+'" text-anchor="end">'+sumFmt(focus.field,yv)+'</text>';
-  }
-  for(let i=0;i<=4;i++){
-    const xv=nMin+(nMax-nMin)*i/4,x=px(xv);
-    s+='<text class="tick-txt" x="'+x+'" y="'+(H-pad.b+14)+'" text-anchor="middle">'+fInt(Math.round(xv))+'</text>';
-  }
-  s+='<line class="axis-line" x1="'+pad.l+'" y1="'+(H-pad.b)+'" x2="'+(W-pad.r)+'" y2="'+(H-pad.b)+'"/><line class="axis-line" x1="'+pad.l+'" y1="'+pad.t+'" x2="'+pad.l+'" y2="'+(H-pad.b)+'"/>';
-  s+='<text class="axis-label" x="'+(pad.l+(W-pad.l-pad.r)/2)+'" y="'+(H-4)+'" text-anchor="middle">Antal handlare</text>';
-  s+='<text class="axis-label" transform="translate(14,'+(pad.t+(H-pad.t-pad.b)/2)+') rotate(-90)" text-anchor="middle">Totalt '+totLbl+'</text>';
-  const path=points.map((p,i)=>(i?'L':'M')+px(p.n).toFixed(1)+','+py(p.sum).toFixed(1)).join(' ');
-  s+='<path class="thr-line" d="'+path+'"/>';
-  s+='<line class="thr-ref" x1="'+px(suggest.n)+'" y1="'+py(suggest.sum)+'" x2="'+px(cur.n)+'" y2="'+py(cur.sum)+'"/>';
-  points.forEach(p=>{
-    s+='<circle class="thr-dot" data-thr="'+p.thr+'" cx="'+px(p.n).toFixed(1)+'" cy="'+py(p.sum).toFixed(1)+'" r="4" fill="#5b8fd6" stroke="#fff" stroke-width="1"/>';
-  });
-  s+='<circle class="thr-dot thr-knee" data-thr="'+suggest.thr+'" cx="'+px(suggest.n).toFixed(1)+'" cy="'+py(suggest.sum).toFixed(1)+'" r="6" title="Föreslagen gräns"/>';
-  s+='<circle class="thr-dot thr-cur" data-thr="'+cur.thr+'" cx="'+px(cur.n).toFixed(1)+'" cy="'+py(cur.sum).toFixed(1)+'" r="6" title="Nuvarande gräns"/>';
-  svg.innerHTML=s;
-  const tip=document.getElementById('tooltip');
-  svg.querySelectorAll('.thr-dot').forEach(cc=>{
-    const thr=+cc.dataset.thr,p=points.find(x=>x.thr===thr)||{n:0,sum:0,thr};
-    cc.addEventListener('mouseenter',()=>{tip.innerHTML='<b>Gräns ≥ '+cfg.fmt(thr)+'</b><br>'+p.n+' handlare · '+sumFmt(focus.field,p.sum)+'<br>'+pct(p.sum)+' % av alla '+totLbl;tip.style.opacity=1;});
-    cc.addEventListener('mousemove',e=>{tip.style.left=(e.clientX+12)+'px';tip.style.top=(e.clientY+12)+'px';});
-    cc.addEventListener('mouseleave',()=>{tip.style.opacity=0;});
-    cc.addEventListener('click',()=>{focus.val=thr;renderFilters();renderTable();});
-  });
-  const curPct=pct(cur.sum),sugPct=pct(suggest.sum),kneePct=pct(knee.sum);
-  callout.innerHTML='<b>Nuvarande:</b> gräns ≥ '+cfg.fmt(focus.val)+' → '+cur.n+' handlare, '+sumFmt(focus.field,cur.sum)+' ('+curPct+' % av totalt)<br>'+
-    '<b>Föreslagen gräns:</b> ≥ '+cfg.fmt(suggest.thr)+' → '+suggest.n+' handlare, '+sumFmt(focus.field,suggest.sum)+' ('+sugPct+' % av totalt) – högsta tröskel som behåller minst 65 % av volymen<br>'+
-    '<span style="color:#5a7a62">Knäpunkt på kurvan: ≥ '+cfg.fmt(knee.thr)+' → '+knee.n+' handlare ('+kneePct+' % volym)</span>';
-}
+function liveBilarThr(){return +document.getElementById('liveBilarSlider').value;}
+function passesLiveFilter(d){return d.bilar>=liveBilarThr();}
 function sumField(set,key){return set.reduce((s,d)=>d[key]!=null?s+d[key]:s,0);}
 function summarizeFoot(set){
   const n=set.length;
@@ -649,10 +459,10 @@ function showPage(page){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{if(!t.disabled)showPage(t.dataset.page);}));
-document.getElementById('backToList').addEventListener('click',()=>showPage('list'));
+document.getElementById('backToList').addEventListener('click',()=>showPage('live'));
 function toggleSel(orgnr,on){if(on)selected.add(orgnr);else selected.delete(orgnr);updateSelUI();}
 function renderTable(){
-  const set=DATA.filter(passesFilter);
+  const set=DATA.filter(passesLiveFilter);
   visibleSet=set;
   set.sort((a,b)=>{let x=a[sortKey],y=b[sortKey];if(x==null&&y==null)return 0;if(x==null)return 1;if(y==null)return -1;if(typeof x==='string')return sortAsc?x.localeCompare(y,'sv'):y.localeCompare(x,'sv');return sortAsc?x-y:y-x;});
   document.querySelectorAll('#thead-row th').forEach(th=>{th.classList.toggle('sorted',th.dataset.key===sortKey);th.classList.toggle('asc',th.dataset.key===sortKey&&sortAsc);});
@@ -668,9 +478,7 @@ function renderTable(){
   });
   const foot=summarizeFoot(set);
   document.getElementById('tbl-foot').innerHTML='<td class="chk-col"></td>'+foot.map(v=>'<td>'+v+'</td>').join('');
-  document.getElementById('tbl-count').textContent=set.length+' av '+DATA.length+' handlare · '+MATCHED.length+' med aktivitetsdata';
-  drawThresholdAnalysis();
-  renderConcentrationTable();
+  document.getElementById('tbl-count').textContent=set.length+' av '+DATA.length+' handlare vid gräns ≥ '+liveBilarThr()+' RM-bilar · '+MATCHED.length+' med aktivitetsdata';
   updateSelUI();
 }
 document.getElementById('selclear').addEventListener('click',()=>{selected.clear();updateSelUI();renderTable();});
@@ -679,7 +487,7 @@ document.getElementById('selAnalyze').addEventListener('click',()=>{if(selected.
 
 /* ==================== ANALYSIS ==================== */
 function metricCard(label,val,sub){return '<div class="metric"><div class="metric-label">'+label+'</div><div class="metric-value">'+val+'</div><div class="metric-sub">'+sub+'</div></div>';}
-function colorFor(a){if(a==null)return '#cfcfca';const stops=[[0,[207,224,245]],[0.5,[91,143,214]],[1,[232,132,46]]];a=Math.max(0,Math.min(1,a));let i=1;while(i<stops.length&&a>stops[i][0])i++;const[t0,c0]=stops[i-1],[t1,c1]=stops[i];const f=(a-t0)/(t1-t0);return 'rgb('+c0.map((v,j)=>Math.round(v+(c1[j]-v)*f)).join(',')+')';}
+function colorFor(a){if(a==null)return '#cfcfca';const stops=[[0,[207,250,254]],[0.5,[8,145,178]],[1,[30,58,95]]];a=Math.max(0,Math.min(1,a));let i=1;while(i<stops.length&&a>stops[i][0])i++;const[t0,c0]=stops[i-1],[t1,c1]=stops[i];const f=(a-t0)/(t1-t0);return 'rgb('+c0.map((v,j)=>Math.round(v+(c1[j]-v)*f)).join(',')+')';}
 function shortName(n){return n.length>22?n.slice(0,20)+'…':n;}
 function renderAnalysis(){
   const sel=DATA.filter(d=>selected.has(d.orgnr));
@@ -735,9 +543,83 @@ function drawBars(sel){
 }
 document.getElementById('bubbleX').addEventListener('change',()=>{if(document.getElementById('view-analysis').classList.contains('active'))drawBubble(DATA.filter(d=>selected.has(d.orgnr)));});
 
+/* ==================== LIVE RM-GRÄNS (sida 1) ==================== */
+const LIVE={points:[],knee:null,totAll:0,px:null,py:null};
+function buildLiveBilarCurve(){
+  const thresholds=[...new Set(DATA.map(d=>d.bilar))].sort((a,b)=>a-b);
+  const best=new Map();
+  thresholds.forEach(t=>{
+    const subset=DATA.filter(d=>d.bilar>=t);
+    const pt={thr:t,n:subset.length,sum:sumField(subset,'bilar')};
+    const key=pt.n+'|'+pt.sum;
+    if(!best.has(key)||t<best.get(key).thr)best.set(key,pt);
+  });
+  return [...best.values()].sort((a,b)=>b.n-a.n);
+}
+function livePointAt(thr){
+  const subset=DATA.filter(d=>d.bilar>=thr);
+  return {thr,n:subset.length,sum:sumField(subset,'bilar')};
+}
+function initLiveThresholdChart(){
+  const slider=document.getElementById('liveBilarSlider'),svg=document.getElementById('chart-live');
+  const bilarVals=DATA.map(d=>d.bilar),minB=Math.min(...bilarVals),maxB=Math.max(...bilarVals);
+  slider.min=minB;slider.max=maxB;slider.step=1;
+  LIVE.points=buildLiveBilarCurve();
+  LIVE.totAll=sumField(DATA,'bilar');
+  LIVE.knee=findElbow(LIVE.points);
+  const W=720,H=280,pad={l:52,r:20,t:16,b:36};
+  const nMin=Math.min(...LIVE.points.map(p=>p.n)),nMax=Math.max(...LIVE.points.map(p=>p.n));
+  const sMin=Math.min(...LIVE.points.map(p=>p.sum)),sMax=Math.max(...LIVE.points.map(p=>p.sum)||[1]);
+  LIVE.px=n=>pad.l+((n-nMin)/(nMax-nMin||1))*(W-pad.l-pad.r);
+  LIVE.py=s=>H-pad.b-((s-sMin)/(sMax-sMin||1))*(H-pad.t-pad.b);
+  let s='<defs><linearGradient id="rm-line-grad" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#0891b2"/><stop offset="100%" stop-color="#1e3a5f"/></linearGradient></defs>';
+  for(let i=0;i<=4;i++){
+    const yv=sMin+(sMax-sMin)*i/4,y=LIVE.py(yv);
+    s+='<line class="grid-line" x1="'+pad.l+'" y1="'+y+'" x2="'+(W-pad.r)+'" y2="'+y+'"/>';
+    s+='<text class="tick-txt" x="'+(pad.l-6)+'" y="'+(y+3)+'" text-anchor="end">'+fInt(yv)+'</text>';
+  }
+  for(let i=0;i<=4;i++){
+    const xv=nMin+(nMax-nMin)*i/4,x=LIVE.px(xv);
+    s+='<text class="tick-txt" x="'+x+'" y="'+(H-pad.b+14)+'" text-anchor="middle">'+fInt(Math.round(xv))+'</text>';
+  }
+  s+='<line class="axis-line" x1="'+pad.l+'" y1="'+(H-pad.b)+'" x2="'+(W-pad.r)+'" y2="'+(H-pad.b)+'"/>';
+  s+='<line class="axis-line" x1="'+pad.l+'" y1="'+pad.t+'" x2="'+pad.l+'" y2="'+(H-pad.b)+'"/>';
+  s+='<text class="axis-label" x="'+(pad.l+(W-pad.l-pad.r)/2)+'" y="'+(H-4)+'" text-anchor="middle">Antal handlare</text>';
+  s+='<text class="axis-label" transform="translate(14,'+(pad.t+(H-pad.t-pad.b)/2)+') rotate(-90)" text-anchor="middle">Kumulativ RM-bilar</text>';
+  s+='<path class="thr-line" stroke="url(#rm-line-grad)" d="'+LIVE.points.map((p,i)=>(i?'L':'M')+LIVE.px(p.n).toFixed(1)+','+LIVE.py(p.sum).toFixed(1)).join(' ')+'"/>';
+  s+='<rect class="live-hit" id="live-hit-area" x="'+pad.l+'" y="'+pad.t+'" width="'+(W-pad.l-pad.r)+'" height="'+(H-pad.t-pad.b)+'"/>';
+  s+='<circle id="live-cur-marker" class="live-cur thr-dot" r="7"/>';
+  svg.innerHTML=s;
+  const kneePt=LIVE.knee;
+  const kpct=LIVE.totAll?Math.round(kneePt.sum/LIVE.totAll*100):0;
+  document.getElementById('live-recommend').innerHTML='Optimal avvägning: gräns ≥ <b>'+fInt(kneePt.thr)+'</b> bilar ger <b>'+kneePt.n+'</b> handlare för <b>'+kpct+' %</b> av volymen. Att sänka gränsen ytterligare kräver fler handlare per extra bil.';
+  function pickPoint(svgX,svgY){
+    let best=LIVE.points[0],bd=Infinity;
+    LIVE.points.forEach(p=>{const d=Math.hypot(LIVE.px(p.n)-svgX,LIVE.py(p.sum)-svgY);if(d<bd){bd=d;best=p;}});
+    return best;
+  }
+  svg.addEventListener('click',e=>{
+    if(e.target.id==='live-cur-marker')return;
+    const pt=svg.createSVGPoint();pt.x=e.clientX;pt.y=e.clientY;
+    const ctm=svg.getScreenCTM();if(!ctm)return;
+    const p=pt.matrixTransform(ctm.inverse()),hit=pickPoint(p.x,p.y);
+    slider.value=hit.thr;
+    updateLiveThresholdMarker(+hit.thr);
+  });
+  slider.addEventListener('input',e=>updateLiveThresholdMarker(+e.target.value));
+  slider.value=kneePt.thr;
+  updateLiveThresholdMarker(+slider.value);
+}
+function updateLiveThresholdMarker(value){
+  const pt=livePointAt(value),pct=LIVE.totAll?Math.round(pt.sum/LIVE.totAll*100):0;
+  document.getElementById('liveBilarReadout').innerHTML='Gräns ≥ <span class="hl">'+fInt(value)+' bilar</span> → <span class="hl">'+fInt(pt.n)+' handlare</span> → <span class="hl">'+fInt(pt.sum)+' RM-bilar</span> ('+pct+' % av total volym)';
+  const cur=document.getElementById('live-cur-marker');
+  if(cur&&LIVE.px){cur.setAttribute('cx',LIVE.px(pt.n).toFixed(1));cur.setAttribute('cy',LIVE.py(pt.sum).toFixed(1));}
+  renderTable();
+}
+
 /* ---------- init ---------- */
-renderFilters();
-renderTable();
+initLiveThresholdChart();
 </script>
 </body>
 </html>
